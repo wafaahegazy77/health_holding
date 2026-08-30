@@ -4,13 +4,303 @@
 @import "./helper.scss";
 @import "./globals.scss";
 
-.section_head {
-    .stars {
-        margin-inline-end: 7px;
-    }
-
+.section{ 
+    position: relative;
+    padding: 70px 0;
+    overflow: hidden;
 }
 
+.txt_gradient {
+    color: #14508A;
+    background-image: linear-gradient(135deg, #14508A 0%, #1691D0 54%, #057590 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+}
+
+.bg_gradient {
+    background-image: linear-gradient(135deg, #14508A 0%, #1691D0 54%, #057590 100%);
+}
+
+/* --------------- butn --------------- */
+.butn {
+    position: relative;
+    padding: 0.5rem 1rem;
+    width: fit-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 16px;
+    border: 1px solid transparent;
+    border-radius: 35px ;
+    overflow: hidden;
+    font-weight: 500;
+
+
+    &.sm_butn {
+        padding: 0;
+        width: 50px;
+        height: 50px;
+    }
+
+    &.primary_butn {
+        background-color: var(--primary);
+        color: #fff;
+    }
+
+    &.primary_border_butn {
+        border: 1px solid var(--primary);
+        color: var(--primary);
+        background-color: transparent;
+    }
+
+    &.secondary_butn {
+        background-color: var(--secondary);
+        color: #fff;
+    }
+
+    &.secondary_border_butn {
+        border: 1px solid var(--secondary);
+        color: var(--secondary);
+        background-color: transparent;
+    }
+
+    &.white_butn {
+        background-color: #fff;
+        color: #333;
+        .hvr-icon {
+            background-image: linear-gradient(135deg, #14508A 0%, #1691D0 54%, #057590 100%);
+            i{
+                color: #fff;
+
+            }
+        }
+    }
+
+    &.white_border_butn {
+        background-color: transparent;
+        color: #fff;
+        border: 1px solid #D6D3D3;
+    }
+
+    &:hover {
+        background-color: #070f34;
+        border-color: #070f34;
+        color: #fff !important;
+    }
+
+    // Text transition hover
+    &.hvr-txt-trans {
+        .txt {
+            position: relative;
+            display: inline-block;
+            transition: all 0.4s ease;
+
+            span {
+                display: inline-block;
+                transition: all 0.4s ease;
+                // padding-bottom: 5px;
+                font-weight: bold;
+            }
+
+            &::after {
+                content: attr(data-text);
+                display: inline-block;
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                opacity: 0;
+                white-space: nowrap;
+                // padding-bottom: 5px;
+                font-weight: bold;
+                transform: translate(-50%, 100%);
+
+                transition:
+                    opacity 0.3s,
+                    transform 0.3s;
+
+                transition-timing-function:
+                    cubic-bezier(.455, .03, .515, .955);
+            }
+        }
+
+        &:hover {
+            .txt {
+                span {
+                    transform: translateY(-150%);
+                    opacity: 0;
+                }
+
+                &::after {
+                    transform: translate(-50%, -50%);
+                    opacity: 1;
+                    color: #fff;
+                }
+            }
+        }
+    }
+
+    // Optional scale effect
+    &.hvr-scale {
+        transition: all 0.3s ease;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+}
+
+.butn.gradient_butn {
+    position: relative;
+    isolation: isolate;
+
+    background: linear-gradient(
+        135deg,
+        #14508A 0%,
+        #1691D0 45%,
+        #057590 100%
+    );
+
+    color: #fff;
+    border: 1px solid transparent;
+
+    overflow: hidden;
+
+    &::before {
+        content: "";
+
+        position: absolute;
+        inset: 0;
+
+        background: linear-gradient(
+            120deg,
+            transparent 20%,
+            rgba(255, 255, 255, 0.28) 50%,
+            transparent 80%
+        );
+
+        transform: translateX(-120%);
+
+        transition: transform 0.7s
+            cubic-bezier(0.22, 1, 0.36, 1);
+
+        z-index: -1;
+    }
+
+    &:hover {
+        color: #fff !important;
+
+        background: linear-gradient(
+            135deg,
+            #057590 0%,
+            #1691D0 45%,
+            #14508A 100%
+        );
+
+        box-shadow:
+            0 0 15px rgba(38, 63, 216, 0.35),
+            0 0 35px rgba(49, 85, 231, 0.25),
+            0 0 60px rgba(78, 109, 255, 0.18);
+
+        &::before {
+            transform: translateX(120%);
+        }
+
+        .txt {
+            span {
+                transform: translateY(-150%);
+                opacity: 0;
+            }
+
+            &::after {
+                transform: translate(-50%, -50%);
+                opacity: 1;
+                color: #fff;
+            }
+        }
+    }
+}
+
+.butn.hvr-icon-slide-out-in {
+    position: relative;
+    padding-inline-end: 50px !important;
+    overflow: hidden;
+
+    .txt {
+        position: relative;
+        z-index: 2;
+
+        display: inline-block;
+
+        transition:
+            transform 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+    }
+
+    .hvr-icon {
+        position: absolute;
+        top: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background-color: #fff;
+        color: #000;
+        transform: translateY(-50%);
+        z-index: 3;
+        transition:
+            transform 0.45s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+        i {
+            font-size: 14px;
+            line-height: 1;
+        }
+    }
+
+    .hvr-icon-current {
+        right: 5px;
+
+        transform:
+            translate(0, -50%);
+    }
+
+    .hvr-icon-next {
+        left: 5px;
+
+        transform:
+            translate(-150%, -50%);
+    }
+    &:hover {
+        .txt {
+            transform: translateX(35px);
+        }
+        .hvr-icon-current {
+            transform:
+                translate(150%, -50%);
+        }
+
+        .hvr-icon-next {
+            transform:
+                translate(0, -50%);
+        }
+    }
+}
+
+/* --------------- butn --------------- */
+.badge {
+    position: relative;
+    padding: .5rem 1rem;
+    border-radius: 50px;
+    display: block;
+    width: fit-content;
+    
+    i ,
+    .icon  {
+        margin-inline-end: 5px;
+    }
+}
+
+/* --------------- page_loader --------------- */
 .page_loader {
     min-height: 100vh;
     display: flex;
@@ -79,42 +369,6 @@
     }
 }
 
-@keyframes loaderRotate {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-@keyframes loaderRotateReverse {
-    to {
-        transform: rotate(-360deg);
-    }
-}
-
-@keyframes loaderPulse {
-    50% {
-        opacity: .5;
-    }
-}
-
-.bg {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    inset: 0;
-}
-
-
-
-@keyframes floatingX {
-    0%{
-        transform: translateY(10%);
-    }
-    100% {
-        transform: translateY(-10%);
-    }
-}
 
 @media screen and (max-width: 991px) {
  
@@ -122,4 +376,19 @@
         order: -1;
     }
 
+}
+
+
+html[dir="rtl"]{
+
+    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
+
+    // * {
+    //     font-family: "Cairo", sans-serif;
+    // }
+    // .fa-classic, .fa-light, .fa-regular, .fa-solid, .fa-thin, .fal, .far, .fas, .fat {
+    //     font-family: "Font Awesome 6 Pro" !important;
+    // }
+
+    
 }

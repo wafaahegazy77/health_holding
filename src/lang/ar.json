@@ -1,81 +1,22 @@
 {
     "navbar": {
-        "home": "الرئيسية",
-        "products": "المنتجات",
-        "pricing": "الباقات والأسعار",
-        "download": "التحميل",
-        "contact": " تواصل معنا  ",
-        "login" : "تسجيل الدخول" 
+        "about": "عن المنصة",
+        "tracks": "المسارات",
+        "courses": "الدورات",
+        "platformFeatures": "مميزات المنصة",
+        "process": "آلية العمل",
+        "faqs": "الأسئلة الشائعة",
+        "exploreContent": "استكشف المحتوى"
     },
     "hero": {
-        "primaryButton": "اطلع على الباقات",
-        "secondaryButton": "أبرز الخصائص"
+        "eyebrow": "تعليم طبي موثوق، مصمم للتطبيق العملي",
+        "title": "تعلم طبي منظم،",
+        "highlightedTitle": "مصمم للأطباء",
+        "exploreCourses": "استكشف المحتوى",
+        "specialties": "تخصصات طبية"
     },
-    "statistics": {
-        "badge": "بالأرقام",
-        "title": "أرقام تتحدث عن نفسها",
-        "description": "نتائج حقيقية تحققها الفرق التي تعتمد على بيم"
-    },
-    "platformServices": {
-        "title": "منصتك الشاملة...",
-        "description": "لكل ما يحتاجه فريقك!",
-        "primaryButn": "إبدأ معنا الآن مجاناً",
-        "tabs": {
-            "documents": "المستندات",
-            "messages": "الرسائل",
-            "contacts": "جهات الاتصال",
-            "meetings": "الاجتماعات",
-            "calendar": "التقويم",
-            "workspace": "مساحات العمل",
-            "tasks": "المهام",
-            "cloudStorage": "التخزين السحابي"
-        }
-    },
-    "whyBeem": {
-        "badge": "ليش بيم؟",
-        "title": "ثلاثة أسباب تجعل بيم الخيار الأمثل",
-        "description": "منصة مصممة لتبسيط العمل وتعزيز إنتاجية الفرق"
-    },
-    "pricing": {
-        "title": "اختر الحل الأمثل لمنظمتك"
-    },
-    "downloadApp": {
-        "title": "حمّل بيم الآن",
-        "description": "رحلتك نحو كفاءة وإنتاجية أعلى تبدأ من هنا"
-    },
-    "beemPlatform": {
-        "title": "منصة واحدة\nتربط فريقك وتوحد أعمالك!"
-    },
-    "footer": {
-        "cta": {
-            "description": "تُعد بيم منصة عمل رقمية متكاملة تجمع الرسائل، والاجتماعات، والمهام، والملفات في مكان واحد",
-            "primaryButton": "احجز خطتك الآن",
-            "secondaryButton": "تواصل معنا"
-        },
-        "links": {
-            "services": "خدمات بيم",
-            "about": "عن بيم",
-            "download": "تحميل بيم",
-
-            "cloudStorage": "التخزين السحابي",
-            "contactCenter": "جهات الاتصال",
-            "tasks": "المهام",
-            "personalBeem": "بيم الشخصي",
-            "notes": "الملاحظات",
-            "messages": "الرسائل",
-            "meetings": "الاجتماعات",
-            "calendar": "التقويم",
-            "documents": "المستندات",
-
-            "helpCenter": "مركز المساعدة",
-            "contactUs": "تواصل معنا",
-            "terms": "شروط الاستخدام",
-            "privacy": "سياسة الخصوصية",
-
-            "appStore": "آبل ستور",
-            "googlePlay": "جوجل بلاي",
-            "windows": "ويندوز",
-            "mac": "ماك"
-        }
+    "aboutPlatform": {
+        "title": "ليست مجرد منصة دورات، بل بيئة للتعلم الطبي",
+        "eyebrow": "عن المنصة"
     }
 }

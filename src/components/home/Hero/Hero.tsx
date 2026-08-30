@@ -1,47 +1,131 @@
 import { getLocale, getTranslations } from "next-intl/server";
+import Image from "next/image";
+
 import { getHomeData } from "@/lib/api/home";
-import './_Hero.scss'
-import Link from "next/link";
+import { Link } from "@/i18n/routing";
 import Reveal from "@/components/animations/Reveal";
 
+import "./_Hero.scss";
 
 const Hero = async () => {
     const locale = await getLocale();
     const t = await getTranslations("hero");
+
     const data = await getHomeData(locale);
 
     return (
-        <section className="hero_section">
+        <section className="hero_section section">
             <div className="container">
-                <div className="col-lg-5 mx-auto">
-                    <div className="txt_box text-center ">
-                        <Reveal  animation="fade-up" trigger="load">
-                            <h1 className="title fw-bold cr-blue fsz-55 mb-4">{data.hero.title}</h1>
-                        </Reveal>
+                <div className="row">
+                    <div className="col-lg-6">
+                        <div className="txt_content">
+                            {/* Eyebrow */}
+                            <Reveal
+                                animation="fade-up"
+                                trigger="load"
+                            >
+                                <div className="badge bg-white color_primary fw-400 mb-3">
+                                    <img src="/images/icons/shield_check.svg" className="icon icon-20 " alt="" />
+                                    {t("eyebrow")}
+                                </div>
+                            </Reveal>
 
-                        <Reveal  animation="fade-down"  trigger="load">
-                            <p className="fsz-18 mb-4">{data.hero.description}</p>
-                        </Reveal>
 
-                        <div className="d-flex justify-content-center align-items-center gap-2">
-                            <Reveal  animation="zoom-out" trigger="load">
-                                <Link className="butn bg-blue radius-10 hvr-txt-trans hvr-scale" href="/pricing">
-                                    <div className="txt" data-text={t("primaryButton")}><span> {t("primaryButton")} </span></div>
+                            {/* Title */}
+                            <Reveal
+                                animation="fade-up"
+                                trigger="load"
+                            >
+                                <h1 className="title fsz-60 fw-500 mb-3 ">
+                                    <span className="">
+                                        {t("title")}{" "}
+                                    </span>
+
+                                    <span className="txt_gradient">
+                                        {t("highlightedTitle")}
+                                    </span>
+                                </h1>
+                            </Reveal>
+
+
+                            {/* Description */}
+                            <Reveal
+                                animation="fade-up"
+                                trigger="load"
+                            >
+                                <p className="hero_description fsz-16 mb-4">
+                                    {data.hero.description}
+                                </p>
+                            </Reveal>
+
+                            {/* Explore Courses */}
+                            <Reveal
+                                animation="fade-up"
+                                trigger="load"
+                            >
+                                <Link
+                                    href="/"
+                                    className="butn gradient_butn hvr-icon-slide-out-in"
+                                >
+                                    <div className="txt" >
+                                        {t("exploreCourses")}
+                                    </div>
+
+                                    {/* Current icon */}
+                                    <span className="hvr-icon hvr-icon-current">
+                                        <i className="fa-regular fa-arrow-up-right"></i>
+                                    </span>
+
+                                    {/* Next icon */}
+                                    <span className="hvr-icon hvr-icon-next">
+                                        <i className="fa-regular fa-arrow-right"></i>
+                                    </span>
                                 </Link>
                             </Reveal>
-                            <Reveal  animation="zoom-out"  trigger="load">
-                                <Link className="butn border border-dr-2 radius-10 hvr-txt-trans hvr-scale" href="/pricing">
-                                    <div className="txt" data-text={t("secondaryButton")}><span> {t("secondaryButton")} </span></div>
-                                </Link>
-                            </Reveal>
+
                         </div>
+                    </div>
+                    <div className="col-lg-6">
 
                     </div>
                 </div>
 
             </div>
 
-            <img src="/images//hero_shaow.svg" alt="hero shaow" className="hero_shaow " />
+            {/* Specialties Statistic */}
+            <div className="hero_stat">
+
+                <div className="hero_stat_icon bg_gradient text-white ">
+                    <i className="fa-regular fa-heart-pulse"></i>
+                </div>
+
+                <div className="counter mt-3 fsz-45 fw-500 ">
+                   <span className="prata-font"> {data.hero.specialtiesCount} </span><small className="fsz-25 fw-300">+</small>
+                </div>
+
+                <div className="label mt-0 fsz-14 ">
+                    {t("specialties")}
+                </div>
+
+            </div>
+
+            {/* hero_pattern Image */}
+            <Image
+                src="/images/hero_pattern.png"
+                className="bg"
+                alt=""
+                fill
+                priority
+            />
+
+            {/* DNA Image */}
+            <Image
+                src="/images/hero-1.png"
+                className="dna"
+                alt=""
+                fill
+                priority
+            />
         </section>
     );
 };

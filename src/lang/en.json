@@ -1,82 +1,22 @@
 {
     "navbar": {
-        "home": "Home",
-        "products": "Products",
-        "pricing": "Plans & Pricing",
-        "download": "Download",
-        "contact": "Contact Us",
-        "login" : "Login" 
+        "about": "About",
+        "tracks": "Tracks",
+        "courses": "Courses",
+        "platformFeatures": "Platform Features",
+        "process": "Process",
+        "faqs": "FAQs",
+        "exploreContent": "Explore Content"
     },
     "hero": {
-        "primaryButton": "View Plans",
-        "secondaryButton": "Key Features"
+        "eyebrow": "Trusted medical education, built for practice",
+        "title": "Structured medical learning,",
+        "highlightedTitle": "designed for doctors",
+        "exploreCourses": "Explore Content",
+        "specialties": "Medical specialties"
     },
-      "statistics": {
-        "badge": "By the Numbers",
-        "title": "Numbers That Speak for Themselves",
-        "description": "Real results achieved by teams that rely on Beem."
-    },
-    "platformServices": {
-        "title": "Your Complete Platform...",
-        "description": "Everything your team needs!",
-        "primaryButn": "Start now for free",
-        "tabs": {
-            "documents": "Documents",
-            "messages": "Messages",
-            "contacts": "Contacts",
-            "meetings": "Meetings",
-            "calendar": "Calendar",
-            "workspace": "Workspaces",
-            "tasks": "Tasks",
-            "cloudStorage": "Cloud Storage"
-        }
-    },
-    "whyBeem": {
-        "badge": "Why Beem?",
-        "title": "Three Reasons Why Beem Is the Best Choice",
-        "description": "A platform designed to simplify work and boost team productivity."
-    },
-    "pricing": {
-        "title": "Choose the Best Plan for Your Organization"
-    },
-    "downloadApp": {
-        "title": "Download Beem Now",
-        "description": "Start your journey toward greater productivity and efficiency."
-    },
-    "beemPlatform": {
-        "title": "One Platform\nThat Connects Your Team and Unifies Your Work!"
-    },
-    "footer": {
-        "cta": {
-            "description": "Beem is an integrated digital workspace that brings together messages, meetings, tasks, and files in one place.",
-            "primaryButton": "Choose Your Plan",
-            "secondaryButton": "Contact Us"
-        },
-        "links": {
-            "services": "Beem Services",
-            "about": "About Beem",
-            "download": "Download Beem",
-
-            "cloudStorage": "Cloud Storage",
-            "contactCenter": "Contacts",
-            "tasks": "Tasks",
-            "personalBeem": "Personal Beem",
-            "notes": "Notes",
-            "messages": "Messages",
-            "meetings": "Meetings",
-            "calendar": "Calendar",
-            "documents": "Documents",
-
-            "helpCenter": "Help Center",
-            "contactUs": "Contact Us",
-            "terms": "Terms of Use",
-            "privacy": "Privacy Policy",
-
-            "appStore": "App Store",
-            "googlePlay": "Google Play",
-            "windows": "Windows",
-            "mac": "Mac"
-        }
+    "aboutPlatform": {
+        "title": "Not another course platform a medical learning environment",
+        "eyebrow": "ABOUT THE PLATFORM"
     }
-
 }

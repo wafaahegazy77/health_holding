@@ -335,7 +335,13 @@
         z-index: 5;
         font-size: 28px;
         font-weight: 700;
-        color: var(--mainColor);
+        color: var(--primary);
+        display: flex;
+        align-items: center;
+        .icon {
+            width: 50px;
+            object-fit: contain;
+        }
     }
 
     .ring {
@@ -349,7 +355,7 @@
         height: 180px;
         top: 0;
         left: 0;
-        border-top-color: var(--blue);
+        border-top-color: #1691D0;
         animation: loaderRotate 1.2s linear infinite;
     }
 

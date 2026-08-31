@@ -1,0 +1,145 @@
+.stats {
+    background-color: #F4F7F9;
+    padding: 50px 0;
+
+    .stats_box {
+        position: relative;
+
+        padding: 35px 25px;
+
+        border-radius: 20px;
+
+        background-image: linear-gradient(135deg, #14508A 0%, #1691D0 54%, #057590 100%);
+
+        color: #fff;
+    }
+
+
+    .stat_item {
+        position: relative;
+
+        min-height: 70px;
+
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+
+        padding-inline: 45px;
+
+        border-inline-end: 1px solid rgba(
+            255,
+            255,
+            255,
+            0.12
+        );
+    }
+
+
+    .col-lg-3:last-child {
+
+        .stat_item {
+            border-inline-end: 0;
+        }
+    }
+
+
+    .counter {
+        display: flex;
+        align-items: center;
+
+        line-height: 1.2;
+
+        white-space: nowrap;
+
+        span {
+            margin-inline-start: 2px;
+        }
+    }
+
+
+    .label {
+        margin-top: 4px;
+
+        color: rgba(
+            255,
+            255,
+            255,
+            0.75
+        );
+
+        line-height: 1.3;
+    }
+}
+
+
+/* -------------------------------------------
+   Tablet
+------------------------------------------- */
+
+@media screen and (max-width: 991px) {
+
+    .stats {
+
+        .stats_box {
+            padding: 15px;
+        }
+
+
+        .stat_item {
+            padding-inline: 25px;   
+            padding-block: 25px ;
+            text-align: center;
+            border-inline-end: 0;
+            border-bottom: 1px solid rgba(
+                255,
+                255,
+                255,
+                0.12
+            );
+        }
+
+
+        .col-md-6 {
+
+            &:last-child .stat_item {
+                border-bottom: none;
+            }
+        }
+    }
+}
+
+
+/* -------------------------------------------
+   Mobile
+------------------------------------------- */
+
+@media screen and (max-width: 575px) {
+
+    .stats {
+
+        .stats_box {
+            padding: 10px 15px;
+        }
+
+
+        .stat_item {
+            min-height: 65px;
+
+            padding-inline: 10px !important;
+
+            align-items: center;
+
+            text-align: center;
+        }
+
+
+        .counter {
+            font-size: 22px !important;
+        }
+
+
+        .label {
+            font-size: 11px !important;
+        }
+    }
+}

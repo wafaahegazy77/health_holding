@@ -6,17 +6,76 @@
         "platformFeatures": "Platform Features",
         "process": "Process",
         "faqs": "FAQs",
-        "exploreContent": "Explore Content"
+        "account": "Account",
+        "login": "Login",
+        "createAccount": "Create an Account"
     },
     "hero": {
         "eyebrow": "Trusted medical education, built for practice",
         "title": "Structured medical learning,",
         "highlightedTitle": "designed for doctors",
-        "exploreCourses": "Explore Content",
+        "logInButn": "Login",
+        "signUpButn": "Create an Account",
         "specialties": "Medical specialties"
     },
     "aboutPlatform": {
         "title": "Not another course platform a medical learning environment",
         "eyebrow": "ABOUT THE PLATFORM"
+    },
+    "learningTracks": {
+        "eyebrow": "LEARNING TRACKS",
+        "courses" : "Courses"
+    },
+    "featuredCourses": {
+        "eyebrow": "FEATURED CONTENT",
+        "title": "Featured courses & learning \n modules",
+        "modules": "MODULES",
+        "course": "COURSE",
+        "hours": "HRS",
+        "quizzes": "QUIZZES"
+    },
+    "platformFeatures": {
+        "eyebrow": "PLATFORM FEATURES",
+        "title": "Everything a medical learning platform needs"
+    },
+    "process": {
+        "title": "A clear, sequential learning journey",
+        "eyebrow": "PROCESS"
+    },
+    "stats": {
+        "activeLearners": "Active learners",
+        "expertInstructors": "Expert instructors",
+        "coursesAndModules": "Courses & modules",
+        "satisfactionRate": "Satisfaction rate"
+    },
+    "faqs": {
+        "eyebrow": "FAQS",
+        "title": "Frequently asked questions"
+    },
+    "callToAction": {
+        "title": "Ready to start learning?",
+        "createAccount": "Create your account",
+        "login": "Login"
+    },
+    "footer": {
+        "contact": "Contact",
+        "platform": "Platform",
+        "helps": "Helps",
+
+        "aboutUs": "About Us",
+        "learningTracks": "Learning Tracks",
+        "courses": "Courses",
+        "faqs": "FAQs",
+        "contactLink": "Contact",
+
+        "privacyPolicy": "Privacy Policy",
+        "termsConditions": "Terms & Conditions",
+
+        "backToTop": "Back to Top",
+
+        "copyright": "Health Holding. All Right Reserved"
     }
+
+
+
 }

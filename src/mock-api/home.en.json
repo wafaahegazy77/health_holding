@@ -19,5 +19,161 @@
                 "description": "Learning materials connected to real-world practice."
             }
         ]
+    },
+    "learningTracks": {
+        "title": "Explore by medical field",
+        "description": "Browse categories, modules and courses related to your specialty.",
+        "backgroundImage": "/images/tracks-bg.png",
+        "tracks": [
+            {
+                "title": "Cardiology",
+                "coursesCount": "18",
+                "icon": "/images/icons/cardiology.svg"
+            },
+            {
+                "title": "Endocrinology",
+                "coursesCount": "11",
+                "icon": "/images/icons/endocrinology.svg"
+            },
+            {
+                "title": "Emergency Medicine",
+                "coursesCount": "24",
+                "icon": "/images/icons/emergency.svg"
+            },
+            {
+                "title": "Pediatrics",
+                "coursesCount": "15",
+                "icon": "/images/icons/pediatrics.svg"
+            },
+            {
+                "title": "Radiology",
+                "coursesCount": "9",
+                "icon": "/images/icons/radiology.svg"
+            }
+        ]
+    },
+    "featuredCourses": {
+        "courses": [
+            {
+                "category": "CARDIOLOGY",
+                "image": "/images/featured-course-1.png",
+                "isFavorite": false,
+                "modulesCount": "6",
+                "title": "Managing Acute Coronary Syndrome",
+                "description": "Clinical decision-making, diagnostics and treatment protocols.",
+                "hours": "3.5",
+                "quizzesCount": "4"
+            },
+            {
+                "category": "ENDOCRINOLOGY",
+                "image": "/images/featured-course-2.png",
+                "isFavorite": false,
+                "modulesCount": "6",
+                "title": "Type 2 Diabetes: Modern Protocols",
+                "description": "Updated guidelines for diagnosis and long-term management.",
+                "hours": "3.5",
+                "quizzesCount": "4"
+            },
+            {
+                "category": "EMERGENCY MEDICINE",
+                "image": "/images/featured-course-3.png",
+                "isFavorite": false,
+                "modulesCount": "6",
+                "title": "Trauma Response: First 60 Minutes",
+                "description": "Simulation-based training for critical trauma cases.",
+                "hours": "3.5",
+                "quizzesCount": "4"
+            }
+        ]
+    },
+    "platformFeatures": {
+        "description": "A professional institutional interface built around a structured educational architecture and a scalable technical foundation.",
+        "features": [
+            {
+                "icon": "/images/icons/platform-feature-1.svg",
+                "title": "Structured medical learning",
+                "description": "Main categories, subcategories, modules and courses."
+            },
+            {
+                "icon": "/images/icons/platform-feature-2.svg",
+                "title": "Specialized scientific content",
+                "description": "SCORM-compliant e-learning materials and attachments."
+            },
+            {
+                "icon": "/images/icons/platform-feature-3.svg",
+                "title": "Clinical cases & practical materials",
+                "description": "Linked directly to relevant courses and modules."
+            },
+            {
+                "icon": "/images/icons/platform-feature-4.svg",
+                "title": "Interactive learning experience",
+                "description": "Simulation-based content, quizzes and progress tracking."
+            },
+            {
+                "icon": "/images/icons/platform-feature-5.svg",
+                "title": "Professional user management",
+                "description": "Membership, roles and customized access to content."
+            }
+        ]
+    },
+    "process": {
+        "title": "A clear, sequential learning journey",
+        "description": "From first login to final assessment — designed around how doctors actually learn.",
+        "steps": [
+            {
+                "icon": "/images/icons/process-1.svg",
+                "title": "Browse by specialty",
+                "description": "Explore categories and courses matched to your interests."
+            },
+            {
+                "icon": "/images/icons/process-2.svg",
+                "title": "Learn & review cases",
+                "description": "Work through content, clinical cases and attachments."
+            },
+            {
+                "icon": "/images/icons/process-3.svg",
+                "title": "Take the quiz",
+                "description": "Answer assessment questions after completing each module."
+            },
+            {
+                "icon": "/images/icons/process-4.svg",
+                "title": "Track your progress",
+                "description": "Save progress, review results, and pick up later."
+            }
+        ]
+    },
+    "stats": {
+        "activeLearners": 18000,
+        "expertInstructors": 250,
+        "coursesAndModules": 500,
+        "satisfactionRate": 98
+    },
+    "faqs": {
+        "items": [
+            {
+                "question": "Who can access the platform?",
+                "answer": "Access is managed through a membership and permission system, customized by user type or target group — doctors, specialists, and healthcare practitioners."
+            },
+            {
+                "question": "Is the content SCORM-compliant?",
+                "answer": "The platform supports structured educational content designed to meet SCORM-compliant learning requirements."
+            },
+            {
+                "question": "How are quizzes and results handled?",
+                "answer": "Quizzes are integrated into the learning journey, with results recorded to help users track their progress."
+            },
+            {
+                "question": "Can I access the platform from mobile?",
+                "answer": "The platform is designed to provide a responsive learning experience across mobile and desktop devices."
+            }
+        ]
+    },
+    "callToAction": {
+        "description": "Join the community of healthcare professionals building their clinical knowledge on Health Holding Academy."
+    },
+    "footer": {
+        "description": "A specialized digital medical learning platform, built to serve doctors’ needs and support institutional growth.",
+        "email": "hello@healthholding.sa",
+        "location": "Riyadh, Saudi Arabia"
     }
 }

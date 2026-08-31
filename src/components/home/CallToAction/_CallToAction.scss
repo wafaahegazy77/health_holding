@@ -1,0 +1,118 @@
+.call_to_action {
+    background-color: #F4F7F9;
+
+    .cta_box {
+        position: relative;
+
+        padding: 100px 30px;
+
+        border-radius: 30px;
+
+        overflow: hidden;
+
+        text-align: center;
+
+        background:#14508A;
+
+        color: #fff;
+
+        &::before {
+            content: "";
+
+            position: absolute;
+            inset: 0;
+
+            background-image: url("/images/pattern-1.png");
+            background-size: cover;
+            background-position: center;
+
+            // opacity: 0.12;
+
+            pointer-events: none;
+        }
+
+
+        > * {
+            position: relative;
+            z-index: 1;
+        }
+
+
+        .title {
+            color: #fff;
+
+            line-height: 1.2;
+        }
+
+
+        .description {
+
+            margin-inline: auto;
+
+            color: rgba(
+                255,
+                255,
+                255,
+                0.85
+            );
+
+            line-height: 1.5;
+        }
+
+        .butns_box {
+            gap: 15px;
+        }
+    }
+
+
+
+}
+
+
+/* -------------------------------------------
+   Tablet
+------------------------------------------- */
+
+@media screen and (max-width: 991px) {
+
+    .call_to_action {
+
+        .cta_box {
+            padding: 60px 25px;
+
+            border-radius: 35px;
+        }
+    }
+}
+
+
+/* -------------------------------------------
+   Mobile
+------------------------------------------- */
+
+@media screen and (max-width: 575px) {
+
+    .call_to_action {
+
+        .cta_box {
+            padding: 50px 20px;
+
+            border-radius: 25px;
+        }
+
+
+        .title {
+            font-size: 30px !important;
+        }
+
+
+        .description {
+            font-size: 14px !important;
+        }
+
+
+        .cta_buttons {
+            flex-wrap: wrap;
+        }
+    }
+}

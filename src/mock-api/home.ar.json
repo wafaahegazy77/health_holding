@@ -19,5 +19,162 @@
                 "description": "مواد تعليمية مرتبطة بالممارسة الواقعية."
             }
         ]
+    },
+    "learningTracks": {
+        "title": "استكشف حسب المجال الطبي",
+        "description": "تصفح التصنيفات والوحدات والدورات المتعلقة بتخصصك.",
+        "backgroundImage": "/images/tracks-bg.png",
+        "tracks": [
+            {
+                "title": "أمراض القلب",
+                "coursesCount": "18",
+                "icon": "/images/icons/cardiology.svg"
+            },
+            {
+                "title": "الغدد الصماء",
+                "coursesCount": "11",
+                "icon": "/images/icons/endocrinology.svg"
+            },
+            {
+                "title": "طب الطوارئ",
+                "coursesCount": "24",
+                "icon": "/images/icons/emergency.svg"
+            },
+            {
+                "title": "طب الأطفال",
+                "coursesCount": "15",
+                "icon": "/images/icons/pediatrics.svg"
+            },
+            {
+                "title": "الأشعة",
+                "coursesCount": "9",
+                "icon": "/images/icons/radiology.svg"
+            }
+        ]
+    },
+    "featuredCourses": {
+        "courses": [
+            {
+                "category": "أمراض القلب",
+                "image": "/images/featured-course-1.png",
+                "isFavorite": false,
+                "modulesCount": "6",
+                "title": "التعامل مع متلازمة الشريان التاجي الحادة",
+                "description": "اتخاذ القرارات السريرية والتشخيص وبروتوكولات العلاج.",
+                "hours": "3.5",
+                "quizzesCount": "4"
+            },
+            {
+                "category": "الغدد الصماء",
+                "image": "/images/featured-course-2.png",
+                "isFavorite": false,
+                "modulesCount": "6",
+                "title": "النوع الثاني من السكري: البروتوكولات الحديثة",
+                "description": "إرشادات محدثة للتشخيص والإدارة طويلة المدى.",
+                "hours": "3.5",
+                "quizzesCount": "4"
+            },
+            {
+                "category": "طب الطوارئ",
+                "image": "/images/featured-course-3.png",
+                "isFavorite": false,
+                "modulesCount": "6",
+                "title": "الاستجابة للإصابات: أول 60 دقيقة",
+                "description": "تدريب قائم على المحاكاة للحالات الحرجة والإصابات.",
+                "hours": "3.5",
+                "quizzesCount": "4"
+            }
+        ]
+    },
+    "platformFeatures": {
+        "description": "واجهة مؤسسية احترافية مبنية حول هيكل تعليمي منظم وأساس تقني قابل للتوسع.",
+        "features": [
+            {
+                "icon": "/images/icons/platform-feature-1.svg",
+                "title": "تعلم طبي منظم",
+                "description": "التخصصات الرئيسية والفرعية والوحدات والدورات."
+            },
+            {
+                "icon": "/images/icons/platform-feature-2.svg",
+                "title": "محتوى علمي متخصص",
+                "description": "مواد تعليم إلكتروني متوافقة مع SCORM ومرفقات."
+            },
+            {
+                "icon": "/images/icons/platform-feature-3.svg",
+                "title": "حالات سريرية ومواد عملية",
+                "description": "مرتبطة مباشرة بالدورات والوحدات ذات الصلة."
+            },
+            {
+                "icon": "/images/icons/platform-feature-4.svg",
+                "title": "تجربة تعليمية تفاعلية",
+                "description": "محتوى قائم على المحاكاة والاختبارات وتتبع التقدم."
+            },
+            {
+                "icon": "/images/icons/platform-feature-5.svg",
+                "title": "إدارة احترافية للمستخدمين",
+                "description": "العضويات والأدوار والوصول المخصص إلى المحتوى."
+            }
+        ]
+    },
+    "process": {
+        "title": "رحلة تعلم واضحة ومتسلسلة",
+        "description": "من أول تسجيل الدخول وحتى التقييم النهائي — مصممة وفقًا للطريقة التي يتعلم بها الأطباء فعليًا.",
+        "steps": [
+            {
+                "icon": "/images/icons/process-1.svg",
+                "title": "استكشف حسب التخصص",
+                "description": "استكشف التخصصات والدورات المتوافقة مع اهتماماتك."
+            },
+            {
+                "icon": "/images/icons/process-2.svg",
+                "title": "تعلم وراجع الحالات",
+                "description": "اطلع على المحتوى والحالات السريرية والمرفقات."
+            },
+            {
+                "icon": "/images/icons/process-3.svg",
+                "title": "أدِ الاختبار",
+                "description": "أجب عن أسئلة التقييم بعد إكمال كل وحدة."
+            },
+            {
+                "icon": "/images/icons/process-4.svg",
+                "title": "تتبع تقدمك",
+                "description": "احفظ تقدمك وراجع نتائجك واستكمل التعلم لاحقًا."
+            }
+        ]
+    },
+    "stats": {
+        "activeLearners": 18000,
+        "expertInstructors": 250,
+        "coursesAndModules": 500,
+        "satisfactionRate": 98
+    },
+    "faqs": {
+        "items": [
+            {
+                "question": "من يمكنه الوصول إلى المنصة؟",
+                "answer": "تتم إدارة الوصول من خلال نظام للعضويات والصلاحيات، يتم تخصيصه حسب نوع المستخدم أو الفئة المستهدفة — الأطباء، والمتخصصين، والممارسين في مجال الرعاية الصحية."
+            },
+            {
+                "question": "هل المحتوى متوافق مع SCORM؟",
+                "answer": "تدعم المنصة محتوى تعليميًا منظمًا مصممًا ليتوافق مع متطلبات التعلم المتوافقة مع SCORM."
+            },
+            {
+                "question": "كيف يتم التعامل مع الاختبارات والنتائج؟",
+                "answer": "تُدمج الاختبارات ضمن رحلة التعلم، مع تسجيل النتائج لمساعدة المستخدمين على متابعة تقدمهم."
+            },
+            {
+                "question": "هل يمكنني الوصول إلى المنصة من الهاتف المحمول؟",
+                "answer": "تم تصميم المنصة لتوفير تجربة تعلم متجاوبة عبر أجهزة الهاتف المحمول وأجهزة الكمبيوتر المكتبية."
+            }
+        ]
+    },
+    "callToAction": {
+        "description": "انضم إلى مجتمع المتخصصين في الرعاية الصحية الذين يطوّرون معارفهم السريرية من خلال أكاديمية Health Holding."
+    },
+    "footer": {
+        "description": "منصة رقمية متخصصة في التعلم الطبي، مصممة لتلبية احتياجات الأطباء ودعم النمو المؤسسي.",
+        "email": "hello@healthholding.sa",
+        "location": "الرياض، المملكة العربية السعودية"
     }
+
 }

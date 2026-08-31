@@ -34,7 +34,6 @@
         background-color: rgba(255, 255, 255, 0.9);
         border-radius: 8px;
         padding: 5px 8px;
-        // margin-inline: auto !important;
         margin-inline-start: 3vw;
     }
 
@@ -133,6 +132,73 @@
     }
 
     // -------------------------
+    // Account Dropdown
+    // -------------------------
+
+    .account-dropdown {
+        position: relative;
+    }
+
+    .account-trigger {
+        border: 0;
+        cursor: pointer;
+        gap: 0;
+
+        .txt {
+            padding-inline: 1rem;
+        }
+
+        .hvr-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            i {
+                margin: 0;
+            }
+        }
+    }
+
+    .account-menu {
+        position: absolute;
+        top: calc(100% + 10px);
+        inset-inline-end: 0;
+        min-width: 200px;
+        padding: 8px;
+        background-color: #fff;
+        border: 1px solid rgba(22, 27, 38, 0.08);
+        border-radius: 14px;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.10);
+        z-index: 100;
+    }
+
+    .account-menu-item {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 11px 13px;
+        border-radius: 9px;
+        color: #161b26;
+        font-size: 13px;
+        font-weight: 500;
+        text-decoration: none;
+        transition: all 0.25s ease;
+
+        i {
+            width: 18px;
+            font-size: 14px;
+            text-align: center;
+            margin: 0;
+        }
+
+        &:hover {
+            background-color: #f2f8fb;
+            color: var(--primary);
+        }
+    }
+
+    // -------------------------
     // Mobile
     // -------------------------
 
@@ -150,14 +216,6 @@
 
         .container {
             flex-wrap: wrap;
-        }
-
-        .navbar-collapse {
-            margin-top: 15px;
-            padding: 15px;
-            background-color: #fff;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
         .navbar-nav {
@@ -185,6 +243,11 @@
             inset-inline-end: auto;
             inset-inline-start: 0;
         }
+
+        .account-menu {
+            inset-inline-end: 0;
+            min-width: 180px;
+        }
     }
 
     @media (max-width: 575.98px) {
@@ -200,13 +263,21 @@
             gap: 12px;
         }
 
-
         .language-trigger {
             font-size: 12px;
         }
+
+        .account-trigger {
+            .txt {
+                padding-inline: 1rem;
+            }
+        }
+
+        .account-menu {
+            min-width: 165px;
+        }
     }
 }
-
 
 @media screen and (max-width: 991px) {
     .navbar.homeNav {

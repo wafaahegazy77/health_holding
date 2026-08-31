@@ -4,8 +4,8 @@ import Image from "next/image";
 import { getHomeData } from "@/lib/api/home";
 import { Link } from "@/i18n/routing";
 import Reveal from "@/components/animations/Reveal";
-
 import "./_Hero.scss";
+import NumberCounter from "@/components/NumberCounter";
 
 const Hero = async () => {
     const locale = await getLocale();
@@ -58,36 +58,61 @@ const Hero = async () => {
                                 </p>
                             </Reveal>
 
-                            {/* Explore Courses */}
-                            <Reveal
-                                animation="fade-up"
-                                trigger="load"
-                            >
-                                <Link
-                                    href="/"
-                                    className="butn gradient_butn hvr-icon-slide-out-in"
+                            {/* butns_boxs */}
+                            <div className="butns_box d-flex align-items-center pt-3">
+                                <Reveal
+                                    animation="fade-up"
+                                    trigger="load"
                                 >
-                                    <div className="txt" >
-                                        {t("exploreCourses")}
-                                    </div>
+                                    <Link
+                                        href="/"
+                                        className="butn white_butn hvr-icon-slide-out-in"
+                                    >
+                                        <div className="txt" >
+                                            {t("signUpButn")}
+                                        </div>
 
-                                    {/* Current icon */}
-                                    <span className="hvr-icon hvr-icon-current">
-                                        <i className="fa-regular fa-arrow-up-right"></i>
-                                    </span>
+                                        {/* Current icon */}
+                                        <span className="hvr-icon hvr-icon-current">
+                                            <i className="fa-regular fa-arrow-up-right"></i>
+                                        </span>
 
-                                    {/* Next icon */}
-                                    <span className="hvr-icon hvr-icon-next">
-                                        <i className="fa-regular fa-arrow-right"></i>
-                                    </span>
-                                </Link>
-                            </Reveal>
+                                        {/* Next icon */}
+                                        <span className="hvr-icon hvr-icon-next">
+                                            <i className="fa-regular fa-arrow-right"></i>
+                                        </span>
+                                    </Link>
+                                </Reveal>
+                                <Reveal
+                                    animation="fade-up"
+                                    trigger="load"
+                                >
+                                    <Link
+                                        href="/"
+                                        className="butn gradient_butn hvr-icon-slide-out-in"
+                                    >
+                                        <div className="txt" >
+                                            {t("logInButn")}
+                                        </div>
+
+                                        {/* Current icon */}
+                                        <span className="hvr-icon hvr-icon-current">
+                                            <i className="fa-regular fa-arrow-up-right"></i>
+                                        </span>
+
+                                        {/* Next icon */}
+                                        <span className="hvr-icon hvr-icon-next">
+                                            <i className="fa-regular fa-arrow-right"></i>
+                                        </span>
+                                    </Link>
+                                </Reveal>
+
+                            </div>
+
 
                         </div>
                     </div>
-                    <div className="col-lg-6">
 
-                    </div>
                 </div>
 
             </div>
@@ -99,8 +124,16 @@ const Hero = async () => {
                     <i className="fa-regular fa-heart-pulse"></i>
                 </div>
 
-                <div className="counter mt-3 fsz-45 fw-500 ">
-                   <span className="prata-font"> {data.hero.specialtiesCount} </span><small className="fsz-25 fw-300">+</small>
+                <div className="counter mt-3 fsz-45 fw-500 d-flex align-items-center justify-content-center ">
+                    <span className="prata-font">
+                        <NumberCounter
+                            value={Number(data.hero.specialtiesCount)}
+                        />
+                    </span>
+
+                    <small className="fsz-25 fw-300">
+                        +
+                    </small>
                 </div>
 
                 <div className="label mt-0 fsz-14 ">

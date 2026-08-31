@@ -23,7 +23,7 @@ const AboutPlatform = async () => {
                         trigger="load"
                     >
                         <div className="badge bg-white color_primary fw-400 mb-3">
-                            <img src="/images/icons/about.svg" className="icon icon-20 " alt="" />
+                            <img src="/images/icons/curve.svg" className="icon icon-20 " alt="" />
                             {t("eyebrow")}
                         </div>
                     </Reveal>
@@ -86,7 +86,7 @@ const AboutPlatform = async () => {
 
 
                     {/* Content */}
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 order_md_1">
                         <div className="txt_content">
 
 

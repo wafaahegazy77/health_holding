@@ -1,0 +1,30 @@
+.learning_tracks {
+
+    background-color: #F4F7F9;
+
+    .track_card {
+        display: flex;
+        align-items: center;
+        background-color: #fff;
+        border-radius: 25px;
+        padding: 35px 25px;
+        margin-bottom: 5px;
+        gap: 15px;
+        border: 1px solid #fff;
+        transition: all .3s linear;
+
+        &:hover {
+            border-color: #0900FF;
+        }
+
+    }
+
+}
+
+@media screen and (max-width: 991px) {
+
+    .learning_tracks .track_card h3 {
+        font-size: 17px !important;
+    }
+    
+}

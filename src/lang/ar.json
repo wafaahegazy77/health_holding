@@ -6,17 +6,75 @@
         "platformFeatures": "مميزات المنصة",
         "process": "آلية العمل",
         "faqs": "الأسئلة الشائعة",
-        "exploreContent": "استكشف المحتوى"
+        "account": "حسابي",
+        "login": "تسجيل الدخول",
+        "createAccount": "إنشاء حساب"
     },
     "hero": {
         "eyebrow": "تعليم طبي موثوق، مصمم للتطبيق العملي",
         "title": "تعلم طبي منظم،",
         "highlightedTitle": "مصمم للأطباء",
+        "logInButn": "تسجيل الدخول",
+        "signUpButn": "إنشاء حساب",
         "exploreCourses": "استكشف المحتوى",
         "specialties": "تخصصات طبية"
     },
     "aboutPlatform": {
         "title": "ليست مجرد منصة دورات، بل بيئة للتعلم الطبي",
         "eyebrow": "عن المنصة"
+    },
+    "learningTracks": {
+        "eyebrow": "المسارات التعليمية",
+        "courses": "دورة"
+    },
+    "featuredCourses": {
+        "eyebrow": "محتوى مميز",
+        "title": "الدورات التدريبية ووحدات التعلم \n المميزة",
+        "modules": "وحدات",
+        "course": "دورة",
+        "hours": "ساعات",
+        "quizzes": "اختبارات"
+    },
+    "platformFeatures": {
+        "eyebrow": "مميزات المنصة",
+        "title": "كل ما تحتاجه منصة التعلم الطبي"
+    },
+    "process": {
+        "title": "رحلة تعليمية واضحة ومتسلسلة",
+        "eyebrow": "الخطوات"
+    },
+    "stats": {
+        "activeLearners": "متعلم نشط",
+        "expertInstructors": "مدرب خبير",
+        "coursesAndModules": "دورات ووحدات",
+        "satisfactionRate": "معدل الرضا"
+    },
+    "faqs": {
+        "eyebrow": "الأسئلة الشائعة",
+        "title": "الأسئلة الأكثر شيوعًا"
+    },
+    "callToAction": {
+        "title": "جاهز لبدء التعلم؟",
+        "createAccount": "إنشاء حسابك",
+        "login": "تسجيل الدخول"
+    },
+    "footer": {
+        "contact": "تواصل معنا",
+        "platform": "المنصة",
+        "helps": "المساعدة",
+
+        "aboutUs": "من نحن",
+        "learningTracks": "مسارات التعلم",
+        "courses": "الدورات",
+        "faqs": "الأسئلة الشائعة",
+        "contactLink": "تواصل معنا",
+
+        "privacyPolicy": "سياسة الخصوصية",
+        "termsConditions": "الشروط والأحكام",
+
+        "backToTop": "العودة للأعلى",
+
+        "copyright": "© 2026 Health Holding. جميع الحقوق محفوظة"
     }
+
 }

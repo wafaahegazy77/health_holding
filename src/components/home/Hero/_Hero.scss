@@ -5,7 +5,10 @@
     min-height: 100vh;
     display: flex;
     align-items: center;
-    
+
+    .butns_box {
+        gap: 15px;
+    }
 
     .hero_stat {
         width: 190px;
@@ -30,11 +33,6 @@
             margin-inline: auto;
         }
 
-        .counter {
-            small {
-                margin-inline-start: -10px;
-            }
-        }
 
 
     }

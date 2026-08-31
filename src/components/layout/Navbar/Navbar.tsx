@@ -40,6 +40,7 @@ export default function Navbar() {
     const t = useTranslations("navbar");
 
     const [languageOpen, setLanguageOpen] = useState(false);
+    const [accountOpen, setAccountOpen] = useState(false);
 
     const changeLanguage = (nextLocale: "en" | "ar") => {
         if (nextLocale === locale) {
@@ -84,7 +85,7 @@ export default function Navbar() {
                     className="collapse navbar-collapse"
                     id="navbarSupportedContent"
                 >
-                    <ul className="navbar-nav  mb-2 mb-lg-0">
+                    <ul className="navbar-nav mb-2 mb-lg-0">
                         {navItems.map((item) => (
                             <li className="nav-item" key={item.key}>
                                 <Link
@@ -99,6 +100,7 @@ export default function Navbar() {
 
                     {/* Right Side */}
                     <div className="nav-side">
+
                         {/* Language Dropdown */}
                         <div className="language-dropdown d-none">
                             <button
@@ -156,25 +158,58 @@ export default function Navbar() {
                             )}
                         </div>
 
-                        {/* Explore Content */}
-                            <Link
-                                href="/"
-                                className="butn white_butn hvr-icon-slide-out-in"
+                        {/* Account Dropdown */}
+                        <div className="account-dropdown">
+                            <button
+                                type="button"
+                                className="butn white_butn hvr-icon-slide-out-in account-trigger"
+                                aria-expanded={accountOpen}
+                                aria-haspopup="true"
+                                onClick={() =>
+                                    setAccountOpen((prev) => !prev)
+                                }
                             >
-                                <div className="txt" >
-                                    {t("exploreContent")}
+                                <div className="txt">
+                                    {t("account")}
                                 </div>
 
                                 {/* Current icon */}
                                 <span className="hvr-icon hvr-icon-current">
-                                    <i className="fa-regular fa-arrow-up-right"></i>
+                                    <i className="fa-light fa-chevron-down"></i>
                                 </span>
 
                                 {/* Next icon */}
                                 <span className="hvr-icon hvr-icon-next">
-                                    <i className="fa-regular fa-arrow-right"></i>
+                                    <i className="fa-regular fa-user"></i>
                                 </span>
-                            </Link>
+                            </button>
+
+                            {accountOpen && (
+                                <div className="account-menu">
+                                    <Link
+                                        href="/login"
+                                        className="account-menu-item"
+                                        onClick={() =>
+                                            setAccountOpen(false)
+                                        }
+                                    >
+                                        <i className="fa-regular fa-right-to-bracket"></i>
+                                        <span>{t("login")}</span>
+                                    </Link>
+
+                                    <Link
+                                        href="/register"
+                                        className="account-menu-item"
+                                        onClick={() =>
+                                            setAccountOpen(false)
+                                        }
+                                    >
+                                        <i className="fa-regular fa-user-plus"></i>
+                                        <span>{t("createAccount")}</span>
+                                    </Link>
+                                </div>
+                            )}
+                        </div>
 
                     </div>
                 </div>

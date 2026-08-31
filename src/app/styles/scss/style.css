@@ -2900,7 +2900,7 @@ input:focus {
 }
 .badge i,
 .badge .icon {
-  margin-inline-end: 5px;
+  margin-inline-end: 7px;
 }
 
 /* --------------- page_loader --------------- */

@@ -41,7 +41,7 @@ const Hero = async () => {
                                         {t("title")}{" "}
                                     </span>
 
-                                    <span className="txt_gradient">
+                                    <span className="txt_gradient fw-600 ">
                                         {t("highlightedTitle")}
                                     </span>
                                 </h1>

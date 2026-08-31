@@ -11,10 +11,19 @@
 }
 
 .txt_gradient {
-    color: #14508A;
-    background-image: linear-gradient(135deg, #14508A 0%, #1691D0 54%, #057590 100%);
+    color: transparent;
+
+    background-image: linear-gradient(
+        135deg,
+        #14508A 0%,
+        #1691D0 54%,
+        #057590 100%
+    );
+
     -webkit-background-clip: text;
     background-clip: text;
+
+    -webkit-text-fill-color: transparent;
 }
 
 .bg_gradient {

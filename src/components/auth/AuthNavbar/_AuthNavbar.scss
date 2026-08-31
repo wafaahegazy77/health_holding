@@ -1,0 +1,101 @@
+.auth_navbar {
+    position: relative;
+    z-index: 10;
+
+    width: 100%;
+    padding: 1.25rem 1rem;
+
+    .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+
+    // -----------------------------------------
+    // Logo
+    // -----------------------------------------
+
+    .auth_navbar_logo {
+        display: inline-flex;
+        align-items: center;
+
+        padding: 0;
+        margin: 0;
+
+        img {
+            width: 170px;
+            height: 50px;
+
+            object-fit: contain;
+        }
+    }
+
+
+    // -----------------------------------------
+    // Back To Site
+    // -----------------------------------------
+
+    .auth_navbar_back {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+
+        color: #161b26;
+
+        font-size: 14px;
+        font-weight: 500;
+
+        text-decoration: none;
+
+        transition:
+            color 0.3s ease,
+            gap 0.3s ease;
+
+        i {
+            font-size: 13px;
+
+            transition: transform 0.3s ease;
+        }
+
+        &:hover {
+            color: var(--primary);
+            gap: 13px;
+
+            i {
+                transform: translateX(-3px);
+            }
+        }
+    }
+
+
+    // -----------------------------------------
+    // Mobile
+    // -----------------------------------------
+
+    @media (max-width: 575.98px) {
+
+        padding: 1rem;
+
+        .auth_navbar_logo {
+
+            img {
+                width: 110px;
+                height: 45px;
+            }
+        }
+
+        .auth_navbar_back {
+            font-size: 12px;
+            gap: 7px;
+
+            i {
+                font-size: 11px;
+            }
+
+            &:hover {
+                gap: 9px;
+            }
+        }
+    }
+}

@@ -1,0 +1,267 @@
+.register_inner {
+
+    // -----------------------------------------
+    // Register Progress
+    // -----------------------------------------
+
+    .register_progress {
+        display: flex;
+        align-items: center;
+
+        width: 100%;
+        height: 8px;
+
+        margin-bottom: 30px;
+
+        overflow: hidden;
+
+        border-radius: 10px;
+        gap: 5px;
+        // background-color: #e4e9ed;
+    }
+
+    .progress_line {
+        flex: 1;
+
+        height: 100%;
+
+        background-color: #e4e9ed;
+
+        transition: background-color 0.3s ease;
+        border-radius: 15px;
+
+        &.active {
+            background-color:#1691D0;
+        }
+    }
+
+
+    // -----------------------------------------
+    // Register Header
+    // -----------------------------------------
+
+    .register_header {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 20px;
+    }
+
+    .step_label {
+        flex-shrink: 0;
+
+        color: var(--primary);
+
+        font-size: 12px;
+        font-weight: 500;
+        white-space: nowrap;
+    }
+
+
+
+    // -----------------------------------------
+    // Field Hint
+    // -----------------------------------------
+
+    .field_hint {
+        display: block;
+
+        margin-top: 6px;
+
+        color: #8b959d;
+
+        font-size: 11px;
+        line-height: 1.5;
+    }
+
+
+    // -----------------------------------------
+    // Option Groups
+    // -----------------------------------------
+
+    .auth_option_group {
+        margin-bottom: 20px;
+
+        h3 {
+            margin: 0 0 10px;
+
+            color: #3F4E56;
+
+            font-size: 13px;
+            font-weight: 500;
+            line-height: 1.5;
+        }
+    }
+
+
+    // -----------------------------------------
+    // Radio
+    // -----------------------------------------
+
+    .auth_radio {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 8px;
+
+        margin: 0;
+
+        color: #777;
+
+        font-size: 12px;
+
+        cursor: pointer;
+
+        input {
+            width: 15px;
+            height: 15px;
+
+            margin: 0;
+
+            accent-color: var(--primary);
+
+            cursor: pointer;
+        }
+    }
+
+
+    // -----------------------------------------
+    // Checkbox
+    // -----------------------------------------
+
+    .auth_checkbox {
+        display: flex;
+        align-items: flex-start;
+
+        gap: 8px;
+
+        margin: 0;
+
+        color: #777;
+
+        font-size: 12px;
+        line-height: 1.5;
+
+        cursor: pointer;
+
+        input {
+            flex-shrink: 0;
+            position: relative;
+            top: 2px;
+            width: 15px;
+            height: 15px;
+
+            margin: 1px 0 0;
+
+            accent-color: var(--primary);
+
+            cursor: pointer;
+        }
+    }
+
+
+    // -----------------------------------------
+    // Privacy
+    // -----------------------------------------
+
+    .auth_privacy_text {
+        margin-bottom: 25px;
+
+        color: #8b959d;
+
+        font-size: 11px;
+        line-height: 1.6;
+    }
+
+
+    // -----------------------------------------
+    // Navigation
+    // -----------------------------------------
+
+    .register_navigation {
+        display: flex;
+        align-items: center;
+
+        gap: 12px;
+
+        margin-top: 10px;
+
+        .butn {
+            flex: 1;
+
+            justify-content: center;
+
+            border: 0;
+
+            cursor: pointer;
+        }
+    }
+
+
+    // -----------------------------------------
+    // Login Link
+    // -----------------------------------------
+
+    .register_login {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        gap: 5px;
+
+        margin-top: 20px;
+
+        color: #777;
+
+        font-size: 12px;
+
+        a {
+            color: var(--primary);
+
+            font-weight: 500;
+
+            text-decoration: none;
+
+            transition: opacity 0.25s ease;
+
+            &:hover {
+                opacity: 0.7;
+            }
+        }
+    }
+
+
+    // -----------------------------------------
+    // Mobile
+    // -----------------------------------------
+
+    @media (max-width: 575.98px) {
+
+        .register_progress {
+            margin-bottom: 22px;
+        }
+
+        .register_header {
+            flex-direction: column;
+
+            gap: 5px;
+        }
+
+        select {
+            height: 46px;
+        }
+
+        .auth_option_group {
+            margin-bottom: 17px;
+        }
+
+        .register_navigation {
+            flex-direction: column;
+
+            .butn {
+                width: 100%;
+            }
+        }
+    }
+}

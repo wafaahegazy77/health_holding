@@ -74,6 +74,124 @@
         "backToTop": "Back to Top",
 
         "copyright": "Health Holding. All Right Reserved"
+    },
+    "auth": {
+        "backToSite": "Back to site",
+
+        "login": {
+            "title": "Welcome back",
+            "description": "Sign in to pick up where you left off.",
+            "email": {
+                "label": "E-mail",
+                "placeholder": "Enter your e-mail"
+            },
+            "password": {
+                "label": "Password",
+                "placeholder": "Enter your password",
+                "showPassword": "Show password",
+                "hidePassword": "Hide password"
+            },
+            "rememberMe": "Remember me",
+            "forgotPassword": "Forgot Password?",
+            "submit": "Sign in",
+            "noAccount": "Don't have an account?",
+            "signUp": "Sign Up"
+        },
+
+        "register": {
+            "title": "Register",
+            "description": "Create your Dexcom Academy account in three easy steps. Already registered? Please login here",
+            "step": "Step {current} of {total}",
+
+            "country": {
+                "label": "Country"
+            },
+
+            "salutation": {
+                "label": "Salutation",
+                "placeholder": "Select salutation"
+            },
+
+            "firstName": {
+                "label": "First Name",
+                "placeholder": "Enter your first name"
+            },
+
+            "lastName": {
+                "label": "Last Name",
+                "placeholder": "Enter your last name"
+            },
+
+            "email": {
+                "label": "E-mail",
+                "placeholder": "Enter your e-mail",
+                "hint": "example@example.com."
+            },
+
+            "professional": {
+                "title": "Are you a Healthcare Professional or an Industry Partner?",
+                "option": "Healthcare Professional"
+            },
+
+            "terms": {
+                "title": "Terms of Use",
+                "text": "Health Holding respects the privacy and confidentiality of your personal information, and any information provided will be processed in accordance with Health Holding Terms of Use and Privacy Notice to facilitate access to Health Holding Educational Programmes for Healthcare Professionals."
+            },
+
+            "marketing": {
+                "title": "Marketing Communications",
+                "text": "I agree to stay up to date with additional information and communications from Health Holding about Health Holding products and services, which can support my practice to care for patients with Diabetes."
+            },
+
+            "privacyConfirmation": "By checking this box you agree to receive information about Health Holding products and related services, including marketing communications aiming to support your practice. You may opt-out of these communications at any time. Health Holding respects the privacy and confidentiality of your personal information and any information you provide will be sent securely and subject to the Health Holding Terms of Use and Privacy Notice.",
+
+            "roleStatement": {
+                "label": "Which statement best describes your role in diabetes care delivery?",
+                "placeholder": "Select your role"
+            },
+
+            "ksaRegion": {
+                "label": "KSA Region",
+                "placeholder": "Select your region"
+            },
+
+            "healthcareSector": {
+                "label": "Which healthcare sector do you work in?",
+                "placeholder": "Select healthcare sector"
+            },
+
+            "role": {
+                "label": "Role",
+                "placeholder": "Select your professional role"
+            },
+
+            "workplace": {
+                "label": "Name of Hospital or Primary Care Workplace",
+                "placeholder": "Enter your workplace"
+            },
+
+            "postcode": {
+                "label": "Post Code of Hospital or Primary Care Workplace",
+                "placeholder": "Type Code"
+            },
+
+            "scfhs": {
+                "label": "SCFHS Number",
+                "placeholder": "Enter your SCFHS number"
+            },
+
+            "mobile": {
+                "label": "Mobile Number",
+                "placeholder": "(+966) 000-000000",
+                "hint": "Please enter a valid phone number."
+            },
+
+            "back": "Back",
+            "next": "Next",
+            "alreadyAccount": "Already have an account?",
+            "login": "Log in",
+            "Submit": "Submit"
+        }
     }
 
 

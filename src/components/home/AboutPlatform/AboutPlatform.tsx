@@ -13,7 +13,7 @@ const AboutPlatform = async () => {
     const data = await getHomeData(locale);
 
     return (
-        <section className="about_platform section" id="about-platform">
+        <section className="about_platform section" id="about">
             <div className="container">
                 <div className="sec_head d-flex mb-5 ">
 

@@ -13,7 +13,7 @@ const PlatformFeatures = async () => {
     const data = await getHomeData(locale);
 
     return (
-        <section className="platform_features section pb-0">
+        <section className="platform_features section pb-0" id="platform-features">
             <div className="container">
 
                 {/* Section Head */}

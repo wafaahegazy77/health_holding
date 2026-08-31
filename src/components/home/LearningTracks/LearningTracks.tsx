@@ -13,7 +13,7 @@ const LearningTracks = async () => {
     const data = await getHomeData(locale);
 
     return (
-        <section className="learning_tracks section">
+        <section className="learning_tracks section" id="tracks">
             <div className="container">
 
                 {/* Section Head */}

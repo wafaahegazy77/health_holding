@@ -38,7 +38,7 @@ const CourseCard = async ({ course }: CourseCardProps) => {
                 </div>
 
                 {/* Favorite - UI */}
-                <button
+                {/* <button
                     type="button"
                     className={`favorite_btn ${
                         course.isFavorite ? "active" : ""
@@ -46,7 +46,7 @@ const CourseCard = async ({ course }: CourseCardProps) => {
                     aria-label="Add to favorites"
                 >
                     <i className="fa-regular fa-heart"></i>
-                </button>
+                </button> */}
 
             </div>
 

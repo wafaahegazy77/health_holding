@@ -13,7 +13,7 @@ const Process = async () => {
     const data = await getHomeData(locale);
 
     return (
-        <section className="process section pt-100">
+        <section className="process section pt-100" id="process">
             <div className="container">
                 <div className="row">
 

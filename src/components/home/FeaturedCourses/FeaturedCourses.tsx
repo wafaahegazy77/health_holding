@@ -13,7 +13,7 @@ const FeaturedCourses = async () => {
     const data = await getHomeData(locale);
 
     return (
-        <section className="featured_courses section">
+        <section className="featured_courses section" id="courses">
             <div className="container">
 
                 {/* Section Head */}

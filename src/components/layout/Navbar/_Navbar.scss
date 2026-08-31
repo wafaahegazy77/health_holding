@@ -7,6 +7,23 @@
         top: 0;
         right: 0;
         left: 0;
+        &.scrolled {
+            position: fixed;
+
+            top: 0;
+            left: 0;
+            right: 0;
+            background-color: #f4f7f9e1;
+            backdrop-filter: blur(7px);
+
+            box-shadow:
+                0 8px 30px rgba(
+                    20,
+                    80,
+                    138,
+                    0.08
+                );
+        }
     }
 
     .container {

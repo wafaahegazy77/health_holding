@@ -42,17 +42,24 @@ const ProcessAnimation = ({
 
             const mm = gsap.matchMedia();
 
+            /*
+             * -------------------------------------------
+             * Desktop
+             * -------------------------------------------
+             */
+
             mm.add("(min-width: 992px)", () => {
                 const cardHeight = cards[0].offsetHeight;
 
                 /*
                  * Initial state
                  *
-                 * 01 -> visible at the top
+                 * 01 -> visible
                  * 02 -> below 01
                  * 03 -> below 02
                  * 04 -> below 03
                  */
+
                 cards.forEach((card, index) => {
                     gsap.set(card, {
                         position: "absolute",
@@ -63,13 +70,13 @@ const ProcessAnimation = ({
                         y: index * cardHeight,
 
                         /*
-                         * Later cards must be above
+                         * Later cards sit above
                          * previous cards when they arrive.
                          */
                         zIndex: index + 1,
 
                         /*
-                         * Only waiting cards are blurred.
+                         * ONLY waiting cards are blurred.
                          */
                         filter:
                             index === 0
@@ -78,9 +85,11 @@ const ProcessAnimation = ({
                     });
                 });
 
+
                 /*
                  * First card is active initially.
                  */
+
                 cards.forEach((card, index) => {
                     card.classList.toggle(
                         "active",
@@ -90,24 +99,62 @@ const ProcessAnimation = ({
 
 
                 /*
-                 * Scroll distance:
+                 * Total animation distance.
                  *
-                 * Each card gets its own scroll section.
-                 * Then we add a final hold after all cards
-                 * have reached their final positions.
+                 * Each card gets its own scroll distance,
+                 * then we add a final hold.
                  */
+
+                const buildDistance =
+                    (cards.length - 1) * CARD_SCROLL;
+
                 const stackDistance =
-                    (cards.length - 1) * CARD_SCROLL +
-                    FINAL_HOLD;
+                    buildDistance + FINAL_HOLD;
+
+
+                /*
+                 * -------------------------------------------
+                 * ScrollTrigger
+                 * -------------------------------------------
+                 *
+                 * The Process must pin BELOW the fixed
+                 * Navbar instead of starting at viewport top.
+                 */
+
+                const getNavbarHeight = () => {
+                    const navbar =
+                        document.querySelector<HTMLElement>(
+                            ".homeNav"
+                        );
+
+                    return navbar?.offsetHeight || 0;
+                };
 
 
                 const timeline = gsap.timeline({
                     scrollTrigger: {
                         trigger: stack,
 
-                        start: "top top",
+                        /*
+                         * IMPORTANT:
+                         *
+                         * Instead of:
+                         *
+                         *     start: "top top"
+                         *
+                         * we dynamically account for the
+                         * fixed Navbar height.
+                         */
 
-                        end: `+=${stackDistance}`,
+                        start: () => {
+                            const navbarHeight =
+                                getNavbarHeight();
+
+                            return `top top+=${navbarHeight + 20}`;
+                        },
+
+                        end: () =>
+                            `+=${stackDistance}`,
 
                         pin: true,
                         pinSpacing: true,
@@ -118,30 +165,42 @@ const ProcessAnimation = ({
 
                         invalidateOnRefresh: true,
 
+
+                        /*
+                         * -----------------------------------
+                         * Active Card
+                         * -----------------------------------
+                         */
+
                         onUpdate: (self) => {
                             /*
                              * Ignore the final hold when
-                             * determining the active card.
+                             * calculating the active card.
                              */
-                            const buildProgress = Math.min(
-                                1,
-                                self.progress *
-                                    (
-                                        stackDistance /
-                                        (
-                                            (cards.length - 1) *
-                                                CARD_SCROLL
-                                        )
-                                    )
-                            );
 
-                            const activeIndex = Math.min(
-                                cards.length - 1,
-                                Math.floor(
-                                    buildProgress *
-                                        (cards.length - 1)
-                                )
-                            );
+                            const buildProgress =
+                                Math.min(
+                                    1,
+                                    self.progress *
+                                        (
+                                            stackDistance /
+                                            buildDistance
+                                        )
+                                );
+
+
+                            const activeIndex =
+                                Math.min(
+                                    cards.length - 1,
+                                    Math.floor(
+                                        buildProgress *
+                                            (
+                                                cards.length -
+                                                1
+                                            )
+                                    )
+                                );
+
 
                             cards.forEach(
                                 (card, index) => {
@@ -153,6 +212,12 @@ const ProcessAnimation = ({
                                 }
                             );
                         },
+
+
+                        /*
+                         * When scrolling back above
+                         * the Process, restore card 01.
+                         */
 
                         onLeaveBack: () => {
                             cards.forEach(
@@ -169,41 +234,46 @@ const ProcessAnimation = ({
 
 
                 /*
-                 * Build the stack.
+                 * -------------------------------------------
+                 * Build Stack
+                 * -------------------------------------------
                  *
-                 * Every card moves from its original
-                 * position to its final 25px position.
+                 * Each waiting card moves into its final
+                 * position with a 25px gap.
                  */
+
                 cards.forEach((card, index) => {
                     if (index === 0) return;
 
-                    timeline.to(
-                        card,
-                        {
-                            y: index * CARD_GAP,
+                    timeline.to(card, {
+                        y: index * CARD_GAP,
 
-                            /*
-                             * Only THIS card loses its blur
-                             * while entering the stack.
-                             */
-                            filter: "blur(0px)",
+                        /*
+                         * ONLY the card entering the stack
+                         * loses its blur.
+                         */
 
-                            duration: 1,
+                        filter: "blur(0px)",
 
-                            ease: "none",
-                        }
-                    );
+                        duration: 1,
+
+                        ease: "none",
+                    });
                 });
 
 
                 /*
-                 * Final hold.
+                 * -------------------------------------------
+                 * Final Hold
+                 * -------------------------------------------
                  *
-                 * No card has any animation here.
+                 * After all cards reach their final positions,
+                 * NOTHING moves anymore.
                  *
-                 * The entire stack stays exactly where
-                 * it finished until the pin ends.
+                 * The stack remains pinned in place until
+                 * the hold distance is completed.
                  */
+
                 timeline.to(
                     {},
                     {
@@ -222,27 +292,30 @@ const ProcessAnimation = ({
 
 
             /*
-             * Mobile
+             * -------------------------------------------
+             * Mobile / Tablet
+             * -------------------------------------------
              */
+
             mm.add("(max-width: 991px)", () => {
                 gsap.set(cards, {
                     clearProps:
                         "position,top,insetInlineStart,width,y,zIndex,filter",
                 });
 
-                cards.forEach(
-                    (card, index) => {
-                        card.classList.toggle(
-                            "active",
-                            index === 0
-                        );
-                    }
-                );
+
+                cards.forEach((card, index) => {
+                    card.classList.toggle(
+                        "active",
+                        index === 0
+                    );
+                });
             });
 
 
             return () => mm.revert();
         }, stackRef);
+
 
         return () => {
             ctx.revert();

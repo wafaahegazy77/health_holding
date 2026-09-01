@@ -2,6 +2,7 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 
 import "./_CourseCard.scss";
+import Link from "next/link";
 
 interface CourseCardProps {
     course: {
@@ -24,13 +25,14 @@ const CourseCard = async ({ course }: CourseCardProps) => {
 
             {/* Course Image - API */}
             <div className="course_image">
-
-                <Image
-                    src={course.image}
-                    alt={course.title}
-                    fill
-                    className="img-cover"
-                />
+                <Link href="https://gamal.inspire-sa.com/scorm/player.html" className="d-block">
+                    <Image
+                        src={course.image}
+                        alt={course.title}
+                        fill
+                        className="img-cover"
+                    />
+                </Link>
 
                 {/* Category - API */}
                 <div className="course_category">

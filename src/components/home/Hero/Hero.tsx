@@ -65,7 +65,7 @@ const Hero = async () => {
                                     trigger="load"
                                 >
                                     <Link
-                                        href="/"
+                                        href="/register"
                                         className="butn white_butn hvr-icon-slide-out-in"
                                     >
                                         <div className="txt" >
@@ -88,7 +88,7 @@ const Hero = async () => {
                                     trigger="load"
                                 >
                                     <Link
-                                        href="/"
+                                        href="/login"
                                         className="butn gradient_butn hvr-icon-slide-out-in"
                                     >
                                         <div className="txt" >

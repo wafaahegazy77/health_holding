@@ -192,6 +192,91 @@
             "login": "Log in",
             "Submit": "Submit"
         }
+    },
+    "profile": {
+        "memberSince": "Member since",
+
+        "sidebar": {
+            "personalInformation": "Personal information",
+            "myCourses": "My courses",
+            "logout": "Log out"
+        },
+        "logoutModal": {
+            "title": "Log out",
+            "description": "You’ll be signed out of this device. Your course progress is saved.",
+            "cancel": "Cancel",
+            "confirm": "Log out",
+            "close": "Close"
+        },
+        "personalInformation": {
+            "personalInformation" : "Personal Information" ,
+            "editPersonalInformation": "Edit personal information",
+            "save": "Save",
+            "cancel": "Cancel",
+            "accountDetails": "Account details",
+            "professionalDetails": "Professional details",
+            "editDetails": "Edit details",
+            "cantBeChanged": "Can't be changed",
+            "confirmed": "Confirmed",
+            "accepted": "Accepted",
+            "readTerms": "Read terms",
+
+            "preferences": {
+                "title": "Preferences & consents",
+                "healthcareProfessional": "Healthcare Professional or Industry Partner",
+                "termsOfUse": "Terms of Use",
+                "marketing": {
+                    "title": "Marketing Communications",
+                    "description": "I agree to stay up to date with additional information and communications from Health Holding about Health Holding products and services."
+                }
+            },
+
+            "accountSecurity": {
+                "title": "Account security",
+                "password": "Password",
+                "changePassword": "Change password"
+            }
+        },
+        "changePasswordModal": {
+            "title": "Change password",
+            "currentPassword": "Current password",
+            "newPassword": "New password",
+            "confirmNewPassword": "Confirm new password",
+            "showPassword": "Show password",
+            "hidePassword": "Hide password",
+            "cancel": "Cancel",
+            "updatePassword": "Update password",
+            "close": "Close"
+        },
+        "courses": {
+            "status": {
+                "inProgress": "In progress",
+                "completed": "Completed",
+                "notStarted": "Not started"
+            },
+            "actions": {
+                "resume": "Resume course",
+                "review": "Review course",
+                "start": "Start course"
+            },
+            "modulesDone": "modules done",
+            "lastActivity": "Last activity",
+            "stats": {
+                "assigned": "Courses assigned",
+                "completed": "Completed",
+                "inProgress": "In progress",
+                "notStarted": "Not started",
+                "overallCompletion": "Overall completion"
+            },
+            "resume": {
+                "pickUp": "Pick up where you left off"
+            },
+            "filters": {
+                "search": "Search your courses",
+                "allCategories": "All categories",
+                "allStatuses": "All statuses"
+            }
+        }
     }
 
 

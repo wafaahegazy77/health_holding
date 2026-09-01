@@ -1,0 +1,135 @@
+.profile_sidebar {
+    padding: 10px;
+
+    background-color: #fff;
+
+    border: 1px solid rgba(20, 80, 138, 0.08);
+    border-radius: 18px;
+
+    box-shadow: 0 8px 25px rgba(20, 80, 138, 0.05);
+    position: sticky;
+    top: 20px;
+
+    // -----------------------------------------
+    // Sidebar Item
+    // -----------------------------------------
+
+    .sidebar_item {
+        position: relative;
+
+        display: flex;
+        align-items: center;
+
+        width: 100%;
+        min-height: 58px;
+
+        padding: 0 15px;
+
+        border: 0;
+        border-radius: 13px;
+
+        background: transparent;
+
+        color: #71879a;
+
+        font-size: 16px;
+        font-weight: 500;
+
+        text-align: start;
+
+        cursor: pointer;
+
+        transition:
+            background-color 0.25s ease,
+            color 0.25s ease;
+
+
+        i {
+            width: 28px;
+
+            margin-inline-end: 8px;
+
+            font-size: 17px;
+
+            text-align: center;
+        }
+
+
+        &:hover {
+            color: var(--primary);
+        }
+
+
+        &.active {
+            background-color: var(--primary);
+
+            color: #fff;
+        }
+
+
+        &.logout {
+            color: #e5484d;
+
+            &:hover {
+                background-color: rgba(
+                    229,
+                    72,
+                    77,
+                    0.06
+                );
+            }
+        }
+    }
+
+
+    // -----------------------------------------
+    // Courses Count
+    // -----------------------------------------
+
+    .courses_count {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 28px;
+        height: 28px;
+
+        margin-inline-start: auto;
+
+        border-radius: 50%;
+
+        background-color: #e4f2fb;
+
+        color: var(--primary);
+
+        font-size: 13px;
+        font-weight: 600;
+    }
+
+
+    // -----------------------------------------
+    // Divider
+    // -----------------------------------------
+
+    .sidebar_divider {
+        height: 1px;
+
+        margin: 12px 10px;
+
+        background-color: #e3edf3;
+    }
+
+
+    // -----------------------------------------
+    // Mobile
+    // -----------------------------------------
+
+    @media (max-width: 767.98px) {
+
+        .sidebar_item {
+            min-height: 52px;
+
+            font-size: 14px;
+        }
+    }
+}

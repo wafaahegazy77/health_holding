@@ -1,0 +1,148 @@
+{
+    "country": "Saudi Arabia",
+    "salutation": "Dr",
+    "firstName": "Ahmed",
+    "lastName": "Al-Fahad",
+    "email": "ahmed.fahad@moh.sa",
+    "mobile": "+966 55 123 4567",
+    "memberSince": "11 February 2026",
+
+    "roleStatement": "I provide routine care for people with diabetes",
+    "region": "Al-Riyadh",
+    "healthcareSector": "MOH Hospitals, Diabetes Centers & Pharmacy channel",
+    "role": "Consultant Endocrinologist",
+    "workplace": "King Fahad Medical City",
+    "postcode": "12271",
+    "scfhs": "SC-44821",
+
+    "healthcareProfessional": true,
+    "termsAccepted": true,
+    "marketingCommunications": true,
+
+    "courses": [
+        {
+            "id": 1,
+            "category": {
+                "en": "Diabetes Care",
+                "ar": "رعاية مرضى السكري"
+            },
+            "title": {
+                "en": "Insulin Therapy Fundamentals",
+                "ar": "أساسيات العلاج بالإنسولين"
+            },
+            "description": {
+                "en": "Learn the fundamentals of insulin therapy.",
+                "ar": "تعلّم أساسيات العلاج بالإنسولين."
+            },
+            "image": "/images/featured-course-1.png",
+            "isFavorite": false,
+            "modulesCount": "8",
+            "hours": "6",
+            "quizzesCount": "4",
+            "status": "inProgress",
+            "completedModules": "6",
+            "progress": 80,
+            "lastActivity": "2026-08-20"
+        },
+
+        {
+            "id": 2,
+            "category": {
+                "en": "Diabetes Care",
+                "ar": "رعاية مرضى السكري"
+            },
+            "title": {
+                "en": "Managing Type 2 Diabetes",
+                "ar": "إدارة مرض السكري من النوع الثاني"
+            },
+            "description": {
+                "en": "Learn how to manage type 2 diabetes effectively.",
+                "ar": "تعلّم كيفية إدارة مرض السكري من النوع الثاني بفعالية."
+            },
+            "image": "/images/featured-course-2.png",
+            "isFavorite": false,
+            "modulesCount": "10",
+            "hours": "8",
+            "quizzesCount": "5",
+            "status": "completed",
+            "completedModules": "10",
+            "progress": 100,
+            "lastActivity": "2026-07-02"
+        },
+
+        {
+            "id": 3,
+            "category": {
+                "en": "Cardiology",
+                "ar": "أمراض القلب"
+            },
+            "title": {
+                "en": "Hypertension in Diabetic Patients",
+                "ar": "ارتفاع ضغط الدم لدى مرضى السكري"
+            },
+            "description": {
+                "en": "Learn about hypertension management in diabetic patients.",
+                "ar": "تعرّف على إدارة ارتفاع ضغط الدم لدى مرضى السكري."
+            },
+            "image": "/images/featured-course-3.png",
+            "isFavorite": false,
+            "modulesCount": "7",
+            "hours": "5",
+            "quizzesCount": "3",
+            "status": "inProgress",
+            "completedModules": "1",
+            "progress": 10,
+            "lastActivity": "2026-06-20"
+        },
+
+        {
+            "id": 4,
+            "category": {
+                "en": "Nephrology",
+                "ar": "أمراض الكلى"
+            },
+            "title": {
+                "en": "Diabetic Nephropathy Essentials",
+                "ar": "أساسيات اعتلال الكلى السكري"
+            },
+            "description": {
+                "en": "Understand the essentials of diabetic nephropathy.",
+                "ar": "تعرّف على أساسيات اعتلال الكلى السكري."
+            },
+            "image": "/images/featured-course-2.png",
+            "isFavorite": false,
+            "modulesCount": "6",
+            "hours": "5",
+            "quizzesCount": "4",
+            "status": "notStarted",
+            "completedModules": "0",
+            "progress": 0,
+            "lastActivity": null
+        },
+
+        {
+            "id": 5,
+            "category": {
+                "en": "Endocrinology",
+                "ar": "الغدد الصماء"
+            },
+            "title": {
+                "en": "Thyroid Disorders Overview",
+                "ar": "نظرة عامة على اضطرابات الغدة الدرقية"
+            },
+            "description": {
+                "en": "An overview of common thyroid disorders.",
+                "ar": "نظرة عامة على اضطرابات الغدة الدرقية الشائعة."
+            },
+            "image": "/images/featured-course-1.png",
+            "isFavorite": false,
+            "modulesCount": "6",
+            "hours": "4",
+            "quizzesCount": "3",
+            "status": "notStarted",
+            "completedModules": "0",
+            "progress": 0,
+            "lastActivity": null
+        }
+    ]
+}

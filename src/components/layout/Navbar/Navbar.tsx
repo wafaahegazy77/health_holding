@@ -3,7 +3,12 @@
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import Image from "next/image";
-import { Link, useRouter } from "@/i18n/routing";
+
+import {
+    Link,
+    usePathname,
+    useRouter,
+} from "@/i18n/routing";
 
 import "./_Navbar.scss";
 
@@ -42,14 +47,31 @@ const navItems = [
 
 export default function Navbar() {
     const locale = useLocale();
+    const pathname = usePathname();
     const router = useRouter();
+
     const t = useTranslations("navbar");
 
-    const [languageOpen, setLanguageOpen] = useState(false);
-    const [accountOpen, setAccountOpen] = useState(false);
+    const [languageOpen, setLanguageOpen] =
+        useState(false);
 
-    const [isScrolled, setIsScrolled] = useState(false);
-    const [activeSection, setActiveSection] = useState("");
+    const [accountOpen, setAccountOpen] =
+        useState(false);
+
+    const [isScrolled, setIsScrolled] =
+        useState(false);
+
+    const [activeSection, setActiveSection] =
+        useState("");
+
+
+    /*
+     * -------------------------------------------
+     * Home Page
+     * -------------------------------------------
+     */
+
+    const isHomePage = pathname === "/";
 
 
     /*
@@ -59,13 +81,21 @@ export default function Navbar() {
      */
 
     useEffect(() => {
+        if (!isHomePage) {
+            setIsScrolled(false);
+            return;
+        }
+
         const handleScroll = () => {
             setIsScrolled(window.scrollY > 40);
         };
 
         handleScroll();
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener(
+            "scroll",
+            handleScroll
+        );
 
         return () => {
             window.removeEventListener(
@@ -73,7 +103,7 @@ export default function Navbar() {
                 handleScroll
             );
         };
-    }, []);
+    }, [isHomePage]);
 
 
     /*
@@ -83,61 +113,83 @@ export default function Navbar() {
      */
 
     useEffect(() => {
+        if (!isHomePage) {
+            setActiveSection("");
+            return;
+        }
+
         const sections = navItems
             .map((item) =>
-                document.getElementById(item.sectionId)
+                document.getElementById(
+                    item.sectionId
+                )
             )
             .filter(Boolean) as HTMLElement[];
 
         if (!sections.length) return;
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                const visibleSections = entries
-                    .filter((entry) => entry.isIntersecting)
-                    .sort(
-                        (a, b) =>
-                            b.intersectionRatio -
-                            a.intersectionRatio
-                    );
+        const observer =
+            new IntersectionObserver(
+                (entries) => {
+                    const visibleSections =
+                        entries
+                            .filter(
+                                (entry) =>
+                                    entry.isIntersecting
+                            )
+                            .sort(
+                                (a, b) =>
+                                    b.intersectionRatio -
+                                    a.intersectionRatio
+                            );
 
-                if (visibleSections.length) {
-                    setActiveSection(
-                        visibleSections[0].target.id
-                    );
+                    if (visibleSections.length) {
+                        setActiveSection(
+                            visibleSections[0].target.id
+                        );
 
-                    return;
+                        return;
+                    }
+
+                    /*
+                     * We're above the first section,
+                     * so we're back in the Hero.
+                     */
+
+                    const firstSection =
+                        sections[0];
+
+                    if (
+                        window.scrollY <
+                        firstSection.offsetTop - 150
+                    ) {
+                        setActiveSection("");
+                    }
+                },
+                {
+                    root: null,
+                    rootMargin:
+                        "-20% 0px -55% 0px",
+                    threshold: [
+                        0.1,
+                        0.25,
+                        0.5,
+                    ],
                 }
-
-                /*
-                * We're above the first section,
-                * so we're back in the Hero.
-                */
-                const firstSection = sections[0];
-
-                if (
-                    window.scrollY <
-                    firstSection.offsetTop - 150
-                ) {
-                    setActiveSection("");
-                }
-            },
-            {
-                root: null,
-                rootMargin: "-20% 0px -55% 0px",
-                threshold: [0.1, 0.25, 0.5],
-            }
-        );
+            );
 
         sections.forEach((section) =>
             observer.observe(section)
         );
 
         /*
-        * Handle initial position / returning to Hero.
-        */
+         * Handle initial position /
+         * returning to Hero.
+         */
+
         const handleScroll = () => {
-            const firstSection = sections[0];
+            const firstSection =
+                sections[0];
 
             if (
                 window.scrollY <
@@ -149,7 +201,10 @@ export default function Navbar() {
 
         handleScroll();
 
-        window.addEventListener("scroll", handleScroll);
+        window.addEventListener(
+            "scroll",
+            handleScroll
+        );
 
         return () => {
             observer.disconnect();
@@ -159,7 +214,7 @@ export default function Navbar() {
                 handleScroll
             );
         };
-    }, []);
+    }, [isHomePage]);
 
 
     /*
@@ -187,10 +242,33 @@ export default function Navbar() {
     };
 
 
+    /*
+     * -------------------------------------------
+     * Section Navigation
+     * -------------------------------------------
+     */
+
+    const handleSectionNavigation = (
+        sectionId: string
+    ) => {
+        if (isHomePage) {
+            return;
+        }
+
+        router.push(
+            `/#${sectionId}`
+        );
+    };
+
+
     return (
         <nav
-            className={`navbar navbar-expand-lg homeNav ${
-                isScrolled ? "scrolled" : ""
+            className={`navbar navbar-expand-lg ${
+                isHomePage ? "homeNav" : ""
+            } ${
+                isHomePage && isScrolled
+                    ? "scrolled"
+                    : ""
             }`}
         >
             <div className="container">
@@ -238,17 +316,31 @@ export default function Navbar() {
                                 className="nav-item"
                                 key={item.key}
                             >
-                                <Link
-                                    className={`nav-link ${
-                                        activeSection ===
-                                        item.sectionId
-                                            ? "active"
-                                            : ""
-                                    }`}
-                                    href={item.href}
-                                >
-                                    {t(item.key)}
-                                </Link>
+                                {isHomePage ? (
+                                    <Link
+                                        className={`nav-link ${
+                                            activeSection ===
+                                            item.sectionId
+                                                ? "active"
+                                                : ""
+                                        }`}
+                                        href={item.href}
+                                    >
+                                        {t(item.key)}
+                                    </Link>
+                                ) : (
+                                    <button
+                                        type="button"
+                                        className="nav-link"
+                                        onClick={() =>
+                                            handleSectionNavigation(
+                                                item.sectionId
+                                            )
+                                        }
+                                    >
+                                        {t(item.key)}
+                                    </button>
+                                )}
                             </li>
                         ))}
 
@@ -270,7 +362,8 @@ export default function Navbar() {
                                 aria-haspopup="true"
                                 onClick={() =>
                                     setLanguageOpen(
-                                        (prev) => !prev
+                                        (prev) =>
+                                            !prev
                                     )
                                 }
                             >
@@ -348,7 +441,8 @@ export default function Navbar() {
                                 aria-haspopup="true"
                                 onClick={() =>
                                     setAccountOpen(
-                                        (prev) => !prev
+                                        (prev) =>
+                                            !prev
                                     )
                                 }
                             >
@@ -365,7 +459,6 @@ export default function Navbar() {
                                 <span className="hvr-icon hvr-icon-next">
                                     <i className="fa-regular fa-user"></i>
                                 </span>
-
                             </button>
 
 

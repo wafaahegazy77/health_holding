@@ -1,0 +1,494 @@
+// =========================================
+// Profile Modals
+// =========================================
+
+
+// -----------------------------------------
+// Shared Modal Overlay
+// -----------------------------------------
+
+.profile_modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 20px;
+
+    background-color: rgba(20, 48, 70, 0.42);
+
+    backdrop-filter: blur(7px);
+
+    animation: profileModalOverlayIn 0.25s ease both;
+}
+
+
+// -----------------------------------------
+// Shared Modal Box
+// -----------------------------------------
+
+.profile_modal_box {
+    width: 100%;
+    max-width: 485px;
+
+    padding: 28px 25px 24px;
+
+    background-color: #fff;
+
+    border: 1px solid rgba(20, 80, 138, 0.08);
+    border-radius: 18px;
+
+    box-shadow:
+        0 25px 70px rgba(20, 80, 138, 0.18);
+
+    animation: profileModalIn 0.3s ease both;
+}
+
+
+// -----------------------------------------
+// Shared Modal Header
+// -----------------------------------------
+
+.profile_modal_header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    margin-bottom: 22px;
+
+    h2 {
+        margin: 0;
+
+        color: #205589;
+
+        font-size: 21px;
+        font-weight: 600;
+        line-height: 1.3;
+    }
+}
+
+
+// -----------------------------------------
+// Shared Close Button
+// -----------------------------------------
+
+.profile_modal_close {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 32px;
+    height: 32px;
+
+    padding: 0;
+
+    border: 0;
+    border-radius: 50%;
+
+    background-color: transparent;
+
+    color: #91a6b6;
+
+    cursor: pointer;
+
+    transition:
+        color 0.2s ease,
+        background-color 0.2s ease,
+        transform 0.2s ease;
+
+    i {
+        font-size: 16px;
+    }
+
+    &:hover {
+        background-color: #f2f7fa;
+
+        color: #205589;
+
+        transform: rotate(90deg);
+    }
+}
+
+
+// -----------------------------------------
+// Shared Modal Body
+// -----------------------------------------
+
+.profile_modal_body {
+    margin-bottom: 30px;
+}
+
+
+// -----------------------------------------
+// Shared Modal Actions
+// -----------------------------------------
+
+.profile_modal_actions {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 12px;
+}
+
+
+// -----------------------------------------
+// Shared Cancel Button
+// -----------------------------------------
+
+.profile_modal_cancel {
+    min-width: 108px;
+    height: 50px;
+
+    padding: 0 22px;
+
+    border: 1px solid #dce8ef;
+    border-radius: 11px;
+
+    background-color: #fff;
+
+    color: #205589;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+
+    &:hover {
+        background-color: #f5f9fc;
+
+        border-color: #c9dce8;
+    }
+}
+
+
+// =========================================
+// Logout Modal
+// =========================================
+
+
+// -----------------------------------------
+// Logout Body
+// -----------------------------------------
+
+.logout_modal_body {
+    display: flex;
+    align-items: center;
+
+    gap: 16px;
+}
+
+
+// -----------------------------------------
+// Logout Icon
+// -----------------------------------------
+
+.logout_modal_icon {
+    flex: 0 0 auto;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    border-radius: 13px;
+
+    background-color: #fcebea;
+
+    color: #df4d51;
+
+    i {
+        font-size: 19px;
+    }
+}
+
+
+// -----------------------------------------
+// Logout Description
+// -----------------------------------------
+
+.logout_modal_body p {
+    margin: 0;
+
+    max-width: 350px;
+
+    color: #71879a;
+
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 1.65;
+}
+
+
+// -----------------------------------------
+// Logout Confirm Button
+// -----------------------------------------
+
+.logout_confirm {
+    min-width: 108px;
+    height: 50px;
+
+    padding: 0 22px;
+
+    border: 1px solid #df4d51;
+    border-radius: 11px;
+
+    background-color: #df4d51;
+
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+
+    &:hover {
+        background-color: #cc3f44;
+
+        border-color: #cc3f44;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 6px 15px rgba(223, 77, 81, 0.2);
+    }
+}
+
+
+// =========================================
+// Change Password Modal
+// =========================================
+
+
+// -----------------------------------------
+// Form
+// -----------------------------------------
+
+.change_password_form {
+
+    .change_password_field {
+
+        &:last-child {
+            margin-bottom: 0;
+        }
+    }
+}
+
+
+// -----------------------------------------
+// Password Input
+// -----------------------------------------
+
+.change_password_field {
+
+    .password_input {
+        position: relative;
+
+        input {
+            padding-inline-end: 45px;
+        }
+    }
+
+
+    .password_toggle {
+        position: absolute;
+        top: 50%;
+        inset-inline-end: 15px;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        width: 24px;
+        height: 24px;
+
+        padding: 0;
+
+        transform: translateY(-50%);
+
+        border: 0;
+
+        background-color: transparent;
+
+        color: #91a0aa;
+
+        cursor: pointer;
+
+        transition: color 0.2s ease;
+
+        &:hover {
+            color: var(--primary);
+        }
+
+        i {
+            font-size: 14px;
+        }
+    }
+}
+
+
+// -----------------------------------------
+// Change Password Submit
+// -----------------------------------------
+
+.change_password_submit {
+    min-width: 145px;
+    height: 50px;
+
+    padding: 0 22px;
+
+    border: 1px solid var(--primary);
+    border-radius: 11px;
+
+    background-color: var(--primary);
+
+    color: #fff;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    transition:
+        background-color 0.2s ease,
+        border-color 0.2s ease,
+        color 0.2s ease,
+        transform 0.2s ease;
+
+    &:hover {
+        background-color: #174f86;
+
+        border-color: #174f86;
+
+        transform: translateY(-1px);
+
+        box-shadow:
+            0 6px 15px rgba(20, 80, 138, 0.18);
+    }
+}
+
+
+// =========================================
+// Mobile
+// =========================================
+
+@media (max-width: 575.98px) {
+
+    .profile_modal {
+        padding: 15px;
+    }
+
+
+    .profile_modal_box {
+        padding: 24px 20px 20px;
+
+        border-radius: 16px;
+    }
+
+
+    .profile_modal_header {
+        margin-bottom: 18px;
+
+        h2 {
+            font-size: 19px;
+        }
+    }
+
+
+    .profile_modal_actions {
+        gap: 8px;
+    }
+
+
+    .profile_modal_cancel,
+    .logout_confirm,
+    .change_password_submit {
+        flex: 1;
+
+        min-width: 0;
+
+        height: 46px;
+
+        padding: 0 15px;
+
+        font-size: 13px;
+    }
+
+
+    // -----------------------------------------
+    // Logout Mobile
+    // -----------------------------------------
+
+    .logout_modal_body {
+        align-items: flex-start;
+
+        gap: 12px;
+
+        margin-bottom: 24px;
+    }
+
+
+    .logout_modal_icon {
+        width: 43px;
+        height: 43px;
+
+        border-radius: 11px;
+
+        i {
+            font-size: 17px;
+        }
+    }
+
+
+    .logout_modal_body p {
+        font-size: 13px;
+        line-height: 1.6;
+    }
+}
+
+
+// =========================================
+// Animations
+// =========================================
+
+@keyframes profileModalOverlayIn {
+
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+
+@keyframes profileModalIn {
+
+    from {
+        opacity: 0;
+        transform: translateY(12px) scale(0.98);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}

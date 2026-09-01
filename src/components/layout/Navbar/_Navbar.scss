@@ -1,12 +1,13 @@
 .navbar {
     padding: 1.25rem 1rem;
     z-index: 99;
-
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    
     &.homeNav {
-        position: absolute;
-        top: 0;
-        right: 0;
-        left: 0;
+
         &.scrolled {
             position: fixed;
 

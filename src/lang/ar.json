@@ -169,6 +169,91 @@
         "alreadyAccount": "لديك حساب بالفعل؟",
         "login": "تسجيل الدخول",
         "Submit": "إرسال"
+    },
+    "profile": {
+        "memberSince": "عضوية منذ",
+
+        "sidebar": {
+            "personalInformation": "المعلومات الشخصية",
+            "myCourses": "دوراتي",
+            "logout": "تسجيل الخروج"
+        },
+        "logoutModal": {
+            "title": "تسجيل الخروج",
+            "description": "سيتم تسجيل خروجك من هذا الجهاز. سيتم حفظ تقدمك في الدورات.",
+            "cancel": "إلغاء",
+            "confirm": "تسجيل الخروج",
+            "close": "إغلاق"
+        },
+        "personalInformation": {
+            "personalInformation" : "المعلومات الشخصية" ,
+            "editPersonalInformation": "تعديل المعلومات الشخصية",
+            "save": "حفظ",
+            "cancel": "إلغاء",
+            "accountDetails": "تفاصيل الحساب",
+            "professionalDetails": "التفاصيل المهنية",
+            "editDetails": "تعديل التفاصيل",
+            "cantBeChanged": "لا يمكن تغييره",
+            "confirmed": "مؤكد",
+            "accepted": "تمت الموافقة",
+            "readTerms": "قراءة الشروط",
+
+            "preferences": {
+                "title": "التفضيلات والموافقات",
+                "healthcareProfessional": "أخصائي رعاية صحية أو شريك في قطاع الصناعة",
+                "termsOfUse": "شروط الاستخدام",
+                "marketing": {
+                    "title": "الاتصالات التسويقية",
+                    "description": "أوافق على تلقي أحدث المعلومات والاتصالات من Health Holding حول منتجات وخدمات Health Holding."
+                }
+            },
+
+            "accountSecurity": {
+                "title": "أمان الحساب",
+                "password": "كلمة المرور",
+                "changePassword": "تغيير كلمة المرور"
+            }
+        },
+        "changePasswordModal": {
+            "title": "تغيير كلمة المرور",
+            "currentPassword": "كلمة المرور الحالية",
+            "newPassword": "كلمة المرور الجديدة",
+            "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+            "showPassword": "إظهار كلمة المرور",
+            "hidePassword": "إخفاء كلمة المرور",
+            "cancel": "إلغاء",
+            "updatePassword": "تحديث كلمة المرور",
+            "close": "إغلاق"
+        },
+        "courses": {
+            "status": {
+                "inProgress": "قيد التقدم",
+                "completed": "مكتمل",
+                "notStarted": "لم يبدأ"
+            },
+            "actions": {
+                "resume": "استئناف الدورة",
+                "review": "مراجعة الدورة",
+                "start": "بدء الدورة"
+            },
+            "modulesDone": "وحدات مكتملة",
+            "lastActivity": "آخر نشاط",
+            "stats": {
+                "assigned": "الدورات المسندة",
+                "completed": "مكتملة",
+                "inProgress": "قيد التقدم",
+                "notStarted": "لم تبدأ",
+                "overallCompletion": "نسبة الإكمال"
+            },
+            "resume": {
+                "pickUp": "تابع من حيث توقفت"
+            },
+            "filters": {
+                "search": "ابحث في دوراتك",
+                "allCategories": "جميع التصنيفات",
+                "allStatuses": "جميع الحالات"
+            }
+        }
     }
 
 }

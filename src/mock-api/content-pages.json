@@ -1,0 +1,106 @@
+{
+  "privacyPolicy": {
+    "title": {
+      "en": "Privacy Policy",
+      "ar": "سياسة الخصوصية"
+    },
+    "updatedAt": {
+      "en": "Last updated: September 2, 2026",
+      "ar": "آخر تحديث: 2 سبتمبر 2026"
+    },
+    "sections": [
+      {
+        "title": {
+          "en": "Introduction",
+          "ar": "مقدمة"
+        },
+        "content": {
+          "en": "At Health Holding, we are committed to protecting your privacy and ensuring that your personal information is handled securely and responsibly.",
+          "ar": "في Health Holding، نلتزم بحماية خصوصيتك وضمان التعامل مع معلوماتك الشخصية بأمان ومسؤولية."
+        }
+      },
+      {
+        "title": {
+          "en": "Information We Collect",
+          "ar": "المعلومات التي نجمعها"
+        },
+        "content": {
+          "en": "We may collect information that you provide when creating an account, enrolling in courses, completing your profile, or interacting with our platform.",
+          "ar": "قد نقوم بجمع المعلومات التي تقدمها عند إنشاء حساب أو التسجيل في الدورات أو استكمال ملفك الشخصي أو التفاعل مع المنصة."
+        }
+      },
+      {
+        "title": {
+          "en": "How We Use Your Information",
+          "ar": "كيفية استخدام معلوماتك"
+        },
+        "content": {
+          "en": "Your information may be used to provide our educational services, improve your learning experience, manage your account, and communicate important updates.",
+          "ar": "قد يتم استخدام معلوماتك لتقديم خدماتنا التعليمية وتحسين تجربة التعلم وإدارة حسابك وإرسال التحديثات المهمة."
+        }
+      },
+      {
+        "title": {
+          "en": "Data Security",
+          "ar": "أمان البيانات"
+        },
+        "content": {
+          "en": "We take reasonable technical and organizational measures to protect your personal information from unauthorized access, alteration, disclosure, or loss.",
+          "ar": "نتخذ التدابير الفنية والتنظيمية المناسبة لحماية معلوماتك الشخصية من الوصول أو التعديل أو الإفصاح أو الفقدان غير المصرح به."
+        }
+      }
+    ]
+  },
+  "termsConditions": {
+    "title": {
+      "en": "Terms & Conditions",
+      "ar": "الشروط والأحكام"
+    },
+    "updatedAt": {
+      "en": "Last updated: September 2, 2026",
+      "ar": "آخر تحديث: 2 سبتمبر 2026"
+    },
+    "sections": [
+      {
+        "title": {
+          "en": "Acceptance of Terms",
+          "ar": "قبول الشروط"
+        },
+        "content": {
+          "en": "By accessing or using the Health Holding platform, you agree to comply with these Terms & Conditions and all applicable laws and regulations.",
+          "ar": "باستخدامك لمنصة Health Holding أو الوصول إليها، فإنك توافق على الالتزام بهذه الشروط والأحكام وجميع القوانين واللوائح المعمول بها."
+        }
+      },
+      {
+        "title": {
+          "en": "Using the Platform",
+          "ar": "استخدام المنصة"
+        },
+        "content": {
+          "en": "The platform is provided for educational and professional development purposes. You are responsible for maintaining the confidentiality of your account information.",
+          "ar": "تم توفير المنصة لأغراض التعليم والتطوير المهني، وتتحمل مسؤولية الحفاظ على سرية بيانات حسابك."
+        }
+      },
+      {
+        "title": {
+          "en": "Courses and Learning Content",
+          "ar": "الدورات والمحتوى التعليمي"
+        },
+        "content": {
+          "en": "Course materials are provided for registered users and may not be copied, distributed, reproduced, or used for commercial purposes without prior authorization.",
+          "ar": "يتم توفير مواد الدورات للمستخدمين المسجلين، ولا يجوز نسخها أو توزيعها أو إعادة إنتاجها أو استخدامها لأغراض تجارية دون الحصول على إذن مسبق."
+        }
+      },
+      {
+        "title": {
+          "en": "Account Responsibility",
+          "ar": "مسؤولية الحساب"
+        },
+        "content": {
+          "en": "You are responsible for all activity performed through your account and for keeping your login credentials secure.",
+          "ar": "أنت مسؤول عن جميع الأنشطة التي تتم من خلال حسابك وعن الحفاظ على أمان بيانات تسجيل الدخول الخاصة بك."
+        }
+      }
+    ]
+  }
+}

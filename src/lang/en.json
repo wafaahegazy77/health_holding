@@ -191,6 +191,45 @@
             "alreadyAccount": "Already have an account?",
             "login": "Log in",
             "Submit": "Submit"
+        },
+        "forgotPassword": {
+            "step": "Step {current} of {total}",
+
+            "stepOne": {
+                "title": "Forgot password",
+                "description": "Enter the email address you registered with and we'll send you a verification code to reset your password.",
+                "email": {
+                    "label": "Email address",
+                    "placeholder": "Enter your email",
+                    "hint": "example@example.com"
+                },
+                "backToLogin": "Back to log in",
+                "sendCode": "Send code"
+            },
+
+            "stepTwo": {
+                "title": "Verification code",
+                "description": "We sent a 4-digit code to {email}. Enter it below to continue.",
+                "prototype": "Prototype: any 4 digits work as the code.",
+                "resend": "Resend code in {time}",
+                "changeEmail": "Change email address",
+                "verify": "Verify"
+            },
+
+            "stepThree": {
+                "title": "Create new password",
+                "description": "Your new password must be different from the one you used before.",
+                "newPassword": {
+                    "label": "New password"
+                },
+                "confirmPassword": {
+                    "label": "Confirm new password"
+                },
+                "resetPassword": "Reset password"
+            },
+
+            "showPassword": "Show password",
+            "hidePassword": "Hide password"
         }
     },
     "profile": {

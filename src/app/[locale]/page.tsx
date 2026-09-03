@@ -22,9 +22,6 @@ export default function Home() {
                 <AboutPlatform/>
                 <CEOMessage/>
                 <HeadTrainingMessage />
-                {/* <LearningTracks /> */}
-                {/* <FeaturedCourses /> */}
-                {/* <PlatformFeatures/> */}
                 <Process />
                 <Stats/>
                 <Faqs/>

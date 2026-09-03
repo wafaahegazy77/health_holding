@@ -23,7 +23,6 @@ export default function Home() {
                 <CEOMessage/>
                 <HeadTrainingMessage />
                 <Process />
-                <Stats/>
                 <Faqs/>
                 <CallToAction/>
             </main>

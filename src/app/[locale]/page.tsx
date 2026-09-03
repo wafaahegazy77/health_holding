@@ -1,7 +1,9 @@
 import AboutPlatform from "@/components/home/AboutPlatform/AboutPlatform";
 import CallToAction from "@/components/home/CallToAction/CallToAction";
+import CEOMessage from "@/components/home/CEOMessage/CEOMessage";
 import Faqs from "@/components/home/Faqs/Faqs";
 import FeaturedCourses from "@/components/home/FeaturedCourses/FeaturedCourses";
+import HeadTrainingMessage from "@/components/home/HeadTrainingMessage/HeadTrainingMessage";
 import Hero from "@/components/home/Hero/Hero";
 import LearningTracks from "@/components/home/LearningTracks/LearningTracks";
 import PlatformFeatures from "@/components/home/PlatformFeatures/PlatformFeatures";
@@ -18,9 +20,11 @@ export default function Home() {
             <main>
                 <Hero />
                 <AboutPlatform/>
-                <LearningTracks />
-                <FeaturedCourses />
-                <PlatformFeatures/>
+                <CEOMessage/>
+                <HeadTrainingMessage />
+                {/* <LearningTracks /> */}
+                {/* <FeaturedCourses /> */}
+                {/* <PlatformFeatures/> */}
                 <Process />
                 <Stats/>
                 <Faqs/>

@@ -49,11 +49,13 @@ const Faqs = async () => {
 
 
                 {/* FAQ Items - API */}
-                <div className="faqs_wrapper">
-                    <FaqAccordion
-                        items={data.faqs.items}
-                    />
-                </div>
+                <Reveal animation="fade-up">
+                    <div className="faqs_wrapper">
+                        <FaqAccordion
+                            items={data.faqs.items}
+                        />
+                    </div>
+                </Reveal>
 
             </div>
         </section>

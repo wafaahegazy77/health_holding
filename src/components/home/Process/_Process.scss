@@ -1,13 +1,11 @@
 .process {
-
     background-color: #F4F7F9;
-    overflow: unset;
+    overflow: visible;
 
     .txt_content {
         padding-top: 20px;
-
         position: sticky;
-        top: 40px;
+        top: 110px;
 
         .title {
             line-height: 1.2;
@@ -20,27 +18,16 @@
         }
     }
 
-
-    .process_animation {
-        position: relative;
-        min-height: 530px;
-    }
-
-
     .process_stack {
         position: relative;
-
         width: 100%;
-        height: 530px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
     }
 
-
     .process_card {
-        position: absolute;
-
-        top: 0;
-        inset-inline-start: 0;
-
+        position: relative;
         width: 100%;
         height: 200px;
 
@@ -53,18 +40,8 @@
         box-shadow: none;
 
         overflow: visible;
-
-        /*
-         * GSAP controls:
-         * transform
-         * filter
-         */
-        will-change: transform, filter;
-
-
-        /* -------------------------------------------
-           Step Number
-        ------------------------------------------- */
+        cursor: pointer;
+        transition: transform 0.25s ease;
 
         .process_number {
             width: 30px;
@@ -84,31 +61,19 @@
 
             background-color: #fff;
 
-            border: 1px solid rgba(
-                20,
-                80,
-                138,
-                0.04
-            );
+            border: 1px solid rgba(20, 80, 138, 0.04);
 
-            box-shadow:
-                0 10px 35px rgba(
-                    20,
-                    80,
-                    138,
-                    0.04
-                );
+            box-shadow: 0 10px 35px rgba(20, 80, 138, 0.04);
 
             font-size: 8px;
             font-weight: 400;
 
             color: #9aa5ad;
+            transition:
+                background-color 0.25s ease,
+                border-color 0.25s ease,
+                color 0.25s ease;
         }
-
-
-        /* -------------------------------------------
-           Main Card
-        ------------------------------------------- */
 
         .process_card_content {
             flex: 1;
@@ -121,21 +86,13 @@
 
             background-color: #fff;
 
-            border: 1px solid rgba(
-                20,
-                80,
-                138,
-                0.04
-            );
+            border: 1px solid rgba(20, 80, 138, 0.04);
 
-            box-shadow:
-                0 10px 35px rgba(
-                    20,
-                    80,
-                    138,
-                    0.04
-                );
+            box-shadow: 0 10px 35px rgba(20, 80, 138, 0.04);
 
+            transition:
+                background-color 0.25s ease,
+                border-color 0.25s ease;
 
             .process_icon {
                 width: 65px;
@@ -159,7 +116,6 @@
                 }
             }
 
-
             h3 {
                 color: #333;
 
@@ -168,7 +124,6 @@
                 margin-bottom: 5px !important;
             }
 
-
             p {
                 color: #777;
 
@@ -176,52 +131,32 @@
             }
         }
 
-
-        /* -------------------------------------------
-           Active
-        ------------------------------------------- */
-
-        &.active {
-
+        &:hover {
             .process_number {
                 background-color: var(--primary);
 
                 border-color: var(--primary);
 
-                color: rgba(
-                    255,
-                    255,
-                    255,
-                    0.55
-                );
+                color: rgba(255, 255, 255, 0.55);
             }
-
 
             .process_card_content {
                 background-color: var(--primary);
 
                 border-color: var(--primary);
 
-
                 .process_icon {
-                    background-color: rgba(
-                        255,
-                        255,
-                        255,
-                        0.08
-                    );
+                    background-color: rgba(255, 255, 255, 0.08);
 
                     img {
                         filter: var(--filterWhite);
                     }
                 }
 
-
                 h3,
                 p {
                     color: #fff;
                 }
-
 
                 p {
                     opacity: 0.72;
@@ -231,71 +166,30 @@
     }
 }
 
-
-/* -------------------------------------------
-   Tablet / Mobile
-------------------------------------------- */
+section.process {
+    overflow: visible;
+}
 
 @media screen and (max-width: 991px) {
-
     .process {
-
         .txt_content {
             padding-inline-end: 0;
-
             margin-bottom: 40px;
-
             position: static;
-        }
-
-
-        .process_animation {
-            min-height: unset;
-        }
-
-
-        .process_stack {
-            height: auto;
-
-            display: flex;
-            flex-direction: column;
-
-            gap: 15px;
-        }
-
-
-        .process_card {
-            position: relative;
-
-            inset: unset;
-
-            width: 100%;
-
-            transform: none !important;
-            filter: none !important;
-
+            top: auto;
         }
     }
 }
 
-
-/* -------------------------------------------
-   Small Mobile
-------------------------------------------- */
-
 @media screen and (max-width: 575px) {
-
     .process {
-
         .process_card {
-
             .process_number {
                 width: 28px;
                 flex-basis: 28px;
 
                 margin-inline-end: 6px;
             }
-
 
             .process_card_content {
                 padding: 20px 18px;

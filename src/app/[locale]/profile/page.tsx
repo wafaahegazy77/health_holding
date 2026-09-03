@@ -19,7 +19,7 @@ const ProfilePage = async () => {
             <Navbar />
 
             <main>
-                <section className="profile_pg position-relative pb-70 bg_blue pt-100">
+                <section className="profile_pg position-relative pb-70 bg_blue pt-150">
                     <div className="container">
 
                         <ProfileHeader />

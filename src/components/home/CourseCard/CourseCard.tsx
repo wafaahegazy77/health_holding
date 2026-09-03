@@ -1,6 +1,5 @@
 import Image from "next/image";
 import { getTranslations } from "next-intl/server";
-import Link from "next/link";
 
 import "./_CourseCard.scss";
 
@@ -15,7 +14,6 @@ interface CourseCardProps {
         hours: string;
         quizzesCount: string;
 
-        // My Courses
         status?: "inProgress" | "completed" | "notStarted";
         completedModules?: string;
         progress?: number;
@@ -23,88 +21,54 @@ interface CourseCardProps {
     };
 }
 
-const CourseCard = async ({
-    course,
-}: CourseCardProps) => {
+const CourseCard = async ({ course }: CourseCardProps) => {
     const t = await getTranslations("featuredCourses");
-    const coursesT = await getTranslations("profile.courses");
+    const profileT = await getTranslations("profile.courses");
 
-    const statusLabels = {
-        inProgress: coursesT("status.inProgress"),
-        completed: coursesT("status.completed"),
-        notStarted: coursesT("status.notStarted"),
-    };
-
-    const actionLabels = {
-        inProgress: coursesT("actions.resume"),
-        completed: coursesT("actions.review"),
-        notStarted: coursesT("actions.start"),
-    };
+    const isProfileCourse = course.status !== undefined;
 
     return (
         <div className="course_card">
 
-            {/* -----------------------------------------
-                Course Image
-            ----------------------------------------- */}
-
+            {/* Course Image */}
             <div className="course_image">
 
-                <Link
-                    href="https://gamal.inspire-sa.com/scorm/player.html"
-                    className="d-block"
-                >
-                    <Image
-                        src={course.image}
-                        alt={course.title}
-                        fill
-                        className="img-cover"
-                    />
-                </Link>
-
+                <Image
+                    src={course.image}
+                    alt={course.title}
+                    fill
+                    className="img-cover"
+                />
 
                 {/* Category */}
                 <div className="course_category">
                     {course.category}
                 </div>
 
-
-                {/* Status - My Courses */}
-                {course.status && (
-                    <div
-                        className={`course_status course_status_${course.status}`}
-                    >
-                        {statusLabels[course.status]}
+                {/* Status - Profile */}
+                {isProfileCourse && (
+                    <div className={`course_status ${course.status}`}>
+                        <span className="status_dot" />
+                        {profileT(`status.${course.status}`)}
                     </div>
                 )}
-
-
-                {/* Favorite - UI */}
-                {/* <button
-                    type="button"
-                    className={`favorite_btn ${
-                        course.isFavorite ? "active" : ""
-                    }`}
-                    aria-label="Add to favorites"
-                >
-                    <i className="fa-regular fa-heart"></i>
-                </button> */}
 
             </div>
 
 
-            {/* -----------------------------------------
-                Course Content
-            ----------------------------------------- */}
-
+            {/* Course Content */}
             <div className="course_content">
 
-                {/* Modules */}
-                <div className="course_modules fsz-13">
-                    <span>
-                        {course.modulesCount} {t("modules")}
-                    </span>
-                </div>
+                    {/* Last Activity */}
+                    {isProfileCourse && course.lastActivity && (
+                        <div className="fsz-12 mb-2">
+                            <span className="course_date">
+                                <i className="fa-regular fa-calendar" />
+                                {course.lastActivity}
+                            </span>
+                        </div>
+                    )}
+
 
 
                 {/* Title */}
@@ -119,86 +83,85 @@ const CourseCard = async ({
                 </p>
 
 
+                {/* Progress - Profile */}
+                {isProfileCourse && (
+                    <div className="course_progress">
+
+                        <div className="progress_info">
+                            <span>
+                                {course.completedModules}/
+                                {course.modulesCount}{" "}
+                                {profileT("modulesDone")}
+                            </span>
+
+                            <span>
+                                {course.progress}%
+                            </span>
+                        </div>
+
+                        <div
+                            className={`progress_bar ${
+                                course.progress === 100 ? "completed" : ""
+                            }`}
+                        >
+                            <span
+                                style={{
+                                    width: `${course.progress}%`,
+                                }}
+                            />
+                        </div>
+
+                    </div>
+                )}
+
+
                 {/* Course Meta */}
-                <div className="course_meta">
+                <div className="course_meta mb-4">
 
                     <span>
                         <b>{course.hours}</b>{" "}
                         {t("hours")}
                     </span>
 
-                    <span className="fw-bold">
-                        .
-                    </span>
+                    <span className="fw-bold">.</span>
 
                     <span>
                         <b>{course.quizzesCount}</b>{" "}
                         {t("quizzes")}
                     </span>
 
+                    <span className="fw-bold">.</span>
+
+                    <span>
+                        <b>  {course.modulesCount} </b> {t("modules")}
+                    </span>
+
                 </div>
 
 
-                {/* -----------------------------------------
-                    My Courses Progress
-                ----------------------------------------- */}
+                {isProfileCourse && (
+                    <button
+                        type="button"
+                        className={`course_action ${
+                            course.status === "completed"
+                                ? "course_action_completed"
+                                : ""
+                        }`}
+                    >
+                        <i className="fa-regular fa-circle-play" />
 
-                {course.status && (
-                    <div className="course_progress">
-
-                        {/* Progress Bar */}
-                        <div className="progress_bar">
-
-                            <div
-                                className={`progress_fill progress_fill_${course.status}`}
-                                style={{
-                                    width: `${course.progress ?? 0}%`,
-                                }}
-                            />
-
-                        </div>
-
-
-                        {/* Progress Info */}
-                        <div className="progress_info">
-
-                            <span>
-                                {course.completedModules ?? "0"}
-                                /
-                                {course.modulesCount}{" "}
-                                {coursesT("modulesDone")}
-                            </span>
-
-                            <strong>
-                                {course.progress ?? 0}%
-                            </strong>
-
-                        </div>
-
-
-                        {/* Action Button */}
-                        <Link
-                            href="https://gamal.inspire-sa.com/scorm/player.html"
-                            className={`course_action course_action_${course.status}`}
-                        >
-                            <i className="fa-regular fa-play" />
-
-                            <span>
-                                {actionLabels[course.status]}
-                            </span>
-                        </Link>
-
-
-                        {/* Last Activity */}
-                        <div className="course_last_activity">
-                            {coursesT("lastActivity")}:{" "}
-                            {course.lastActivity || "—"}
-                        </div>
-
-                    </div>
+                        {profileT(
+                            course.status === "completed" && course.progress === 100
+                                ? "actions.review"
+                                : course.status === "notStarted"
+                                    ? "actions.start"    
+                                    : "actions.resume"
+                        )}
+                    </button>
                 )}
 
             </div>
+
 
         </div>
     );

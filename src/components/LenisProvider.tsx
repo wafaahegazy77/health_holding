@@ -1,70 +1,62 @@
 "use client";
 
-import {
-    createContext,
-    useContext,
-    useEffect,
-    useState,
-} from "react";
+import { useEffect, useState } from "react";
 import Lenis from "lenis";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-const LenisContext = createContext<Lenis | null>(null);
+let lenisInstance: Lenis | null = null;
 
-export const useLenis = () => {
-    return useContext(LenisContext);
-};
+export function useLenis() {
+  return lenisInstance;
+}
 
 export default function LenisProvider({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-    const [lenis, setLenis] = useState<Lenis | null>(null);
+  const [, setLenis] = useState<Lenis | null>(null);
 
-    useEffect(() => {
-        gsap.registerPlugin(ScrollTrigger);
+  useEffect(() => {
+    // 1. Register ScrollTrigger plugin with GSAP
+    gsap.registerPlugin(ScrollTrigger);
 
-        const lenisInstance = new Lenis({
-            duration: 1.2,
-            easing: (t) =>
-                Math.min(
-                    1,
-                    1.001 - Math.pow(2, -10 * t)
-                ),
-            orientation: "vertical",
-            gestureOrientation: "vertical",
-            smoothWheel: true,
-            wheelMultiplier: 1,
-            touchMultiplier: 2,
-        });
+    // 2. Initialize Lenis smooth scroll
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      orientation: "vertical",
+      gestureOrientation: "vertical",
+      smoothWheel: true,
+      wheelMultiplier: 1,
+      touchMultiplier: 2,
+    });
 
-        setLenis(lenisInstance);
+    lenisInstance = lenis;
+    setLenis(lenis);
 
-        lenisInstance.on(
-            "scroll",
-            ScrollTrigger.update
-        );
+    // 3. Update ScrollTrigger whenever Lenis scrolls
+    lenis.on("scroll", ScrollTrigger.update);
 
-        function update(time: number) {
-            lenisInstance.raf(time * 1000);
-        }
+    // 4. Synchronize Lenis with GSAP's Ticker RAF
+    function update(time: number) {
+      lenis.raf(time * 1000);
+    }
 
-        gsap.ticker.add(update);
+    gsap.ticker.add(update);
 
-        gsap.ticker.lagSmoothing(0);
+    // Disable lag smoothing in GSAP to avoid discrepancies
+    gsap.ticker.lagSmoothing(0);
 
-        return () => {
-            gsap.ticker.remove(update);
-            lenisInstance.destroy();
-            setLenis(null);
-        };
-    }, []);
+    // Clean up on component unmount
+    return () => {
+      gsap.ticker.remove(update);
+      lenis.destroy();
+      lenisInstance = null;
+      setLenis(null);
+    };
+  }, []);
 
-    return (
-        <LenisContext.Provider value={lenis}>
-            {children}
-        </LenisContext.Provider>
-    );
+  return <>{children}</>;
 }

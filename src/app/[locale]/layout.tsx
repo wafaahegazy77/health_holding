@@ -10,6 +10,7 @@ import { routing } from "@/i18n/routing";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import MotionProvider from "@/components/MotionProvider";
+import { cairo, poppins, prata } from "@/app/fonts";
 
 export function generateStaticParams() {
     return routing.locales.map((locale) => ({ locale }));
@@ -38,7 +39,11 @@ export default async function RootLayout({
     const dir = locale === "ar" ? "rtl" : "ltr";
 
     return (
-        <html lang={locale} dir={dir} >
+        <html
+            lang={locale}
+            dir={dir}
+            className={`${poppins.variable} ${prata.variable} ${cairo.variable}`}
+        >
             <body suppressHydrationWarning>
                 <NextIntlClientProvider messages={messages}>
                     <Providers>

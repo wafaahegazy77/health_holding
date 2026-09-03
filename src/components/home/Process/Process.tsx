@@ -2,7 +2,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { getHomeData } from "@/lib/api/home";
 import Reveal from "@/components/animations/Reveal";
-import ProcessAnimation from "./ProcessAnimation";
+import ProcessSteps from "./ProcessSteps";
 
 import "./_Process.scss";
 
@@ -64,7 +64,7 @@ const Process = async () => {
 
                     {/* Process Stack */}
                     <div className="col-lg-7">
-                        <ProcessAnimation
+                        <ProcessSteps
                             steps={data.process.steps}
                         />
                     </div>

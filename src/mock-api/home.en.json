@@ -23,7 +23,7 @@
     "learningTracks": {
         "title": "Explore by medical field",
         "description": "Browse categories, modules and courses related to your specialty.",
-        "backgroundImage": "/images/tracks-bg.png",
+        "backgroundImage": "/images/learningTracks-bg.png",
         "tracks": [
             {
                 "title": "Cardiology",
@@ -115,6 +115,18 @@
                 "description": "Membership, roles and customized access to content."
             }
         ]
+    },
+    "ceo": {
+        "description": "At Health Holding, we believe that investing in people is the foundation of a better future for healthcare. Through continuous learning and professional development, we strive to empower our healthcare professionals to keep pace with the latest practices and standards, while creating a meaningful and sustainable impact on the quality of healthcare services provided to our community.",
+        "name": "Dr. Mohamed Ahmed",
+        "position": "Chief Executive Officer",
+        "image": "/images/ceo.jpg"
+    },
+    "headTraining": {
+        "description": "At Health Holding, we believe that developing healthcare professionals is one of the key pillars of improving the quality of care. Through continuous training, we empower our teams with the knowledge and skills they need to achieve excellence and meet the demands of the future.",
+        "name": "Dr. Ahmed Mohamed",
+        "position": "Head of Training",
+        "image": "/images/head-training.jpg"
     },
     "process": {
         "title": "A clear, sequential learning journey",

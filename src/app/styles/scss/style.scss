@@ -1,8 +1,8 @@
 // -------------------------------------------
 //             IMPORTSCSS FILES
 // -------------------------------------------
-@import "./helper.scss";
-@import "./globals.scss";
+@use "./helper";
+@use "./globals";
 
 .section{ 
     position: relative;
@@ -33,6 +33,7 @@
 .bg_blue {
     background-color: #E6F5FD;
 }
+
 /* --------------- butn --------------- */
 .butn {
     position: relative;
@@ -453,19 +454,6 @@
     .profile_pg {
         padding-top: 50px !important;
     }
+
 }
 
-
-html[dir="rtl"]{
-
-    @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@200..1000&display=swap');
-
-    // * {
-    //     font-family: "Cairo", sans-serif;
-    // }
-    // .fa-classic, .fa-light, .fa-regular, .fa-solid, .fa-thin, .fal, .far, .fas, .fat {
-    //     font-family: "Font Awesome 6 Pro" !important;
-    // }
-
-    
-}

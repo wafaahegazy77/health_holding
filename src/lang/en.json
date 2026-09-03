@@ -1,323 +1,299 @@
 {
-    "navbar": {
-        "about": "About",
-        "tracks": "Tracks",
-        "courses": "Courses",
-        "platformFeatures": "Platform Features",
-        "process": "Process",
-        "faqs": "FAQs",
-        "account": "Account",
-        "login": "Login",
-        "createAccount": "Create an Account"
+  "navbar": {
+    "about": "About",
+    "tracks": "Tracks",
+    "courses": "Courses",
+    "platformFeatures": "Platform Features",
+    "process": "Process",
+    "faqs": "FAQs",
+    "account": "Account",
+    "login": "Login",
+    "createAccount": "Create an Account"
+  },
+  "hero": {
+    "eyebrow": "Trusted medical education, built for practice",
+    "title": "Structured medical learning,",
+    "highlightedTitle": "designed for doctors",
+    "logInButn": "Login",
+    "signUpButn": "Create an Account",
+    "exploreCourses": "Explore content",
+    "specialties": "Medical specialties"
+  },
+  "aboutPlatform": {
+    "title": "Not another course platform a medical learning environment",
+    "eyebrow": "ABOUT THE PLATFORM"
+  },
+  "learningTracks": {
+    "eyebrow": "LEARNING TRACKS",
+    "courses": "Courses"
+  },
+  "featuredCourses": {
+    "eyebrow": "FEATURED CONTENT",
+    "title": "Featured courses & learning \n modules",
+    "modules": "MODULES",
+    "course": "COURSE",
+    "hours": "HRS",
+    "quizzes": "QUIZZES"
+  },
+  "platformFeatures": {
+    "eyebrow": "PLATFORM FEATURES",
+    "title": "Everything a medical learning platform needs"
+  },
+  "ceo": {
+    "eyebrow": "A Message from the CEO",
+    "title": "Message from the CEO"
+  },
+  "headTraining": {
+    "eyebrow": "Head of Training",
+    "title": "A Message from the Head of Training"
+  },
+  "process": {
+    "title": "A clear, sequential learning journey",
+    "eyebrow": "PROCESS"
+  },
+  "stats": {
+    "activeLearners": "Active learners",
+    "expertInstructors": "Expert instructors",
+    "coursesAndModules": "Courses & modules",
+    "satisfactionRate": "Satisfaction rate"
+  },
+  "faqs": {
+    "eyebrow": "FAQS",
+    "title": "Frequently asked questions"
+  },
+  "callToAction": {
+    "title": "Ready to start learning?",
+    "createAccount": "Create your account",
+    "login": "Login"
+  },
+  "footer": {
+    "contact": "Contact",
+    "platform": "Platform",
+    "helps": "Helps",
+    "aboutUs": "About Us",
+    "learningTracks": "Learning Tracks",
+    "courses": "Courses",
+    "faqs": "FAQs",
+    "contactLink": "Contact",
+    "privacyPolicy": "Privacy Policy",
+    "termsConditions": "Terms & Conditions",
+    "backToTop": "Back to Top",
+    "copyright": "Health Holding. All Right Reserved"
+  },
+  "auth": {
+    "backToSite": "Back to site",
+    "login": {
+      "title": "Welcome back",
+      "description": "Sign in to pick up where you left off.",
+      "email": {
+        "label": "E-mail",
+        "placeholder": "Enter your e-mail"
+      },
+      "password": {
+        "label": "Password",
+        "placeholder": "Enter your password",
+        "showPassword": "Show password",
+        "hidePassword": "Hide password"
+      },
+      "rememberMe": "Remember me",
+      "forgotPassword": "Forgot Password?",
+      "submit": "Sign in",
+      "noAccount": "Don't have an account?",
+      "signUp": "Sign Up"
     },
-    "hero": {
-        "eyebrow": "Trusted medical education, built for practice",
-        "title": "Structured medical learning,",
-        "highlightedTitle": "designed for doctors",
-        "logInButn": "Login",
-        "signUpButn": "Create an Account",
-        "specialties": "Medical specialties"
-    },
-    "aboutPlatform": {
-        "title": "Not another course platform a medical learning environment",
-        "eyebrow": "ABOUT THE PLATFORM"
-    },
-    "learningTracks": {
-        "eyebrow": "LEARNING TRACKS",
-        "courses" : "Courses"
-    },
-    "featuredCourses": {
-        "eyebrow": "FEATURED CONTENT",
-        "title": "Featured courses & learning \n modules",
-        "modules": "MODULES",
-        "course": "COURSE",
-        "hours": "HRS",
-        "quizzes": "QUIZZES"
-    },
-    "platformFeatures": {
-        "eyebrow": "PLATFORM FEATURES",
-        "title": "Everything a medical learning platform needs"
-    },
-    "process": {
-        "title": "A clear, sequential learning journey",
-        "eyebrow": "PROCESS"
-    },
-    "stats": {
-        "activeLearners": "Active learners",
-        "expertInstructors": "Expert instructors",
-        "coursesAndModules": "Courses & modules",
-        "satisfactionRate": "Satisfaction rate"
-    },
-    "faqs": {
-        "eyebrow": "FAQS",
-        "title": "Frequently asked questions"
-    },
-    "callToAction": {
-        "title": "Ready to start learning?",
-        "createAccount": "Create your account",
-        "login": "Login"
-    },
-    "footer": {
-        "contact": "Contact",
-        "platform": "Platform",
-        "helps": "Helps",
-
-        "aboutUs": "About Us",
-        "learningTracks": "Learning Tracks",
-        "courses": "Courses",
-        "faqs": "FAQs",
-        "contactLink": "Contact",
-
-        "privacyPolicy": "Privacy Policy",
-        "termsConditions": "Terms & Conditions",
-
-        "backToTop": "Back to Top",
-
-        "copyright": "Health Holding. All Right Reserved"
-    },
-    "auth": {
-        "backToSite": "Back to site",
-
-        "login": {
-            "title": "Welcome back",
-            "description": "Sign in to pick up where you left off.",
-            "email": {
-                "label": "E-mail",
-                "placeholder": "Enter your e-mail"
-            },
-            "password": {
-                "label": "Password",
-                "placeholder": "Enter your password",
-                "showPassword": "Show password",
-                "hidePassword": "Hide password"
-            },
-            "rememberMe": "Remember me",
-            "forgotPassword": "Forgot Password?",
-            "submit": "Sign in",
-            "noAccount": "Don't have an account?",
-            "signUp": "Sign Up"
+    "forgotPassword": {
+      "step": "Step {current} of {total}",
+      "stepOne": {
+        "title": "Forgot password",
+        "description": "Enter the email address you registered with and we'll send you a verification code to reset your password.",
+        "email": {
+          "label": "Email address",
+          "placeholder": "Enter your email",
+          "hint": "example@example.com"
         },
-
-        "register": {
+        "backToLogin": "Back to log in",
+        "sendCode": "Send code"
+      },
+      "stepTwo": {
+        "title": "Verification code",
+        "description": "We sent a 4-digit code to {email}. Enter it below to continue.",
+        "prototype": "Prototype: any 4 digits work as the code.",
+        "resend": "Resend code in {time}",
+        "changeEmail": "Change email address",
+        "verify": "Verify"
+      },
+      "stepThree": {
+        "title": "Create new password",
+        "description": "Your new password must be different from the one you used before.",
+        "newPassword": {
+          "label": "New password"
+        },
+        "confirmPassword": {
+          "label": "Confirm new password"
+        },
+        "resetPassword": "Reset password"
+      },
+      "showPassword": "Show password",
+      "hidePassword": "Hide password"
+    },
+    "register": {
             "title": "Register",
-            "description": "Create your Dexcom Academy account in three easy steps. Already registered? Please login here",
+            "description": "Create your Health Holding Academy account in three easy steps. Already registered? Please login here",
             "step": "Step {current} of {total}",
-
             "country": {
                 "label": "Country"
             },
-
             "salutation": {
                 "label": "Salutation",
                 "placeholder": "Select salutation"
             },
-
             "firstName": {
                 "label": "First Name",
                 "placeholder": "Enter your first name"
             },
-
             "lastName": {
                 "label": "Last Name",
                 "placeholder": "Enter your last name"
             },
-
             "email": {
                 "label": "E-mail",
                 "placeholder": "Enter your e-mail",
                 "hint": "example@example.com."
             },
-
             "professional": {
                 "title": "Are you a Healthcare Professional or an Industry Partner?",
                 "option": "Healthcare Professional"
             },
-
             "terms": {
                 "title": "Terms of Use",
                 "text": "Health Holding respects the privacy and confidentiality of your personal information, and any information provided will be processed in accordance with Health Holding Terms of Use and Privacy Notice to facilitate access to Health Holding Educational Programmes for Healthcare Professionals."
             },
-
             "marketing": {
                 "title": "Marketing Communications",
                 "text": "I agree to stay up to date with additional information and communications from Health Holding about Health Holding products and services, which can support my practice to care for patients with Diabetes."
             },
-
             "privacyConfirmation": "By checking this box you agree to receive information about Health Holding products and related services, including marketing communications aiming to support your practice. You may opt-out of these communications at any time. Health Holding respects the privacy and confidentiality of your personal information and any information you provide will be sent securely and subject to the Health Holding Terms of Use and Privacy Notice.",
-
             "roleStatement": {
                 "label": "Which statement best describes your role in diabetes care delivery?",
                 "placeholder": "Select your role"
             },
-
             "ksaRegion": {
                 "label": "KSA Region",
                 "placeholder": "Select your region"
             },
-
             "healthcareSector": {
                 "label": "Which healthcare sector do you work in?",
                 "placeholder": "Select healthcare sector"
             },
-
             "role": {
                 "label": "Role",
                 "placeholder": "Select your professional role"
             },
-
             "workplace": {
                 "label": "Name of Hospital or Primary Care Workplace",
                 "placeholder": "Enter your workplace"
             },
-
             "postcode": {
                 "label": "Post Code of Hospital or Primary Care Workplace",
                 "placeholder": "Type Code"
             },
-
             "scfhs": {
                 "label": "SCFHS Number",
                 "placeholder": "Enter your SCFHS number"
             },
-
             "mobile": {
                 "label": "Mobile Number",
                 "placeholder": "(+966) 000-000000",
                 "hint": "Please enter a valid phone number."
             },
-
             "back": "Back",
             "next": "Next",
             "alreadyAccount": "Already have an account?",
             "login": "Log in",
             "Submit": "Submit"
-        },
-        "forgotPassword": {
-            "step": "Step {current} of {total}",
-
-            "stepOne": {
-                "title": "Forgot password",
-                "description": "Enter the email address you registered with and we'll send you a verification code to reset your password.",
-                "email": {
-                    "label": "Email address",
-                    "placeholder": "Enter your email",
-                    "hint": "example@example.com"
-                },
-                "backToLogin": "Back to log in",
-                "sendCode": "Send code"
-            },
-
-            "stepTwo": {
-                "title": "Verification code",
-                "description": "We sent a 4-digit code to {email}. Enter it below to continue.",
-                "prototype": "Prototype: any 4 digits work as the code.",
-                "resend": "Resend code in {time}",
-                "changeEmail": "Change email address",
-                "verify": "Verify"
-            },
-
-            "stepThree": {
-                "title": "Create new password",
-                "description": "Your new password must be different from the one you used before.",
-                "newPassword": {
-                    "label": "New password"
-                },
-                "confirmPassword": {
-                    "label": "Confirm new password"
-                },
-                "resetPassword": "Reset password"
-            },
-
-            "showPassword": "Show password",
-            "hidePassword": "Hide password"
-        }
-    },
-    "profile": {
-        "memberSince": "Member since",
-
-        "sidebar": {
-            "personalInformation": "Personal information",
-            "myCourses": "My courses",
-            "logout": "Log out"
-        },
-        "logoutModal": {
-            "title": "Log out",
-            "description": "You’ll be signed out of this device. Your course progress is saved.",
-            "cancel": "Cancel",
-            "confirm": "Log out",
-            "close": "Close"
-        },
-        "personalInformation": {
-            "personalInformation" : "Personal Information" ,
-            "editPersonalInformation": "Edit personal information",
-            "save": "Save",
-            "cancel": "Cancel",
-            "accountDetails": "Account details",
-            "professionalDetails": "Professional details",
-            "editDetails": "Edit details",
-            "cantBeChanged": "Can't be changed",
-            "confirmed": "Confirmed",
-            "accepted": "Accepted",
-            "readTerms": "Read terms",
-
-            "preferences": {
-                "title": "Preferences & consents",
-                "healthcareProfessional": "Healthcare Professional or Industry Partner",
-                "termsOfUse": "Terms of Use",
-                "marketing": {
-                    "title": "Marketing Communications",
-                    "description": "I agree to stay up to date with additional information and communications from Health Holding about Health Holding products and services."
-                }
-            },
-
-            "accountSecurity": {
-                "title": "Account security",
-                "password": "Password",
-                "changePassword": "Change password"
-            }
-        },
-        "changePasswordModal": {
-            "title": "Change password",
-            "currentPassword": "Current password",
-            "newPassword": "New password",
-            "confirmNewPassword": "Confirm new password",
-            "showPassword": "Show password",
-            "hidePassword": "Hide password",
-            "cancel": "Cancel",
-            "updatePassword": "Update password",
-            "close": "Close"
-        },
-        "courses": {
-            "status": {
-                "inProgress": "In progress",
-                "completed": "Completed",
-                "notStarted": "Not started"
-            },
-            "actions": {
-                "resume": "Resume course",
-                "review": "Review course",
-                "start": "Start course"
-            },
-            "modulesDone": "modules done",
-            "lastActivity": "Last activity",
-            "stats": {
-                "assigned": "Courses assigned",
-                "completed": "Completed",
-                "inProgress": "In progress",
-                "notStarted": "Not started",
-                "overallCompletion": "Overall completion"
-            },
-            "resume": {
-                "pickUp": "Pick up where you left off"
-            },
-            "filters": {
-                "search": "Search your courses",
-                "allCategories": "All categories",
-                "allStatuses": "All statuses"
-            }
-        }
     }
+  },
 
-
-
+  "profile": {
+    "memberSince": "Member since",
+    "sidebar": {
+      "personalInformation": "Personal information",
+      "myCourses": "My courses",
+      "logout": "Log out"
+    },
+    "logoutModal": {
+      "title": "Log out",
+      "description": "You’ll be signed out of this device. Your course progress is saved.",
+      "cancel": "Cancel",
+      "confirm": "Log out",
+      "close": "Close"
+    },
+    "personalInformation": {
+      "personalInformation": "Personal Information",
+      "editPersonalInformation": "Edit personal information",
+      "save": "Save",
+      "cancel": "Cancel",
+      "accountDetails": "Account details",
+      "professionalDetails": "Professional details",
+      "editDetails": "Edit details",
+      "cantBeChanged": "Can't be changed",
+      "confirmed": "Confirmed",
+      "accepted": "Accepted",
+      "readTerms": "Read terms",
+      "preferences": {
+        "title": "Preferences & consents",
+        "healthcareProfessional": "Healthcare Professional or Industry Partner",
+        "termsOfUse": "Terms of Use",
+        "marketing": {
+          "title": "Marketing Communications",
+          "description": "I agree to stay up to date with additional information and communications from Health Holding about Health Holding products and services."
+        }
+      },
+      "accountSecurity": {
+        "title": "Account security",
+        "password": "Password",
+        "changePassword": "Change password"
+      }
+    },
+    "changePasswordModal": {
+      "title": "Change password",
+      "currentPassword": "Current password",
+      "newPassword": "New password",
+      "confirmNewPassword": "Confirm new password",
+      "showPassword": "Show password",
+      "hidePassword": "Hide password",
+      "cancel": "Cancel",
+      "updatePassword": "Update password",
+      "close": "Close"
+    },
+    "courses": {
+      "status": {
+        "inProgress": "In progress",
+        "completed": "Completed",
+        "notStarted": "Not started"
+      },
+      "actions": {
+        "resume": "Resume course",
+        "review": "Review course",
+        "start": "Start course"
+      },
+      "modulesDone": "modules done",
+      "lastActivity": "Last activity",
+      "stats": {
+        "assigned": "Courses assigned",
+        "completed": "Completed",
+        "inProgress": "In progress",
+        "notStarted": "Not started",
+        "overallCompletion": "Overall completion"
+      },
+      "resume": {
+        "pickUp": "Pick up where you left off"
+      },
+      "filters": {
+        "search": "Search your courses",
+        "allCategories": "All categories",
+        "allStatuses": "All statuses"
+      }
+    }
+  }
 }

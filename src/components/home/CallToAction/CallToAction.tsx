@@ -47,31 +47,8 @@ const CallToAction = async () => {
                             trigger="load"
                         >
                             <Link
-                                href="/"
-                                className="butn white_butn hvr-icon-slide-out-in"
-                            >
-                                <div className="txt" >
-                                    {t("createAccount")}
-                                </div>
-
-                                {/* Current icon */}
-                                <span className="hvr-icon hvr-icon-current">
-                                    <i className="fa-regular fa-arrow-up-right"></i>
-                                </span>
-
-                                {/* Next icon */}
-                                <span className="hvr-icon hvr-icon-next">
-                                    <i className="fa-regular fa-arrow-right"></i>
-                                </span>
-                            </Link>
-                        </Reveal>
-                        <Reveal
-                            animation="fade-up"
-                            trigger="load"
-                        >
-                            <Link
-                                href="/"
-                                className="butn gradient_butn hvr-icon-slide-out-in"
+                                href="/login"
+                                className="butn gradient_butn hvr-icon-slide-out-in "
                             >
                                 <div className="txt" >
                                     {t("login")}

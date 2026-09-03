@@ -1,338 +1,299 @@
 {
-    "navbar": {
-        "about": "عن المنصة",
-        "tracks": "المسارات",
-        "courses": "الدورات",
-        "platformFeatures": "مميزات المنصة",
-        "process": "آلية التعلم",
-        "faqs": "الأسئلة الشائعة",
-        "account": "الحساب",
+  "navbar": {
+    "about": "عن المنصة",
+    "tracks": "المسارات",
+    "courses": "الدورات",
+    "platformFeatures": "مميزات المنصة",
+    "process": "آلية العمل",
+    "faqs": "الأسئلة الشائعة",
+    "account": "حسابي",
+    "login": "تسجيل الدخول",
+    "createAccount": "إنشاء حساب"
+  },
+  "hero": {
+    "eyebrow": "تعليم طبي موثوق، مصمم للتطبيق العملي",
+    "title": "تعلم طبي منظم،",
+    "highlightedTitle": "مصمم للأطباء",
+    "logInButn": "تسجيل الدخول",
+    "signUpButn": "إنشاء حساب",
+    "exploreCourses": "استكشف المحتوى",
+    "specialties": "تخصصات طبية"
+  },
+  "aboutPlatform": {
+    "title": "ليست مجرد منصة دورات، بل بيئة للتعلم الطبي",
+    "eyebrow": "عن المنصة"
+  },
+  "learningTracks": {
+    "eyebrow": "المسارات التعليمية",
+    "courses": "دورة"
+  },
+  "featuredCourses": {
+    "eyebrow": "محتوى مميز",
+    "title": "الدورات التدريبية ووحدات التعلم \n المميزة",
+    "modules": "وحدات",
+    "course": "دورة",
+    "hours": "ساعات",
+    "quizzes": "اختبارات"
+  },
+  "platformFeatures": {
+    "eyebrow": "مميزات المنصة",
+    "title": "كل ما تحتاجه منصة التعلم الطبي"
+  },
+  "ceo": {
+    "eyebrow": "كلمة الرئيس التنفيذي",
+    "title": "رسالة من الرئيس التنفيذي"
+  },
+  "headTraining": {
+    "eyebrow": "رؤية رئيس التدريب",
+    "title": "كلمة رئيس التدريب"
+  },
+  "process": {
+    "title": "رحلة تعليمية واضحة ومتسلسلة",
+    "eyebrow": "الخطوات"
+  },
+  "stats": {
+    "activeLearners": "متعلم نشط",
+    "expertInstructors": "مدرب خبير",
+    "coursesAndModules": "دورات ووحدات",
+    "satisfactionRate": "معدل الرضا"
+  },
+  "faqs": {
+    "eyebrow": "الأسئلة الشائعة",
+    "title": "الأسئلة الأكثر شيوعًا"
+  },
+  "callToAction": {
+    "title": "جاهز لبدء التعلم؟",
+    "createAccount": "إنشاء حسابك",
+    "login": "تسجيل الدخول"
+  },
+  "footer": {
+    "contact": "تواصل معنا",
+    "platform": "المنصة",
+    "helps": "المساعدة",
+    "aboutUs": "من نحن",
+    "learningTracks": "مسارات التعلم",
+    "courses": "الدورات",
+    "faqs": "الأسئلة الشائعة",
+    "contactLink": "تواصل معنا",
+    "privacyPolicy": "سياسة الخصوصية",
+    "termsConditions": "الشروط والأحكام",
+    "backToTop": "العودة للأعلى",
+    "copyright": "© 2026 Health Holding. جميع الحقوق محفوظة"
+  },
+  "auth": {
+    "backToSite": "العودة إلى الموقع",
+    "login": {
+      "title": "مرحبًا بعودتك",
+      "description": "سجّل الدخول لمتابعة رحلة التعلم من حيث توقفت.",
+      "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني"
+      },
+      "password": {
+        "label": "كلمة المرور",
+        "placeholder": "أدخل كلمة المرور",
+        "showPassword": "إظهار كلمة المرور",
+        "hidePassword": "إخفاء كلمة المرور"
+      },
+      "rememberMe": "تذكرني",
+      "forgotPassword": "هل نسيت كلمة المرور؟",
+      "submit": "تسجيل الدخول",
+      "noAccount": "ليس لديك حساب؟",
+      "signUp": "إنشاء حساب"
+    },
+    "forgotPassword": {
+      "step": "الخطوة {current} من {total}",
+      "stepOne": {
+        "title": "نسيت كلمة المرور",
+        "description": "أدخل عنوان البريد الإلكتروني الذي سجلت به وسنرسل لك رمز تحقق لإعادة تعيين كلمة المرور.",
+        "email": {
+          "label": "عنوان البريد الإلكتروني",
+          "placeholder": "أدخل بريدك الإلكتروني",
+          "hint": "example@example.com"
+        },
+        "backToLogin": "العودة إلى تسجيل الدخول",
+        "sendCode": "إرسال الرمز"
+      },
+      "stepTwo": {
+        "title": "رمز التحقق",
+        "description": "أرسلنا رمزًا مكونًا من 4 أرقام إلى {email}. أدخله أدناه للمتابعة.",
+        "prototype": "للتجربة: يمكن استخدام أي 4 أرقام كرمز.",
+        "resend": "إعادة إرسال الرمز خلال {time}",
+        "changeEmail": "تغيير عنوان البريد الإلكتروني",
+        "verify": "تحقق"
+      },
+      "stepThree": {
+        "title": "إنشاء كلمة مرور جديدة",
+        "description": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور التي استخدمتها من قبل.",
+        "newPassword": {
+          "label": "كلمة المرور الجديدة"
+        },
+        "confirmPassword": {
+          "label": "تأكيد كلمة المرور الجديدة"
+        },
+        "resetPassword": "إعادة تعيين كلمة المرور"
+      },
+      "showPassword": "إظهار كلمة المرور",
+      "hidePassword": "إخفاء كلمة المرور"
+    },
+    "register": {
+        "title": "تسجيل",
+        "description": "أنشئ حسابك في Health Holding Academy في ثلاث خطوات سهلة. هل لديك حساب بالفعل؟ يرجى تسجيل الدخول من هنا",
+        "step": "الخطوة {current} من {total}",
+        "country": {
+        "label": "الدولة"
+        },
+        "salutation": {
+        "label": "اللقب",
+        "placeholder": "اختر اللقب"
+        },
+        "firstName": {
+        "label": "الاسم الأول",
+        "placeholder": "أدخل اسمك الأول"
+        },
+        "lastName": {
+        "label": "اسم العائلة",
+        "placeholder": "أدخل اسم عائلتك"
+        },
+        "email": {
+        "label": "البريد الإلكتروني",
+        "placeholder": "أدخل بريدك الإلكتروني",
+        "hint": "example@example.com."
+        },
+        "professional": {
+        "title": "هل أنت ممارسًا صحيًا أم شريكًا في القطاع الصناعي؟",
+        "option": "ممارس صحي"
+        },
+        "terms": {
+        "title": "شروط الاستخدام",
+        "text": "تحترم Health Holding خصوصية وسرية معلوماتك الشخصية، وسيتم معالجة أي معلومات تقدمها وفقًا لشروط الاستخدام وإشعار الخصوصية الخاصين بـ Health Holding، وذلك لتسهيل الوصول إلى البرامج التعليمية المقدمة من Health Holding لمتخصصي الرعاية الصحية."
+        },
+        "marketing": {
+        "title": "الرسائل التسويقية",
+        "text": "أوافق على البقاء على اطلاع بأحدث المعلومات والرسائل الإضافية من Health Holding حول منتجات وخدمات Health Holding، والتي يمكن أن تدعم ممارستي في رعاية المرضى المصابين بمرض السكري."
+        },
+        "privacyConfirmation": "بموجب تحديد هذا المربع، فإنك توافق على تلقي المعلومات حول منتجات Health Holding والخدمات ذات الصلة، بما في ذلك الرسائل التسويقية التي تهدف إلى دعم ممارستك. يمكنك إلغاء الاشتراك في هذه الرسائل في أي وقت. تحترم Health Holding خصوصية وسرية معلوماتك الشخصية، وسيتم إرسال أي معلومات تقدمها بشكل آمن وتخضع لشروط الاستخدام وإشعار الخصوصية الخاصين بـ Health Holding.",
+        "roleStatement": {
+        "label": "أي عبارة تصف دورك بشكل أفضل في تقديم رعاية مرضى السكري؟",
+        "placeholder": "اختر دورك"
+        },
+        "ksaRegion": {
+        "label": "منطقة المملكة العربية السعودية",
+        "placeholder": "اختر المنطقة"
+        },
+        "healthcareSector": {
+        "label": "في أي قطاع من قطاعات الرعاية الصحية تعمل؟",
+        "placeholder": "اختر قطاع الرعاية الصحية"
+        },
+        "role": {
+        "label": "الدور",
+        "placeholder": "اختر دورك المهني"
+        },
+        "workplace": {
+        "label": "اسم المستشفى أو جهة الرعاية الأولية",
+        "placeholder": "أدخل اسم جهة العمل"
+        },
+        "postcode": {
+        "label": "الرمز البريدي للمستشفى أو جهة الرعاية الأولية",
+        "placeholder": "أدخل الرمز البريدي"
+        },
+        "scfhs": {
+        "label": "رقم الهيئة السعودية للتخصصات الصحية",
+        "placeholder": "أدخل رقم الهيئة"
+        },
+        "mobile": {
+        "label": "رقم الجوال",
+        "placeholder": "(+966) 000-000000",
+        "hint": "يرجى إدخال رقم هاتف صالح."
+        },
+        "back": "رجوع",
+        "next": "التالي",
+        "alreadyAccount": "لديك حساب بالفعل؟",
         "login": "تسجيل الدخول",
-        "createAccount": "إنشاء حساب"
-    },
-
-    "hero": {
-        "eyebrow": "تعليم طبي موثوق، مصمم للتطبيق العملي",
-        "title": "تعلم طبي منظم،",
-        "highlightedTitle": "مصمم للأطباء",
-        "logInButn": "تسجيل الدخول",
-        "signUpButn": "إنشاء حساب",
-        "specialties": "التخصصات الطبية"
-    },
-
-    "aboutPlatform": {
-        "title": "ليست مجرد منصة دورات، بل بيئة متكاملة للتعلم الطبي",
-        "eyebrow": "عن المنصة"
-    },
-
-    "learningTracks": {
-        "eyebrow": "المسارات التعليمية",
-        "courses": "الدورات"
-    },
-
-    "featuredCourses": {
-        "eyebrow": "محتوى مميز",
-        "title": "دورات ووحدات \n تعليمية مميزة",
-        "modules": "الوحدات",
-        "course": "دورة",
-        "hours": "ساعة",
-        "quizzes": "اختبارات"
-    },
-
-    "platformFeatures": {
-        "eyebrow": "مميزات المنصة",
-        "title": "كل ما تحتاجه منصة التعلم الطبي"
-    },
-
-    "process": {
-        "title": "رحلة تعلم واضحة ومتسلسلة",
-        "eyebrow": "آلية التعلم"
-    },
-
-    "stats": {
-        "activeLearners": "المتعلمون النشطون",
-        "expertInstructors": "المدربون الخبراء",
-        "coursesAndModules": "الدورات والوحدات",
-        "satisfactionRate": "نسبة الرضا"
-    },
-
-    "faqs": {
-        "eyebrow": "الأسئلة الشائعة",
-        "title": "الأسئلة الأكثر شيوعًا"
-    },
-
-    "callToAction": {
-        "title": "هل أنت مستعد لبدء التعلم؟",
-        "createAccount": "أنشئ حسابك",
-        "login": "تسجيل الدخول"
-    },
-
-    "footer": {
-        "contact": "تواصل معنا",
-        "platform": "المنصة",
-        "helps": "المساعدة",
-        "aboutUs": "عن المنصة",
-        "learningTracks": "المسارات التعليمية",
-        "courses": "الدورات",
-        "faqs": "الأسئلة الشائعة",
-        "contactLink": "تواصل معنا",
-        "privacyPolicy": "سياسة الخصوصية",
-        "termsConditions": "الشروط والأحكام",
-        "backToTop": "العودة إلى الأعلى",
-        "copyright": "Health Holding. جميع الحقوق محفوظة"
-    },
-
-    "auth": {
-        "backToSite": "العودة إلى الموقع",
-
-        "login": {
-            "title": "مرحبًا بعودتك",
-            "description": "سجّل الدخول لمتابعة رحلة التعلم من حيث توقفت.",
-            "email": {
-                "label": "البريد الإلكتروني",
-                "placeholder": "أدخل بريدك الإلكتروني"
-            },
-            "password": {
-                "label": "كلمة المرور",
-                "placeholder": "أدخل كلمة المرور",
-                "showPassword": "إظهار كلمة المرور",
-                "hidePassword": "إخفاء كلمة المرور"
-            },
-            "rememberMe": "تذكرني",
-            "forgotPassword": "هل نسيت كلمة المرور؟",
-            "submit": "تسجيل الدخول",
-            "noAccount": "ليس لديك حساب؟",
-            "signUp": "إنشاء حساب"
-        },
-
-        "register": {
-            "title": "إنشاء حساب",
-            "description": "أنشئ حسابك في Health Holding Academy من خلال ثلاث خطوات بسيطة. هل لديك حساب بالفعل؟ سجّل الدخول من هنا",
-            "step": "الخطوة {current} من {total}",
-
-            "country": {
-                "label": "الدولة"
-            },
-
-            "salutation": {
-                "label": "اللقب",
-                "placeholder": "اختر اللقب"
-            },
-
-            "firstName": {
-                "label": "الاسم الأول",
-                "placeholder": "أدخل اسمك الأول"
-            },
-
-            "lastName": {
-                "label": "اسم العائلة",
-                "placeholder": "أدخل اسم العائلة"
-            },
-
-            "email": {
-                "label": "البريد الإلكتروني",
-                "placeholder": "أدخل بريدك الإلكتروني",
-                "hint": "example@example.com."
-            },
-
-            "professional": {
-                "title": "هل أنت من العاملين في المجال الصحي أم شريكًا في قطاع الصناعة؟",
-                "option": "أخصائي رعاية صحية"
-            },
-
-            "terms": {
-                "title": "شروط الاستخدام",
-                "text": "تحترم Health Holding خصوصية معلوماتك الشخصية وسريتها، وسيتم التعامل مع أي معلومات تقدمها وفقًا لشروط الاستخدام وإشعار الخصوصية الخاصين بـ Health Holding، وذلك لتسهيل الوصول إلى البرامج التعليمية التي تقدمها Health Holding لأخصائيي الرعاية الصحية."
-            },
-
-            "marketing": {
-                "title": "الاتصالات التسويقية",
-                "text": "أوافق على تلقي أحدث المعلومات والاتصالات من Health Holding حول منتجات وخدمات Health Holding، والتي يمكن أن تدعم ممارستي المهنية في رعاية مرضى السكري."
-            },
-
-            "privacyConfirmation": "بتحديد هذا المربع، فإنك توافق على تلقي المعلومات حول منتجات Health Holding والخدمات ذات الصلة، بما في ذلك الاتصالات التسويقية التي تهدف إلى دعم ممارستك المهنية. يمكنك إلغاء الاشتراك في هذه الاتصالات في أي وقت. تحترم Health Holding خصوصية معلوماتك الشخصية وسريتها، وسيتم إرسال أي معلومات تقدمها بشكل آمن ووفقًا لشروط الاستخدام وإشعار الخصوصية الخاصين بـ Health Holding.",
-
-            "roleStatement": {
-                "label": "أي عبارة تصف دورك بشكل أفضل في تقديم رعاية مرضى السكري؟",
-                "placeholder": "اختر دورك"
-            },
-
-            "ksaRegion": {
-                "label": "منطقة المملكة العربية السعودية",
-                "placeholder": "اختر منطقتك"
-            },
-
-            "healthcareSector": {
-                "label": "في أي قطاع صحي تعمل؟",
-                "placeholder": "اختر القطاع الصحي"
-            },
-
-            "role": {
-                "label": "الدور الوظيفي",
-                "placeholder": "اختر دورك المهني"
-            },
-
-            "workplace": {
-                "label": "اسم المستشفى أو جهة الرعاية الأولية",
-                "placeholder": "أدخل مكان عملك"
-            },
-
-            "postcode": {
-                "label": "الرمز البريدي للمستشفى أو جهة الرعاية الأولية",
-                "placeholder": "أدخل الرمز البريدي"
-            },
-
-            "scfhs": {
-                "label": "رقم الهيئة السعودية للتخصصات الصحية",
-                "placeholder": "أدخل رقم الهيئة السعودية للتخصصات الصحية"
-            },
-
-            "mobile": {
-                "label": "رقم الجوال",
-                "placeholder": "(+966) 000-000000",
-                "hint": "يرجى إدخال رقم هاتف صالح."
-            },
-
-            "back": "رجوع",
-            "next": "التالي",
-            "alreadyAccount": "لديك حساب بالفعل؟",
-            "login": "تسجيل الدخول",
-            "Submit": "إرسال"
-        },
-
-        "forgotPassword": {
-            "step": "الخطوة {current} من {total}",
-
-            "stepOne": {
-                "title": "نسيت كلمة المرور",
-                "description": "أدخل عنوان البريد الإلكتروني الذي سجلت به وسنرسل لك رمز تحقق لإعادة تعيين كلمة المرور.",
-                "email": {
-                    "label": "عنوان البريد الإلكتروني",
-                    "placeholder": "أدخل بريدك الإلكتروني",
-                    "hint": "example@example.com"
-                },
-                "backToLogin": "العودة إلى تسجيل الدخول",
-                "sendCode": "إرسال الرمز"
-            },
-
-            "stepTwo": {
-                "title": "رمز التحقق",
-                "description": "أرسلنا رمزًا مكونًا من 4 أرقام إلى {email}. أدخله أدناه للمتابعة.",
-                "prototype": "للتجربة: يمكن استخدام أي 4 أرقام كرمز.",
-                "resend": "إعادة إرسال الرمز خلال {time}",
-                "changeEmail": "تغيير عنوان البريد الإلكتروني",
-                "verify": "تحقق"
-            },
-
-            "stepThree": {
-                "title": "إنشاء كلمة مرور جديدة",
-                "description": "يجب أن تكون كلمة المرور الجديدة مختلفة عن كلمة المرور التي استخدمتها من قبل.",
-                "newPassword": {
-                    "label": "كلمة المرور الجديدة"
-                },
-                "confirmPassword": {
-                    "label": "تأكيد كلمة المرور الجديدة"
-                },
-                "resetPassword": "إعادة تعيين كلمة المرور"
-            },
-
-            "showPassword": "إظهار كلمة المرور",
-            "hidePassword": "إخفاء كلمة المرور"
-        }
-    },
-
-    "profile": {
-        "memberSince": "عضو منذ",
-
-        "sidebar": {
-            "personalInformation": "المعلومات الشخصية",
-            "myCourses": "دوراتي",
-            "logout": "تسجيل الخروج"
-        },
-
-        "logoutModal": {
-            "title": "تسجيل الخروج",
-            "description": "سيتم تسجيل خروجك من هذا الجهاز. سيتم حفظ تقدمك في الدورات.",
-            "cancel": "إلغاء",
-            "confirm": "تسجيل الخروج",
-            "close": "إغلاق"
-        },
-
-        "personalInformation": {
-            "personalInformation": "المعلومات الشخصية",
-            "editPersonalInformation": "تعديل المعلومات الشخصية",
-            "save": "حفظ",
-            "cancel": "إلغاء",
-            "accountDetails": "تفاصيل الحساب",
-            "professionalDetails": "التفاصيل المهنية",
-            "editDetails": "تعديل التفاصيل",
-            "cantBeChanged": "لا يمكن تغييره",
-            "confirmed": "تم التأكيد",
-            "accepted": "تم القبول",
-            "readTerms": "قراءة الشروط",
-
-            "preferences": {
-                "title": "التفضيلات والموافقات",
-                "healthcareProfessional": "أخصائي رعاية صحية أو شريك في قطاع الصناعة",
-                "termsOfUse": "شروط الاستخدام",
-                "marketing": {
-                    "title": "الاتصالات التسويقية",
-                    "description": "أوافق على تلقي أحدث المعلومات والاتصالات من Health Holding حول منتجات وخدمات Health Holding."
-                }
-            },
-
-            "accountSecurity": {
-                "title": "أمان الحساب",
-                "password": "كلمة المرور",
-                "changePassword": "تغيير كلمة المرور"
-            }
-        },
-
-        "changePasswordModal": {
-            "title": "تغيير كلمة المرور",
-            "currentPassword": "كلمة المرور الحالية",
-            "newPassword": "كلمة المرور الجديدة",
-            "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
-            "showPassword": "إظهار كلمة المرور",
-            "hidePassword": "إخفاء كلمة المرور",
-            "cancel": "إلغاء",
-            "updatePassword": "تحديث كلمة المرور",
-            "close": "إغلاق"
-        },
-
-        "courses": {
-            "status": {
-                "inProgress": "قيد التقدم",
-                "completed": "مكتملة",
-                "notStarted": "لم تبدأ"
-            },
-
-            "actions": {
-                "resume": "استئناف الدورة",
-                "review": "مراجعة الدورة",
-                "start": "بدء الدورة"
-            },
-
-            "modulesDone": "وحدات مكتملة",
-            "lastActivity": "آخر نشاط",
-
-            "stats": {
-                "assigned": "الدورات المسندة",
-                "completed": "مكتملة",
-                "inProgress": "قيد التقدم",
-                "notStarted": "لم تبدأ",
-                "overallCompletion": "نسبة الإكمال"
-            },
-
-            "resume": {
-                "pickUp": "تابع من حيث توقفت"
-            },
-
-            "filters": {
-                "search": "ابحث في دوراتك",
-                "allCategories": "جميع التصنيفات",
-                "allStatuses": "جميع الحالات"
-            }
-        }
+        "Submit": "إرسال"
     }
+  },
+
+  "profile": {
+    "memberSince": "عضو منذ",
+    "sidebar": {
+      "personalInformation": "المعلومات الشخصية",
+      "myCourses": "دوراتي",
+      "logout": "تسجيل الخروج"
+    },
+    "logoutModal": {
+      "title": "تسجيل الخروج",
+      "description": "سيتم تسجيل خروجك من هذا الجهاز. سيتم حفظ تقدمك في الدورات.",
+      "cancel": "إلغاء",
+      "confirm": "تسجيل الخروج",
+      "close": "إغلاق"
+    },
+    "personalInformation": {
+      "personalInformation": "المعلومات الشخصية",
+      "editPersonalInformation": "تعديل المعلومات الشخصية",
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "accountDetails": "تفاصيل الحساب",
+      "professionalDetails": "التفاصيل المهنية",
+      "editDetails": "تعديل التفاصيل",
+      "cantBeChanged": "لا يمكن تغييره",
+      "confirmed": "تم التأكيد",
+      "accepted": "تم القبول",
+      "readTerms": "قراءة الشروط",
+      "preferences": {
+        "title": "التفضيلات والموافقات",
+        "healthcareProfessional": "أخصائي رعاية صحية أو شريك في قطاع الصناعة",
+        "termsOfUse": "شروط الاستخدام",
+        "marketing": {
+          "title": "الاتصالات التسويقية",
+          "description": "أوافق على تلقي أحدث المعلومات والاتصالات من Health Holding حول منتجات وخدمات Health Holding."
+        }
+      },
+      "accountSecurity": {
+        "title": "أمان الحساب",
+        "password": "كلمة المرور",
+        "changePassword": "تغيير كلمة المرور"
+      }
+    },
+    "changePasswordModal": {
+      "title": "تغيير كلمة المرور",
+      "currentPassword": "كلمة المرور الحالية",
+      "newPassword": "كلمة المرور الجديدة",
+      "confirmNewPassword": "تأكيد كلمة المرور الجديدة",
+      "showPassword": "إظهار كلمة المرور",
+      "hidePassword": "إخفاء كلمة المرور",
+      "cancel": "إلغاء",
+      "updatePassword": "تحديث كلمة المرور",
+      "close": "إغلاق"
+    },
+    "courses": {
+      "status": {
+        "inProgress": "قيد التقدم",
+        "completed": "مكتملة",
+        "notStarted": "لم تبدأ"
+      },
+      "actions": {
+        "resume": "استئناف الدورة",
+        "review": "مراجعة الدورة",
+        "start": "بدء الدورة"
+      },
+      "modulesDone": "وحدات مكتملة",
+      "lastActivity": "آخر نشاط",
+      "stats": {
+        "assigned": "الدورات المسندة",
+        "completed": "مكتملة",
+        "inProgress": "قيد التقدم",
+        "notStarted": "لم تبدأ",
+        "overallCompletion": "نسبة الإكمال"
+      },
+      "resume": {
+        "pickUp": "تابع من حيث توقفت"
+      },
+      "filters": {
+        "search": "ابحث في دوراتك",
+        "allCategories": "جميع التصنيفات",
+        "allStatuses": "جميع الحالات"
+      }
+    }
+  }
 }

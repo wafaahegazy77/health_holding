@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { getHomeData } from "@/lib/api/home";
 import Reveal from "@/components/animations/Reveal";
 import CourseCard from "@/components/home/CourseCard/CourseCard";
+import { Link } from "@/i18n/routing";
 
 import "./_FeaturedCourses.scss";
 
@@ -52,7 +53,8 @@ const FeaturedCourses = async () => {
 
                     {data.featuredCourses.courses.map(
                         (course, index) => (
-                            <div
+                            <Link
+                                href="https://gamal.inspire-sa.com/scorm/player.html"
                                 className="col-lg-4 col-md-6"
                                 key={index}
                             >
@@ -64,7 +66,7 @@ const FeaturedCourses = async () => {
                                         course={course}
                                     />
                                 </Reveal>
-                            </div>
+                            </Link>
                         )
                     )}
 

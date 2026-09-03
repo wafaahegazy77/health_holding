@@ -1,0 +1,145 @@
+.ceo_message {
+    background-color: #f4f7f9;
+
+    .sec_head {
+
+        .badge {
+            position: relative;
+            top: 10px;
+        }
+
+        .title {
+            margin-inline-start: 15px;
+        }
+    }
+
+    .ceo_image {
+        position: relative;
+        height: 580px;
+        overflow: hidden;
+        border-radius: 50px;
+
+        img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: top;
+        }
+
+        .ceo_info {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 25px;
+            z-index: 2;
+
+            padding: 18px 22px;
+            border-radius: 18px;
+
+            background: rgba(255, 255, 255, 0.672);
+            backdrop-filter: blur(10px);
+            width: 70%;
+
+            text-align: center;
+            h3 {
+                color: var(--primary);
+            }
+
+            span {
+                color: #555;
+            }
+        }
+    }
+
+    .ceo_content {
+        position: relative;
+
+        .message_mark {
+            width: 55px;
+            height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 25px;
+
+            border-radius: 50%;
+
+            color: var(--primary);
+            font-size: 22px;
+        }
+
+        .description {
+            color: #777;
+            line-height: 1.8;
+            font-size: 20px !important;
+        }
+    }
+}
+
+
+@media screen and (max-width: 991px) {
+
+    .ceo_message {
+
+        .sec_head {
+            flex-direction: column;
+            margin-bottom: 10px !important;
+
+            .title {
+                margin-inline-start: 0;
+            }
+        }
+
+        .ceo_image {
+            height: 400px;
+            margin-bottom: 40px;
+
+            .ceo_info {
+                inset-inline-start: 20px;
+                inset-inline-end: 20px;
+                bottom: 20px;
+            }
+        }
+
+        .ceo_content {
+            padding-inline-start: 0 !important;
+            padding-inline-end: 0 !important;
+        }
+    }
+}
+
+
+@media screen and (max-width: 575px) {
+
+    .ceo_message {
+
+        .ceo_image {
+            height: 320px;
+            border-radius: 30px;
+
+            .ceo_info {
+                inset-inline-start: 15px;
+                inset-inline-end: 15px;
+                bottom: 15px;
+
+                padding: 14px 16px;
+                border-radius: 14px;
+
+                h3 {
+                    font-size: 16px !important;
+                }
+
+                span {
+                    font-size: 12px !important;
+                }
+            }
+        }
+
+        .ceo_content {
+
+            .description {
+                font-size: 16px !important;
+            }
+        }
+    }
+}

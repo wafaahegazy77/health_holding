@@ -95,15 +95,15 @@ const slide = (direction: "ltr" | "rtl") => ({
 const animations: Record<AnimationType, any> = {
 
     // Fade
-    "fade-up": fade(0, 60),
-    "fade-down": fade(0, -60),
-    "fade-left": fade(-60, 0),
-    "fade-right": fade(60, 0),
+    "fade-up": fade(0, 24),
+    "fade-down": fade(0, -24),
+    "fade-left": fade(-24, 0),
+    "fade-right": fade(24, 0),
 
-    "fade-up-left": fade(-60, 60),
-    "fade-up-right": fade(60, 60),
-    "fade-down-left": fade(-60, -60),
-    "fade-down-right": fade(60, -60),
+    "fade-up-left": fade(-24, 24),
+    "fade-up-right": fade(24, 24),
+    "fade-down-left": fade(-24, -24),
+    "fade-down-right": fade(24, -24),
 
     // Zoom
     "zoom-in": zoom(.7),
@@ -134,10 +134,10 @@ const animations: Record<AnimationType, any> = {
 export default function Reveal({
     children,
     animation = "fade-up",
-    delay = 0,
-    duration = 1.5,
+    delay = 0.25,
+    duration = 0.7,
     once = true,
-    amount = .2,
+    amount = 0.18,
     className,
     trigger = "view",
 }: RevealProps) {
@@ -148,8 +148,7 @@ export default function Reveal({
         <m.div
             className={className}
             initial={variant.initial}
-            animate={trigger === "load" ? variant.animate : undefined}
-            whileInView={trigger === "view" ? variant.animate : undefined}
+            whileInView={variant.animate}
             viewport={{
                 once,
                 amount,

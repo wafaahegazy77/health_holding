@@ -64,7 +64,6 @@ export default function Navbar() {
     const [activeSection, setActiveSection] =
         useState("");
 
-
     /*
      * -------------------------------------------
      * Home Page
@@ -72,7 +71,6 @@ export default function Navbar() {
      */
 
     const isHomePage = pathname === "/";
-
 
     /*
      * -------------------------------------------
@@ -104,7 +102,6 @@ export default function Navbar() {
             );
         };
     }, [isHomePage]);
-
 
     /*
      * -------------------------------------------
@@ -216,7 +213,6 @@ export default function Navbar() {
         };
     }, [isHomePage]);
 
-
     /*
      * -------------------------------------------
      * Language
@@ -241,7 +237,6 @@ export default function Navbar() {
         setLanguageOpen(false);
     };
 
-
     /*
      * -------------------------------------------
      * Section Navigation
@@ -259,7 +254,6 @@ export default function Navbar() {
             `/#${sectionId}`
         );
     };
-
 
     return (
         <nav
@@ -288,7 +282,6 @@ export default function Navbar() {
                     />
                 </Link>
 
-
                 {/* Mobile Toggle */}
                 <button
                     className="navbar-toggler"
@@ -302,13 +295,11 @@ export default function Navbar() {
                     <span className="navbar-toggler-icon"></span>
                 </button>
 
-
                 {/* Navigation */}
                 <div
                     className="collapse navbar-collapse"
                     id="navbarSupportedContent"
                 >
-
                     <ul className="navbar-nav mb-2 mb-lg-0">
 
                         {navItems.map((item) => (
@@ -345,7 +336,6 @@ export default function Navbar() {
                         ))}
 
                     </ul>
-
 
                     {/* Right Side */}
                     <div className="nav-side">
@@ -384,7 +374,6 @@ export default function Navbar() {
                                 ></i>
                             </button>
 
-
                             {languageOpen && (
                                 <div className="language-menu">
 
@@ -404,7 +393,6 @@ export default function Navbar() {
                                     >
                                         English
                                     </button>
-
 
                                     <button
                                         type="button"
@@ -428,87 +416,33 @@ export default function Navbar() {
 
                         </div>
 
-
                         {/* Account Dropdown */}
                         <div className="account-dropdown">
 
-                            <button
-                                type="button"
+                            <Link 
+                                href="/login"
                                 className="butn white_butn hvr-icon-slide-out-in account-trigger"
-                                aria-expanded={
-                                    accountOpen
-                                }
-                                aria-haspopup="true"
-                                onClick={() =>
-                                    setAccountOpen(
-                                        (prev) =>
-                                            !prev
-                                    )
-                                }
                             >
                                 <div className="txt">
-                                    {t("account")}
+                                    {t("login")}
                                 </div>
 
                                 {/* Current icon */}
                                 <span className="hvr-icon hvr-icon-current">
-                                    <i className="fa-light fa-chevron-down"></i>
+                                    <i className="fa-regular fa-arrow-up-right"></i>
                                 </span>
 
                                 {/* Next icon */}
                                 <span className="hvr-icon hvr-icon-next">
-                                    <i className="fa-regular fa-user"></i>
+                                    <i className="fa-regular fa-right-to-bracket"></i>
                                 </span>
-                            </button>
+                            </Link>
 
-
-                            {accountOpen && (
-                                <div className="account-menu">
-
-                                    <Link
-                                        href="/login"
-                                        className="account-menu-item"
-                                        onClick={() =>
-                                            setAccountOpen(
-                                                false
-                                            )
-                                        }
-                                    >
-                                        <i className="fa-regular fa-right-to-bracket"></i>
-
-                                        <span>
-                                            {t("login")}
-                                        </span>
-                                    </Link>
-
-
-                                    <Link
-                                        href="/register"
-                                        className="account-menu-item"
-                                        onClick={() =>
-                                            setAccountOpen(
-                                                false
-                                            )
-                                        }
-                                    >
-                                        <i className="fa-regular fa-user-plus"></i>
-
-                                        <span>
-                                            {t(
-                                                "createAccount"
-                                            )}
-                                        </span>
-                                    </Link>
-
-                                </div>
-                            )}
 
                         </div>
 
                     </div>
-
                 </div>
-
             </div>
         </nav>
     );

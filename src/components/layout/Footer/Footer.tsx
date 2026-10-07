@@ -1,19 +1,27 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { getHomeData } from "@/lib/api/home";
+import { getFooterSection, type FooterSocialKey } from "@/lib/api/home";
 import { Link } from "@/i18n/routing";
 import Reveal from "@/components/animations/Reveal";
 import BackToTop from "./BackToTop";
 
 import "./_Footer.scss";
 
+const socialIcons: Record<FooterSocialKey, { icon: string; label: string }> = {
+    facebook: { icon: "fa-brands fa-facebook-f", label: "Facebook" },
+    instagram: { icon: "fa-brands fa-instagram", label: "Instagram" },
+    x: { icon: "fa-brands fa-x-twitter", label: "X" },
+    whatsapp: { icon: "fa-brands fa-whatsapp", label: "WhatsApp" },
+    linkedin: { icon: "fa-brands fa-linkedin-in", label: "LinkedIn" },
+};
+
 const Footer = async () => {
     const locale = await getLocale();
     const t = await getTranslations("footer");
-
-    const data = await getHomeData(locale);
+    const footer = await getFooterSection(locale);
 
     const currentYear = new Date().getFullYear();
+    const hasContact = Boolean(footer.email || footer.phone || footer.address);
 
     return (
         <footer className="footer">
@@ -43,14 +51,16 @@ const Footer = async () => {
                                     </Link>
                                 </Reveal>
 
-                                <Reveal
-                                    animation="fade-up"
-                                    trigger="load"
-                                >
-                                    <p className="footer_description fsz-18 mb-0 col-lg-10">
-                                        {data.footer.description}
-                                    </p>
-                                </Reveal>
+                                {footer.description ? (
+                                    <Reveal
+                                        animation="fade-up"
+                                        trigger="load"
+                                    >
+                                        <p className="footer_description fsz-18 mb-0 col-lg-10">
+                                            {footer.description}
+                                        </p>
+                                    </Reveal>
+                                ) : null}
 
                             </div>
                         </div>
@@ -69,23 +79,33 @@ const Footer = async () => {
                                     </h3>
                                 </Reveal>
 
-                                <ul>
+                                {hasContact ? (
+                                    <ul>
+                                        {footer.email ? (
+                                            <li>
+                                                <a href={`mailto:${footer.email}`}>
+                                                    {footer.email}
+                                                </a>
+                                            </li>
+                                        ) : null}
 
-                                    <li>
-                                        <a
-                                            href={`mailto:${data.footer.email}`}
-                                        >
-                                            {data.footer.email}
-                                        </a>
-                                    </li>
+                                        {footer.phone ? (
+                                            <li>
+                                                <a href={`tel:${footer.phone.replace(/\s/g, "")}`}>
+                                                    {footer.phone}
+                                                </a>
+                                            </li>
+                                        ) : null}
 
-                                    <li>
-                                        <span>
-                                            {data.footer.location}
-                                        </span>
-                                    </li>
-
-                                </ul>
+                                        {footer.address ? (
+                                            <li>
+                                                <span>
+                                                    {footer.address}
+                                                </span>
+                                            </li>
+                                        ) : null}
+                                    </ul>
+                                ) : null}
 
                             </div>
                         </div>
@@ -187,45 +207,25 @@ const Footer = async () => {
                     </div>
 
 
-                    {/* Social Links */}
-                    <div className="social_links">
+                    {footer.socials.length > 0 ? (
+                        <div className="social_links">
+                            {footer.socials.map((social) => {
+                                const item = socialIcons[social.key];
 
-                        <a
-                            href="#"
-                            aria-label="X"
-                        >
-                            <i className="fa-brands fa-x-twitter"></i>
-                        </a>
-
-                        <a
-                            href="#"
-                            aria-label="Facebook"
-                        >
-                            <i className="fa-brands fa-facebook-f"></i>
-                        </a>
-
-                        <a
-                            href="#"
-                            aria-label="Instagram"
-                        >
-                            <i className="fa-brands fa-instagram"></i>
-                        </a>
-
-                        <a
-                            href="#"
-                            aria-label="LinkedIn"
-                        >
-                            <i className="fa-brands fa-linkedin-in"></i>
-                        </a>
-
-                        <a
-                            href="#"
-                            aria-label="YouTube"
-                        >
-                            <i className="fa-brands fa-youtube"></i>
-                        </a>
-
-                    </div>
+                                return (
+                                    <a
+                                        key={social.key}
+                                        href={social.url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label={item.label}
+                                    >
+                                        <i className={item.icon}></i>
+                                    </a>
+                                );
+                            })}
+                        </div>
+                    ) : null}
 
 
                     {/* Back To Top */}

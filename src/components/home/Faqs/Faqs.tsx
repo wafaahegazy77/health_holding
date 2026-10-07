@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { getHomeData } from "@/lib/api/home";
+import { getFaqsSection } from "@/lib/api/home";
 import Reveal from "@/components/animations/Reveal";
 
 import "./_Faqs.scss";
@@ -9,8 +9,7 @@ import FaqAccordion from "./FaqAccordion";
 const Faqs = async () => {
     const locale = await getLocale();
     const t = await getTranslations("faqs");
-
-    const data = await getHomeData(locale);
+    const items = await getFaqsSection(locale);
 
     return (
         <section className="faqs section" id="faqs">
@@ -48,14 +47,15 @@ const Faqs = async () => {
                 </div>
 
 
-                {/* FAQ Items - API */}
-                <Reveal animation="fade-up">
-                    <div className="faqs_wrapper">
-                        <FaqAccordion
-                            items={data.faqs.items}
-                        />
-                    </div>
-                </Reveal>
+                {items.length > 0 ? (
+                    <Reveal animation="fade-up">
+                        <div className="faqs_wrapper">
+                            <FaqAccordion
+                                items={items}
+                            />
+                        </div>
+                    </Reveal>
+                ) : null}
 
             </div>
         </section>

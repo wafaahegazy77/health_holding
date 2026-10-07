@@ -2,37 +2,147 @@ import axios from "axios";
 
 // 1. Create customized axios instance
 const apiClient = axios.create({
-    baseURL: `${process.env.NEXT_PUBLIC_API_URL}`,
+    baseURL: process.env.NEXT_PUBLIC_API_URL,
     headers: {
-        "Accept": "application/json",
-        "X-Api-Secret": process.env.NEXT_PUBLIC_API_SECRET,
-        "lang": "en",
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        secret: process.env.NEXT_PUBLIC_API_SECRET,
+        lang: "ar",
     },
 });
 
+apiClient.interceptors.request.use((config) => {
+    if (typeof window !== "undefined") {
+        const token = localStorage.getItem("token");
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`;
+        }
+    }
+    return config;
+});
+
+const withLang = (locale?: string) =>
+    locale ? { headers: { lang: locale } } : {};
+
+export type PageKey =
+    | "hero_section"
+    | "about_us"
+    | "ceo"
+    | "head_of_marketing"
+    | "how_we_work"
+    | "footer"
+    | "terms_conditions"
+    | (string & {});
+
+export type CourseStatus =
+    | "in_progress"
+    | "overdue"
+    | "completed_on_time"
+    | "completed_late";
+
+export type MyCoursesParams = {
+    title?: string;
+    category_code?: string;
+    status?: CourseStatus | "";
+};
+
 // 2. Centralized Endpoints Configuration
 export const endpoints = {
-    // home: "/pages/home",
-    home: "/pages/home",
-    about: "/pages/about-us",
-    services: "/pages/services",
-    fleet: "/pages/fleet",
-    destinations: "/pages/destinations",
-    contact: "/pages/contact-us",
+    // Auth
+    login: "/auth/login",
+    forgotPasswordRequest: "/auth/forgot-password/request",
+    forgotPasswordVerify: "/auth/forgot-password/verify",
+    forgotPasswordReset: "/auth/forgot-password/reset",
+
+    // Profile
+    profile: "/profile",
+    profilePassword: "/profile/password",
+    profileCourses: "/profile/courses",
+
+    // Courses
+    categories: "/categories",
+
+    // Settings
+    settings: "/settings",
+
+    // Pages
+    pages: "/pages",
+    page: (pageKey: PageKey) => `/pages/${pageKey}`,
+    hero: "/pages/hero_section",
+    about: "/pages/about_us",
+    ceo: "/pages/ceo",
+    headOfTraining: "/pages/head_of_marketing",
+    howWeWork: "/pages/how_we_work",
+    footer: "/pages/footer",
+    terms: "/pages/terms_conditions",
+
+    // FAQs
     faqs: "/faqs",
-    partners: "/partners",
 };
 
 // 3. Centralized API Fetcher Object
 export const api = {
-    getHome: (locale?: string) => apiClient.get(endpoints.home, { headers: locale ? { lang: locale } : {} }).then((res) => res.data),
-    getAbout: (locale?: string) => apiClient.get(endpoints.about, { headers: locale ? { lang: locale } : {} }).then((res) => res.data),
-    getServices: (locale?: string) => apiClient.get(endpoints.services, { headers: locale ? { lang: locale } : {} }).then((res) => res.data),
-    getFleet: (locale?: string) => apiClient.get(endpoints.fleet, { headers: locale ? { lang: locale } : {} }).then((res) => res.data),
-    getDestinations: (locale?: string) => apiClient.get(endpoints.destinations, { headers: locale ? { lang: locale } : {} }).then((res) => res.data),
-    getContact: (locale?: string) => apiClient.get(endpoints.contact, { headers: locale ? { lang: locale } : {} }).then((res) => res.data),
-    getFaqs: (locale?: string) => apiClient.get(endpoints.faqs, { headers: locale ? { lang: locale } : {} }).then((res) => res.data),
-    getPartners: (locale?: string) => apiClient.get(endpoints.partners, { headers: locale ? { lang: locale } : {} }).then((res) => res.data),
+    // Auth
+    login: (payload: { email: string; password: string; remember_me?: boolean }, locale?: string) =>
+        apiClient.post(endpoints.login, payload, withLang(locale)).then((res) => {
+            const token = res.data?.data?.api_token;
+            if (token && typeof window !== "undefined") {
+                localStorage.setItem("token", token);
+            }
+            return res.data;
+        }),
+    requestForgotPasswordCode: (payload: { email: string }, locale?: string) =>
+        apiClient.post(endpoints.forgotPasswordRequest, payload, withLang(locale)).then((res) => res.data),
+    verifyForgotPasswordCode: (payload: { email: string; code: string }, locale?: string) =>
+        apiClient.post(endpoints.forgotPasswordVerify, payload, withLang(locale)).then((res) => res.data),
+    resetForgotPassword: (
+        payload: { email: string; code: string; password: string; password_confirmation: string },
+        locale?: string,
+    ) => apiClient.post(endpoints.forgotPasswordReset, payload, withLang(locale)).then((res) => res.data),
+
+    // Profile
+    getProfile: (locale?: string) =>
+        apiClient.get(endpoints.profile, withLang(locale)).then((res) => res.data),
+    updateProfile: (payload: Record<string, unknown>, locale?: string) =>
+        apiClient.put(endpoints.profile, payload, withLang(locale)).then((res) => res.data),
+    changePassword: (
+        payload: { current_password: string; password: string; password_confirmation: string },
+        locale?: string,
+    ) => apiClient.put(endpoints.profilePassword, payload, withLang(locale)).then((res) => res.data),
+
+    // Courses
+    getCategories: (locale?: string) =>
+        apiClient.get(endpoints.categories, withLang(locale)).then((res) => res.data),
+    getMyCourses: (params?: MyCoursesParams, locale?: string) =>
+        apiClient.get(endpoints.profileCourses, { ...withLang(locale), params }).then((res) => res.data),
+
+    // Settings
+    getSettings: (locale?: string) =>
+        apiClient.get(endpoints.settings, withLang(locale)).then((res) => res.data),
+
+    // Pages
+    getPages: (cmsOnly = true, locale?: string) =>
+        apiClient
+            .get(endpoints.pages, { ...withLang(locale), params: cmsOnly ? { cms_only: 1 } : {} })
+            .then((res) => res.data),
+    getPage: (pageKey: PageKey, locale?: string) =>
+        apiClient.get(endpoints.page(pageKey), withLang(locale)).then((res) => res.data),
+    getHero: (locale?: string) =>
+        apiClient.get(endpoints.hero, withLang(locale)).then((res) => res.data),
+    getAbout: (locale?: string) =>
+        apiClient.get(endpoints.about, withLang(locale)).then((res) => res.data),
+    getCeo: (locale?: string) =>
+        apiClient.get(endpoints.ceo, withLang(locale)).then((res) => res.data),
+    getHeadOfTraining: (locale?: string) =>
+        apiClient.get(endpoints.headOfTraining, withLang(locale)).then((res) => res.data),
+    getHowWeWork: (locale?: string) =>
+        apiClient.get(endpoints.howWeWork, withLang(locale)).then((res) => res.data),
+    getFooter: (locale?: string) =>
+        apiClient.get(endpoints.footer, withLang(locale)).then((res) => res.data),
+    getTerms: (locale?: string) =>
+        apiClient.get(endpoints.terms, withLang(locale)).then((res) => res.data),
+    getFaqs: (locale?: string) =>
+        apiClient.get(endpoints.faqs, withLang(locale)).then((res) => res.data),
 };
 
 export default apiClient;

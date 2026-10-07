@@ -1,12 +1,6 @@
 import Image from "next/image";
 import Reveal from "@/components/animations/Reveal";
-
-interface ProcessStep {
-    number?: string;
-    icon: string;
-    title: string;
-    description: string;
-}
+import type { ProcessStep } from "@/lib/api/home";
 
 interface ProcessStepsProps {
     steps: ProcessStep[];
@@ -22,28 +16,36 @@ const ProcessSteps = ({ steps }: ProcessStepsProps) => {
                     delay={0.25 + index * 0.1}
                 >
                     <div className="process_card">
-                        <div className="process_number">
-                            {step.number || `0${index + 1}`}
-                        </div>
+                        {step.number ? (
+                            <div className="process_number">
+                                {step.number}
+                            </div>
+                        ) : null}
 
                         <div className="process_card_content">
-                            <div className="process_icon">
-                                <Image
-                                    src={step.icon}
-                                    alt=""
-                                    width={45}
-                                    height={45}
-                                    className="img-contain"
-                                />
-                            </div>
+                            {step.icon ? (
+                                <div className="process_icon">
+                                    <Image
+                                        src={step.icon}
+                                        alt=""
+                                        width={45}
+                                        height={45}
+                                        className="img-contain"
+                                    />
+                                </div>
+                            ) : null}
 
-                            <h3 className="fsz-20 fw-500 mb-2">
-                                {step.title}
-                            </h3>
+                            {step.title ? (
+                                <h3 className="fsz-20 fw-500 mb-2">
+                                    {step.title}
+                                </h3>
+                            ) : null}
 
-                            <p className="fsz-14 mb-0">
-                                {step.description}
-                            </p>
+                            {step.description ? (
+                                <p className="fsz-14 mb-0">
+                                    {step.description}
+                                </p>
+                            ) : null}
                         </div>
                     </div>
                 </Reveal>

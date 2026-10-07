@@ -11,6 +11,13 @@ const nextConfig: NextConfig = {
   trailingSlash: true,
   images: {
     unoptimized: true,
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname: "**.inspire-sa.com",
+        pathname: "/**",
+      },
+    ],
   },
 };
 

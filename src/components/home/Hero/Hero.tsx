@@ -1,18 +1,15 @@
 import { getLocale, getTranslations } from "next-intl/server";
-import Image from "next/image";
 
-import { getHomeData } from "@/lib/api/home";
+import { getHeroSection } from "@/lib/api/home";
 import { Link } from "@/i18n/routing";
 import Reveal from "@/components/animations/Reveal";
 import "./_Hero.scss";
-import NumberCounter from "@/components/NumberCounter";
 import DnaInkScene from "./DnaInkScene";
 
 const Hero = async () => {
     const locale = await getLocale();
     const t = await getTranslations("hero");
-
-    const data = await getHomeData(locale);
+    const hero = await getHeroSection(locale);
 
     return (
         <section className="hero_section section">
@@ -31,23 +28,29 @@ const Hero = async () => {
                                 </div>
                             </Reveal>
 
-                            <Reveal animation="fade-up" trigger="load">
-                                <h1 className="title fsz-60 fw-500 mb-3 ">
-                                    <span>{t("title")} </span>
-                                    <span className="txt_gradient fw-600 ">
-                                        {t("highlightedTitle")}
-                                    </span>
-                                </h1>
-                            </Reveal>
+                            {hero.main_title || hero.subtitle ? (
+                                <Reveal animation="fade-up" trigger="load">
+                                    <h1 className="title fsz-60 fw-500 mb-3 ">
+                                        {hero.main_title ? <span>{hero.main_title} </span> : null}
+                                        {hero.subtitle ? (
+                                            <span className="txt_gradient fw-600 ">
+                                                {hero.subtitle}
+                                            </span>
+                                        ) : null}
+                                    </h1>
+                                </Reveal>
+                            ) : null}
 
-                            <Reveal animation="fade-up" trigger="load">
-                                <p className="hero_description fsz-16 mb-4">
-                                    {data.hero.description}
-                                </p>
-                            </Reveal>
+                            {hero.description ? (
+                                <Reveal animation="fade-up" trigger="load">
+                                    <p className="hero_description fsz-16 mb-4">
+                                        {hero.description}
+                                    </p>
+                                </Reveal>
+                            ) : null}
 
                             <div className="butns_box d-flex align-items-center pt-3">
-                                <Reveal animation="fade-up" trigger="load">
+                                {/* <Reveal animation="fade-up" trigger="load">
                                     <Link
                                         href="/register"
                                         className="butn white_butn hvr-icon-slide-out-in"
@@ -62,7 +65,7 @@ const Hero = async () => {
                                             <i className="fa-regular fa-arrow-right"></i>
                                         </span>
                                     </Link>
-                                </Reveal>
+                                </Reveal> */}
                                 <Reveal animation="fade-up" trigger="load">
                                     <Link
                                         href="/login"

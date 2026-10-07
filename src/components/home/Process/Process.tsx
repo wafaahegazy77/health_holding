@@ -1,6 +1,6 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { getHomeData } from "@/lib/api/home";
+import { getProcessSection } from "@/lib/api/home";
 import Reveal from "@/components/animations/Reveal";
 import ProcessSteps from "./ProcessSteps";
 
@@ -9,8 +9,7 @@ import "./_Process.scss";
 const Process = async () => {
     const locale = await getLocale();
     const t = await getTranslations("process");
-
-    const data = await getHomeData(locale);
+    const process = await getProcessSection(locale);
 
     return (
         <section className="process section pt-100" id="process">
@@ -48,15 +47,16 @@ const Process = async () => {
                             </Reveal>
 
 
-                            {/* Description - API */}
-                            <Reveal
-                                animation="fade-up"
-                                trigger="load"
-                            >
-                                <p className="description fsz-16 mb-0">
-                                    {data.process.description}
-                                </p>
-                            </Reveal>
+                            {process.description ? (
+                                <Reveal
+                                    animation="fade-up"
+                                    trigger="load"
+                                >
+                                    <p className="description fsz-16 mb-0">
+                                        {process.description}
+                                    </p>
+                                </Reveal>
+                            ) : null}
 
                         </div>
                     </div>
@@ -64,9 +64,11 @@ const Process = async () => {
 
                     {/* Process Stack */}
                     <div className="col-lg-7">
-                        <ProcessSteps
-                            steps={data.process.steps}
-                        />
+                        {process.items.length > 0 ? (
+                            <ProcessSteps
+                                steps={process.items}
+                            />
+                        ) : null}
                     </div>
 
                 </div>

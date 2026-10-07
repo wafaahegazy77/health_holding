@@ -1,11 +1,7 @@
 "use client";
 
 import { useState } from "react";
-
-interface FaqItem {
-    question: string;
-    answer: string;
-}
+import type { FaqItem } from "@/lib/api/home";
 
 interface FaqAccordionProps {
     items: FaqItem[];
@@ -32,7 +28,7 @@ const FaqAccordion = ({
                             ? "active"
                             : ""
                     }`}
-                    key={index}
+                    key={item.code || `${item.question}-${index}`}
                 >
 
                     <button
@@ -58,11 +54,13 @@ const FaqAccordion = ({
                     </button>
 
 
-                    <div className="faq_answer">
-                        <p className="fsz-14 mb-0">
-                            {item.answer}
-                        </p>
-                    </div>
+                    {item.answer ? (
+                        <div className="faq_answer">
+                            <p className="fsz-14 mb-0">
+                                {item.answer}
+                            </p>
+                        </div>
+                    ) : null}
 
                 </div>
             ))}

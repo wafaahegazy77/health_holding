@@ -139,7 +139,7 @@ const LoginForm = () => {
             </form>
 
             {/* Register */}
-            <div className="login_register">
+            {/* <div className="login_register">
                 <span>
                     {t("noAccount")}
                 </span>
@@ -147,7 +147,7 @@ const LoginForm = () => {
                 <Link href="/register">
                     {t("signUp")}
                 </Link>
-            </div>
+            </div> */}
 
         </div>
     );

@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 import Image from "next/image";
 
-import { getHomeData } from "@/lib/api/home";
+import { getCeoSection } from "@/lib/api/home";
 import Reveal from "@/components/animations/Reveal";
 
 import "./_CEOMessage.scss";
@@ -9,8 +9,7 @@ import "./_CEOMessage.scss";
 const CEOMessage = async () => {
     const locale = await getLocale();
     const t = await getTranslations("ceo");
-
-    const data = await getHomeData(locale);
+    const ceo = await getCeoSection(locale);
 
     return (
         <section className="ceo_message section">
@@ -21,29 +20,39 @@ const CEOMessage = async () => {
 
                     {/* CEO Image */}
                     <div className="col-lg-5">
-                        <Reveal
-                            animation="fade-up"
-                            trigger="load"
-                        >
-                            <div className="ceo_image">
-                                <Image
-                                    src={data.ceo.image}
-                                    alt={data.ceo.name}
-                                    fill
-                                    className="img-cover"
-                                />
+                        {ceo.image || ceo.manager_name || ceo.job_title ? (
+                            <Reveal
+                                animation="fade-up"
+                                trigger="load"
+                            >
+                                <div className="ceo_image">
+                                    {ceo.image ? (
+                                        <Image
+                                            src={ceo.image}
+                                            alt={ceo.manager_name}
+                                            fill
+                                            className="img-cover"
+                                        />
+                                    ) : null}
 
-                                <div className="ceo_info">
-                                    <h3 className="fsz-20 fw-500 mb-1">
-                                        {data.ceo.name}
-                                    </h3>
+                                    {ceo.manager_name || ceo.job_title ? (
+                                        <div className="ceo_info">
+                                            {ceo.manager_name ? (
+                                                <h3 className="fsz-20 fw-500 mb-1">
+                                                    {ceo.manager_name}
+                                                </h3>
+                                            ) : null}
 
-                                    <span className="fsz-14">
-                                        {data.ceo.position}
-                                    </span>
+                                            {ceo.job_title ? (
+                                                <span className="fsz-14">
+                                                    {ceo.job_title}
+                                                </span>
+                                            ) : null}
+                                        </div>
+                                    ) : null}
                                 </div>
-                            </div>
-                        </Reveal>
+                            </Reveal>
+                        ) : null}
                     </div>
 
                     {/* CEO Message */}
@@ -66,14 +75,16 @@ const CEOMessage = async () => {
                                 </div>
                             </Reveal>
 
-                            <Reveal
-                                animation="fade-up"
-                                trigger="load"
-                            >
-                                <h2 className="title fsz-50 fw-400 mb-4">
-                                    {t("title")}
-                                </h2>
-                            </Reveal>
+                            {ceo.title ? (
+                                <Reveal
+                                    animation="fade-up"
+                                    trigger="load"
+                                >
+                                    <h2 className="title fsz-50 fw-400 mb-4">
+                                        {ceo.title}
+                                    </h2>
+                                </Reveal>
+                            ) : null}
 
                         </div>
 
@@ -88,14 +99,16 @@ const CEOMessage = async () => {
                                 </div>
                             </Reveal>
 
-                            <Reveal
-                                animation="fade-up"
-                                trigger="load"
-                            >
-                                <p className="description fsz-18 mb-4">
-                                    {data.ceo.description}
-                                </p>
-                            </Reveal>
+                            {ceo.description ? (
+                                <Reveal
+                                    animation="fade-up"
+                                    trigger="load"
+                                >
+                                    <p className="description fsz-18 mb-4">
+                                        {ceo.description}
+                                    </p>
+                                </Reveal>
+                            ) : null}
 
                         </div>
 

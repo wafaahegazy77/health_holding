@@ -22,6 +22,7 @@ export type AboutSectionData = {
     features: AboutFeature[];
 };
 
+
 export type CeoSectionData = {
     title: string;
     description: string;

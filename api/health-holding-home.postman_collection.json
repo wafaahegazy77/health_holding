@@ -1,0 +1,435 @@
+{
+  "info": {
+    "name": "Health Holding — Home API",
+    "description": "Public homepage API.\n\nSame endpoints, current language from header `lang` (`ar` or `en`).\n\n1. Import `postman/environments/local.postman_environment.json` or `deploy.postman_environment.json`.\n2. Select the environment and set `secret` to `SECRET_TOKEN`. A successful Sign in writes `api_token` into the environment variable `token`.\n3. Pages use one route: `GET /pages/{page_key}` (`PageController@show`).\n4. My Courses lives under folder **02 Courses**.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "pm.test('response is JSON', function () {",
+          "    pm.response.to.be.json;",
+          "});",
+          "",
+          "pm.test('envelope has data or errors', function () {",
+          "    const body = pm.response.json();",
+          "    pm.expect(body.data !== undefined || body.errors !== undefined).to.eql(true);",
+          "});",
+          "",
+          "if (pm.info.requestName === 'Sign in' && pm.response.code === 200) {",
+          "    const token = pm.response.json().data && pm.response.json().data.api_token;",
+          "    pm.test('api token saved to environment', function () {",
+          "        pm.expect(token, 'api_token').to.be.a('string').and.not.empty;",
+          "        pm.expect(pm.environment.name, 'select Local or Deploy environment').to.be.ok;",
+          "    });",
+          "    if (token && pm.environment.name) {",
+          "        pm.environment.set('token', token);",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:9091/api"
+    },
+    {
+      "key": "secret",
+      "value": ""
+    },
+    {
+      "key": "lang",
+      "value": "ar"
+    },
+    {
+      "key": "page_key",
+      "value": "hero_section"
+    },
+    {
+      "key": "email",
+      "value": ""
+    },
+    {
+      "key": "password",
+      "value": ""
+    },
+    {
+      "key": "code",
+      "value": ""
+    },
+    {
+      "key": "new_password",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "00 Auth",
+      "description": "Doctor accounts created in Dashboard → Doctors. No dashboard content on these pages. Resend code uses the same request endpoint.",
+      "item": [
+        {
+          "name": "Sign in",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"password\": \"{{password}}\",\n  \"remember_me\": true\n}"
+            },
+            "url": "{{base_url}}/auth/login",
+            "description": "Checks email and password against a doctor. Success returns the user and `api_token`. The website redirects to Profile."
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot password — request code",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\"\n}"
+            },
+            "url": "{{base_url}}/auth/forgot-password/request",
+            "description": "Step 1 and resend. Sends a 4-digit code to the doctor email. Same endpoint for Resend."
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot password — verify code",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{code}}\"\n}"
+            },
+            "url": "{{base_url}}/auth/forgot-password/verify",
+            "description": "Step 2. Validates the code. The code stays valid for the reset step (5 minutes)."
+          },
+          "response": []
+        },
+        {
+          "name": "Forgot password — reset password",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"{{email}}\",\n  \"code\": \"{{code}}\",\n  \"password\": \"{{new_password}}\",\n  \"password_confirmation\": \"{{new_password}}\"\n}"
+            },
+            "url": "{{base_url}}/auth/forgot-password/reset",
+            "description": "Step 3. Updates the doctor password. Then sign in with the new password."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "01 Profile",
+      "description": "Doctor profile after login. Run Sign in first so `token` is saved.",
+      "item": [
+        {
+          "name": "Get profile",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": "{{base_url}}/profile",
+            "description": "Personal information for the profile page. Terms is a separate page: GET /pages/terms_conditions."
+          },
+          "response": []
+        },
+        {
+          "name": "Update profile",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"salutation\": \"dr\",\n  \"first_name\": \"Ahmed\",\n  \"last_name\": \"Ali\",\n  \"mobile\": \"0551234567\",\n  \"healthcare_sector\": \"moh_hospitals\",\n  \"healthcare_sector_other\": null,\n  \"workplace_name\": \"King Fahad Medical City\",\n  \"workplace_postcode\": \"12271\"\n}"
+            },
+            "url": "{{base_url}}/profile",
+            "description": "Editable fields only. Sending a different email, health_cluster_id, health_cluster, or scfhs_number is rejected. The stored values are still returned by GET /profile."
+          },
+          "response": []
+        },
+        {
+          "name": "Change password",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "Content-Type", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"current_password\": \"{{password}}\",\n  \"password\": \"{{new_password}}\",\n  \"password_confirmation\": \"{{new_password}}\"\n}"
+            },
+            "url": "{{base_url}}/profile/password",
+            "description": "Requires the current password. Does not return a new token."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "02 Courses",
+      "description": "Profile → My Courses tab + category filter.\n\n**Status filter (fixed, not returned in JSON):** `in_progress` | `overdue` | `completed_on_time` | `completed_late`\n\n**Category filter:** use `code` from Get categories as `category_code`.\n\n`summary` and `continue_learning` ignore list filters. Run Sign in first for Bearer `token`.",
+      "item": [
+        {
+          "name": "Get categories",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/categories",
+            "description": "Main medical categories. Returns `{ code, title, image }`. Use `code` as `category_code` on My courses."
+          },
+          "response": []
+        },
+        {
+          "name": "My courses",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" },
+              { "key": "Authorization", "value": "Bearer {{token}}" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/profile/courses?title=&category_code=&status=",
+              "host": ["{{base_url}}"],
+              "path": ["profile", "courses"],
+              "query": [
+                { "key": "title", "value": "", "description": "Search by course title (current lang)" },
+                { "key": "category_code", "value": "", "description": "From Get categories → code" },
+                {
+                  "key": "status",
+                  "value": "",
+                  "description": "in_progress | overdue | completed_on_time | completed_late"
+                }
+              ]
+            },
+            "description": "Returns `summary`, `continue_learning` (or null), and `courses`.\n\n**Filters** (apply to `courses` only):\n- `title` — free text\n- `category_code` — from Get categories\n- `status` — `in_progress` | `overdue` | `completed_on_time` | `completed_late`\n\n**Card `action`:** `start` | `resume` | `review`\n\n**Launch:** iframe `url` = `/scorm/{code}/play?ticket=…` (short-lived). Opening content without ticket/cookie → 403. LMS get/set status can be wired later on the player mock API.\n\n`cover_image` is null until courses have an image in the dashboard."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "03 Settings",
+      "description": "Footer contact and social links. Mail credentials and admin flags are not returned. Empty social keys are omitted.",
+      "item": [
+        {
+          "name": "Get public settings",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/settings",
+            "description": "Returns `site_email`, `site_phone`, localized `site_address`, and only filled social links (`facebook`, `instagram`, `x`, `whatsapp`, `linkedin`)."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "04 Pages",
+      "description": "CMS and legacy pages. Each item uses `PageResource`: `code`, `page_key`, and `data` shaped from that page's fields.\n\n`GET /pages/{page_key}` is one method for every page.",
+      "item": [
+        {
+          "name": "List pages",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/pages?cms_only=1",
+            "description": "`cms_only=1` returns CMS pages only. Omit the query to include legacy pages."
+          },
+          "response": []
+        },
+        {
+          "name": "Get page by key",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/pages/{{page_key}}",
+            "description": "Change collection/environment variable `page_key`. Hashed page codes still work on the same route."
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "05 Home page",
+      "description": "Homepage sections in page order. Page sections all call `GET /pages/{page_key}`. FAQs and settings are the other two endpoints the homepage needs.",
+      "item": [
+        {
+          "name": "1. Hero",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/pages/hero_section",
+            "description": "`data`: `main_title`, `subtitle`, `description`."
+          },
+          "response": []
+        },
+        {
+          "name": "2. About the platform",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/pages/about_us",
+            "description": "`data`: `title`, `description`, `image_1`, `image_2`, `features[]` (`title`, `description`, `icon`)."
+          },
+          "response": []
+        },
+        {
+          "name": "3. CEO message",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/pages/ceo",
+            "description": "`data`: `title`, `description`, `manager_name`, `job_title`, `image`."
+          },
+          "response": []
+        },
+        {
+          "name": "4. Head of Training message",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/pages/head_of_marketing",
+            "description": "Same shape as CEO. Stored page key is `head_of_marketing`."
+          },
+          "response": []
+        },
+        {
+          "name": "5. Process (How we work)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/pages/how_we_work",
+            "description": "`data.items`: 4 steps with `number`, `title`, `description`, `icon`."
+          },
+          "response": []
+        },
+        {
+          "name": "6. FAQs",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/faqs",
+            "description": "Existing FAQ endpoint. Each item: `code`, `question`, `answer`."
+          },
+          "response": []
+        },
+        {
+          "name": "7a. Footer description",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/pages/footer",
+            "description": "`data.description`. Contact and social links come from Settings."
+          },
+          "response": []
+        },
+        {
+          "name": "7b. Footer contact and social",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Accept", "value": "application/json" },
+              { "key": "secret", "value": "{{secret}}" },
+              { "key": "lang", "value": "{{lang}}" }
+            ],
+            "url": "{{base_url}}/settings",
+            "description": "Same settings endpoint. Used by the footer for email, mobile, address, and social icons."
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

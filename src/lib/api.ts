@@ -11,16 +11,6 @@ const apiClient = axios.create({
     },
 });
 
-apiClient.interceptors.request.use((config) => {
-    if (typeof window !== "undefined") {
-        const token = localStorage.getItem("token");
-        if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
-        }
-    }
-    return config;
-});
-
 const withLang = (locale?: string) =>
     locale ? { headers: { lang: locale } } : {};
 
@@ -84,13 +74,7 @@ export const endpoints = {
 export const api = {
     // Auth
     login: (payload: { email: string; password: string; remember_me?: boolean }, locale?: string) =>
-        apiClient.post(endpoints.login, payload, withLang(locale)).then((res) => {
-            const token = res.data?.data?.api_token;
-            if (token && typeof window !== "undefined") {
-                localStorage.setItem("token", token);
-            }
-            return res.data;
-        }),
+        apiClient.post(endpoints.login, payload, withLang(locale)).then((res) => res.data),
     requestForgotPasswordCode: (payload: { email: string }, locale?: string) =>
         apiClient.post(endpoints.forgotPasswordRequest, payload, withLang(locale)).then((res) => res.data),
     verifyForgotPasswordCode: (payload: { email: string; code: string }, locale?: string) =>

@@ -98,8 +98,13 @@
       "rememberMe": "Remember me",
       "forgotPassword": "Forgot Password?",
       "submit": "Sign in",
+      "submitting": "Signing in...",
       "noAccount": "Don't have an account?",
-      "signUp": "Sign Up"
+      "signUp": "Sign Up",
+      "errors": {
+        "generic": "Unable to sign in. Please check your details and try again.",
+        "network": "Network error. Please check your connection and try again."
+      }
     },
     "forgotPassword": {
       "step": "Step {current} of {total}",

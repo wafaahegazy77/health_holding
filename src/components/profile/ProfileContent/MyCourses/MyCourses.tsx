@@ -1,95 +1,105 @@
-import CourseCard from "@/components/home/CourseCard/CourseCard";
+"use client";
 
-import { getTranslations } from "next-intl/server";
+import Image from "next/image";
+import { useEffect, useMemo, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
+import type { Course, CourseAction, CourseStatus } from "@/lib/api/profile";
+import {
+    fetchCourseCategories,
+    fetchProfileCourses,
+    getProfileCoursesQueryKey,
+    profileCourseCategoriesQueryKey,
+} from "@/lib/api/profile-courses-client";
+
+import "@/components/home/CourseCard/_CourseCard.scss";
 import "./_MyCourses.scss";
 
-type CourseStatus =
-    | "inProgress"
-    | "completed"
-    | "notStarted";
+const PLACEHOLDER_IMAGE = "/images/featured-course-1.png";
 
-type Course = {
-    id: number;
+const COURSE_STATUSES: CourseStatus[] = [
+    "in_progress",
+    "overdue",
+    "completed_on_time",
+    "completed_late",
+];
 
-    category: {
-        en: string;
-        ar: string;
-    };
+function statusClassName(status: string): string {
+    if (status === "completed_on_time" || status === "completed_late") {
+        return "completed";
+    }
+    if (status === "in_progress" || status === "overdue") {
+        return "inProgress";
+    }
+    return "inProgress";
+}
 
-    title: {
-        en: string;
-        ar: string;
-    };
-
-    description: {
-        en: string;
-        ar: string;
-    };
-
-    image: string;
-    isFavorite: boolean;
-
-    modulesCount: string;
-    hours: string;
-    quizzesCount: string;
-
-    status: string;
-
-    completedModules: string;
-    progress: number;
-
-    lastActivity: string | null;
-};
+function actionLabelKey(action: Course["action"]): "start" | "resume" | "review" {
+    if (action === "start" || action === "resume" || action === "review") {
+        return action;
+    }
+    return "resume";
+}
 
 type MyCoursesProps = {
-    courses: Course[];
-    locale: string;
+    locale?: string;
 };
 
-const MyCourses = async ({
-    courses,
-    locale,
-}: MyCoursesProps) => {
-    const currentLocale = locale === "ar" ? "ar" : "en";
+const MyCourses = ({ locale }: MyCoursesProps) => {
+    const t = useTranslations("profile.courses");
+    const currentLocale = useLocale();
+    const resolvedLocale = locale === "en" || locale === "ar" ? locale : currentLocale;
 
-    const t = await getTranslations("profile.courses");
+    const [titleInput, setTitleInput] = useState("");
+    const [title, setTitle] = useState("");
+    const [categoryCode, setCategoryCode] = useState("");
+    const [status, setStatus] = useState<CourseStatus | "">("");
 
-    const completedCourses = courses.filter(
-        (course) => course.status === "completed"
-    ).length;
+    useEffect(() => {
+        const timer = window.setTimeout(() => {
+            setTitle(titleInput.trim());
+        }, 350);
 
-    const inProgressCourses = courses.filter(
-        (course) => course.status === "inProgress"
-    ).length;
+        return () => window.clearTimeout(timer);
+    }, [titleInput]);
 
-    const notStartedCourses = courses.filter(
-        (course) => course.status === "notStarted"
-    ).length;
-
-    const overallCompletion =
-        courses.length > 0
-            ? Math.round(
-                  courses.reduce(
-                      (total, course) =>
-                          total + course.progress,
-                      0
-                  ) / courses.length
-              )
-            : 0;
-
-    const resumeCourse = courses.find(
-        (course) => course.status === "inProgress"
+    const filters = useMemo(
+        () => ({
+            title,
+            categoryCode,
+            status,
+        }),
+        [title, categoryCode, status],
     );
 
-    const categories = Array.from(
-        new Set(
-            courses.map(
-                (course) =>
-                    course.category[currentLocale]
-            )
-        )
-    );
+    const {
+        data: categories = [],
+        isPending: isCategoriesPending,
+        isError: isCategoriesError,
+        error: categoriesError,
+    } = useQuery({
+        queryKey: profileCourseCategoriesQueryKey,
+        queryFn: () => fetchCourseCategories(resolvedLocale),
+    });
+
+    const { data, isPending, isError, error, isFetching } = useQuery({
+        queryKey: getProfileCoursesQueryKey(filters),
+        queryFn: () => fetchProfileCourses(resolvedLocale, filters),
+        placeholderData: keepPreviousData,
+    });
+
+    const summary = data?.summary ?? {};
+    const courses = data?.courses ?? [];
+    const continueLearning = data?.continueLearning ?? null;
+
+    const assignedCount = summary.total ?? courses.length;
+    const completedCount =
+        (summary.completedOnTime ?? 0) + (summary.completedLate ?? 0);
+    const inProgressCount = summary.inProgress ?? 0;
+    const overdueCount = summary.overdue ?? 0;
+
+    const showInitialLoading = isPending && !data;
 
     return (
         <div className="my_courses">
@@ -106,7 +116,7 @@ const MyCourses = async ({
                     </div>
 
                     <strong>
-                        {courses.length}
+                        {showInitialLoading ? "—" : assignedCount}
                     </strong>
 
                     <span>
@@ -121,7 +131,7 @@ const MyCourses = async ({
                     </div>
 
                     <strong>
-                        {completedCourses}
+                        {showInitialLoading ? "—" : completedCount}
                     </strong>
 
                     <span>
@@ -136,7 +146,7 @@ const MyCourses = async ({
                     </div>
 
                     <strong>
-                        {inProgressCourses}
+                        {showInitialLoading ? "—" : inProgressCount}
                     </strong>
 
                     <span>
@@ -151,11 +161,11 @@ const MyCourses = async ({
                     </div>
 
                     <strong>
-                        {notStartedCourses}
+                        {showInitialLoading ? "—" : overdueCount}
                     </strong>
 
                     <span>
-                        {t("stats.notStarted")}
+                        {t("stats.overdue")}
                     </span>
                 </div>
 
@@ -166,7 +176,7 @@ const MyCourses = async ({
                     </div>
 
                     <strong>
-                        {overallCompletion}%
+                        —
                     </strong>
 
                     <span>
@@ -178,10 +188,10 @@ const MyCourses = async ({
 
 
             {/* -----------------------------------------
-                Resume Course
+                Resume / Continue Learning
             ----------------------------------------- */}
 
-            {resumeCourse && (
+            {!showInitialLoading && continueLearning ? (
                 <div className="resume_course">
 
                     <div className="resume_course_content">
@@ -191,50 +201,39 @@ const MyCourses = async ({
                         </span>
 
                         <h3>
-                            {
-                                resumeCourse.title[
-                                    currentLocale
-                                ]
-                            }
+                            {continueLearning.title}
                         </h3>
-
-                        <div className="resume_progress">
-
-                            <div className="resume_progress_bar">
-                                <div
-                                    className="resume_progress_fill"
-                                    style={{
-                                        width: `${resumeCourse.progress}%`,
-                                    }}
-                                />
-                            </div>
-
-                            <span>
-                                {resumeCourse.completedModules}/
-                                {resumeCourse.modulesCount}{" "}
-                                {t("modulesDone")}{" "}
-                                —{" "}
-                                {resumeCourse.progress}%
-                            </span>
-
-                        </div>
 
                     </div>
 
 
-                    <a
-                        href="https://gamal.inspire-sa.com/scorm/player.html"
-                        className="resume_course_button"
-                    >
-                        <i className="fa-solid fa-play" />
+                    {continueLearning.url ? (
+                        <a
+                            href={continueLearning.url}
+                            className="resume_course_button"
+                        >
+                            <i className="fa-solid fa-play" />
 
-                        <span>
-                            {t("actions.resume")}
-                        </span>
-                    </a>
+                            <span>
+                                {t(`actions.${actionLabelKey(continueLearning.action)}`)}
+                            </span>
+                        </a>
+                    ) : (
+                        <button
+                            type="button"
+                            className="resume_course_button"
+                            disabled
+                        >
+                            <i className="fa-solid fa-play" />
+
+                            <span>
+                                {t(`actions.${actionLabelKey(continueLearning.action)}`)}
+                            </span>
+                        </button>
+                    )}
 
                 </div>
-            )}
+            ) : null}
 
 
             {/* -----------------------------------------
@@ -250,6 +249,8 @@ const MyCourses = async ({
                     <input
                         type="search"
                         placeholder={t("filters.search")}
+                        value={titleInput}
+                        onChange={(event) => setTitleInput(event.target.value)}
                     />
 
                 </div>
@@ -257,17 +258,20 @@ const MyCourses = async ({
 
                 <div className="courses_filter">
 
-                    <select defaultValue="">
+                    <select
+                        value={categoryCode}
+                        onChange={(event) => setCategoryCode(event.target.value)}
+                        disabled={isCategoriesPending}
+                    >
                         <option value="">
-                            {t("filters.allCategories")}
+                            {isCategoriesPending
+                                ? t("loadingCategories")
+                                : t("filters.allCategories")}
                         </option>
 
                         {categories.map((category) => (
-                            <option
-                                value={category}
-                                key={category}
-                            >
-                                {category}
+                            <option value={category.code} key={category.code}>
+                                {category.title}
                             </option>
                         ))}
                     </select>
@@ -279,22 +283,21 @@ const MyCourses = async ({
 
                 <div className="courses_filter">
 
-                    <select defaultValue="">
+                    <select
+                        value={status}
+                        onChange={(event) =>
+                            setStatus((event.target.value || "") as CourseStatus | "")
+                        }
+                    >
                         <option value="">
                             {t("filters.allStatuses")}
                         </option>
 
-                        <option value="inProgress">
-                            {t("status.inProgress")}
-                        </option>
-
-                        <option value="completed">
-                            {t("status.completed")}
-                        </option>
-
-                        <option value="notStarted">
-                            {t("status.notStarted")}
-                        </option>
+                        {COURSE_STATUSES.map((value) => (
+                            <option value={value} key={value}>
+                                {t(`status.${value}`)}
+                            </option>
+                        ))}
                     </select>
 
                     <i className="fa-regular fa-chevron-down" />
@@ -303,72 +306,123 @@ const MyCourses = async ({
 
             </div>
 
+            {isCategoriesError ? (
+                <p className="text-danger mb-3" role="alert" style={{ fontSize: 14 }}>
+                    {categoriesError instanceof Error && categoriesError.message
+                        ? categoriesError.message
+                        : t("categoriesError")}
+                </p>
+            ) : null}
+
 
             {/* -----------------------------------------
                 Courses
             ----------------------------------------- */}
 
-            <div className="row gx-3">
+            {showInitialLoading ? (
+                <p className="mb-0" style={{ fontSize: 14 }}>
+                    {t("loading")}
+                </p>
+            ) : isError ? (
+                <p className="text-danger mb-0" role="alert" style={{ fontSize: 14 }}>
+                    {error instanceof Error && error.message
+                        ? error.message
+                        : t("error")}
+                </p>
+            ) : courses.length === 0 ? (
+                <p className="mb-0" style={{ fontSize: 14 }}>
+                    {t("empty")}
+                </p>
+            ) : (
+                <div
+                    className="row gx-3"
+                    style={isFetching ? { opacity: 0.72 } : undefined}
+                >
 
-                {courses.map((course) => {
+                    {courses.map((course) => {
+                        const courseStatus = String(course.status);
+                        const cssStatus = statusClassName(courseStatus);
+                        const action = actionLabelKey(course.action as CourseAction | null);
+                        const imageSrc = course.coverImage || PLACEHOLDER_IMAGE;
+                        const isCompleted =
+                            courseStatus === "completed_on_time" ||
+                            courseStatus === "completed_late";
 
-                    const status =
-                        course.status as CourseStatus;
+                        return (
+                            <div
+                                className="col-lg-4"
+                                key={`${course.id}-${course.code}`}
+                            >
+                                <div className="course_card">
 
-                    return (
-                        <div
-                            className="col-lg-4"
-                            key={course.id}
-                        >
-                            <CourseCard
-                                course={{
-                                    category:
-                                        course.category[
-                                            currentLocale
-                                        ],
+                                    <div className="course_image">
 
-                                    title:
-                                        course.title[
-                                            currentLocale
-                                        ],
+                                        <Image
+                                            src={imageSrc}
+                                            alt={course.title}
+                                            fill
+                                            className="img-cover"
+                                        />
 
-                                    description:
-                                        course.description[
-                                            currentLocale
-                                        ],
+                                        {course.categoryTitle ? (
+                                            <div className="course_category">
+                                                {course.categoryTitle}
+                                            </div>
+                                        ) : null}
 
-                                    image:
-                                        course.image,
+                                        {courseStatus ? (
+                                            <div className={`course_status ${cssStatus}`}>
+                                                <span className="status_dot" />
+                                                {t(`status.${courseStatus}`)}
+                                            </div>
+                                        ) : null}
 
-                                    isFavorite:
-                                        course.isFavorite,
+                                    </div>
 
-                                    modulesCount:
-                                        course.modulesCount,
+                                    <div className="course_content">
 
-                                    hours:
-                                        course.hours,
+                                        <h3 className="fsz-25 fw-500 mb-2">
+                                            {course.title}
+                                        </h3>
 
-                                    quizzesCount:
-                                        course.quizzesCount,
+                                        {course.action ? (
+                                            course.url ? (
+                                                <a
+                                                    href={course.url}
+                                                    className={`course_action ${
+                                                        isCompleted
+                                                            ? "course_action_completed"
+                                                            : ""
+                                                    }`}
+                                                >
+                                                    <i className="fa-regular fa-circle-play" />
+                                                    {t(`actions.${action}`)}
+                                                </a>
+                                            ) : (
+                                                <button
+                                                    type="button"
+                                                    className={`course_action ${
+                                                        isCompleted
+                                                            ? "course_action_completed"
+                                                            : ""
+                                                    }`}
+                                                    disabled
+                                                >
+                                                    <i className="fa-regular fa-circle-play" />
+                                                    {t(`actions.${action}`)}
+                                                </button>
+                                            )
+                                        ) : null}
 
-                                    status,
+                                    </div>
 
-                                    completedModules:
-                                        course.completedModules,
+                                </div>
+                            </div>
+                        );
+                    })}
 
-                                    progress:
-                                        course.progress,
-
-                                    lastActivity:
-                                        course.lastActivity,
-                                }}
-                            />
-                        </div>
-                    );
-                })}
-
-            </div>
+                </div>
+            )}
 
         </div>
     );

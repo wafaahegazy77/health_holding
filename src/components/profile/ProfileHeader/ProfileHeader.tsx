@@ -1,11 +1,13 @@
 import { getTranslations } from "next-intl/server";
-import { getProfileData } from "@/lib/api/profile";
+import type { ProfileData } from "@/lib/api/profile";
 import "./_ProfileHeader.scss";
 
-const ProfileHeader = async () => {
-    const t = await getTranslations("profile");
+type Props = {
+    data: ProfileData;
+};
 
-    const data = await getProfileData();
+const ProfileHeader = async ({ data }: Props) => {
+    const t = await getTranslations("profile");
 
     return (
         <div className="profile_header bg_gradient">

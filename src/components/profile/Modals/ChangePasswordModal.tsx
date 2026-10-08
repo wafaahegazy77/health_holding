@@ -1,11 +1,12 @@
 "use client";
 
 import {
+    FormEvent,
     useEffect,
     useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { useLenis } from "@/components/LenisProvider";
 
@@ -16,6 +17,12 @@ type ChangePasswordModalProps = {
     onClose: () => void;
 };
 
+const emptyForm = {
+    currentPassword: "",
+    newPassword: "",
+    confirmNewPassword: "",
+};
+
 const ChangePasswordModal = ({
     isOpen,
     onClose,
@@ -23,8 +30,13 @@ const ChangePasswordModal = ({
     const t = useTranslations(
         "profile.changePasswordModal"
     );
+    const locale = useLocale();
 
     const [mounted, setMounted] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [error, setError] = useState<string | null>(null);
+    const [success, setSuccess] = useState<string | null>(null);
+    const [form, setForm] = useState(emptyForm);
 
     const [showPasswords, setShowPasswords] = useState({
         current: false,
@@ -42,6 +54,25 @@ const ChangePasswordModal = ({
     useEffect(() => {
         setMounted(true);
     }, []);
+
+
+    // -----------------------------------------
+    // Reset when closed
+    // -----------------------------------------
+
+    useEffect(() => {
+        if (isOpen) return;
+
+        setForm(emptyForm);
+        setError(null);
+        setSuccess(null);
+        setIsSubmitting(false);
+        setShowPasswords({
+            current: false,
+            new: false,
+            confirm: false,
+        });
+    }, [isOpen]);
 
 
     // -----------------------------------------
@@ -70,7 +101,7 @@ const ChangePasswordModal = ({
         const handleKeyDown = (
             event: KeyboardEvent
         ) => {
-            if (event.key === "Escape") {
+            if (event.key === "Escape" && !isSubmitting) {
                 onClose();
             }
         };
@@ -103,7 +134,7 @@ const ChangePasswordModal = ({
             // Start Lenis again
             lenis?.start();
         };
-    }, [isOpen, onClose, lenis]);
+    }, [isOpen, onClose, lenis, isSubmitting]);
 
 
     // -----------------------------------------
@@ -120,6 +151,113 @@ const ChangePasswordModal = ({
             ...prev,
             [field]: !prev[field],
         }));
+    };
+
+    const handleClose = () => {
+        if (isSubmitting) return;
+        onClose();
+    };
+
+    const handleChange = (
+        event: React.ChangeEvent<HTMLInputElement>,
+    ) => {
+        const { name, value } = event.target;
+        setForm((prev) => ({
+            ...prev,
+            [name]: value,
+        }));
+    };
+
+    const resolveApiError = (result: {
+        message?: string;
+        errors?: Record<string, string[] | string> | string[] | string;
+    } | null) => {
+        if (!result) return t("errorGeneric");
+
+        if (typeof result.errors === "string" && result.errors.trim()) {
+            return result.errors;
+        }
+
+        if (Array.isArray(result.errors)) {
+            const first = result.errors.find(
+                (item) => typeof item === "string" && item.trim(),
+            );
+            if (first) return first;
+        }
+
+        if (result.errors && typeof result.errors === "object") {
+            for (const value of Object.values(result.errors)) {
+                if (Array.isArray(value) && value[0]) return String(value[0]);
+                if (typeof value === "string" && value.trim()) return value;
+            }
+        }
+
+        if (typeof result.message === "string" && result.message.trim()) {
+            return result.message;
+        }
+
+        return t("errorGeneric");
+    };
+
+    const handleSubmit = async (event?: FormEvent) => {
+        event?.preventDefault();
+        if (isSubmitting || success) return;
+
+        setError(null);
+
+        const currentPassword = form.currentPassword.trim();
+        const password = form.newPassword;
+        const passwordConfirmation = form.confirmNewPassword;
+
+        if (!currentPassword || !password || !passwordConfirmation) {
+            setError(t("required"));
+            return;
+        }
+
+        if (password !== passwordConfirmation) {
+            setError(t("mismatch"));
+            return;
+        }
+
+        setIsSubmitting(true);
+
+        try {
+            const response = await fetch("/api/profile/password", {
+                method: "PUT",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    lang: locale,
+                    currentPassword,
+                    password,
+                    passwordConfirmation,
+                }),
+            });
+
+            const result = (await response.json().catch(() => null)) as {
+                message?: string;
+                errors?: Record<string, string[] | string> | string[] | string;
+                success?: boolean;
+            } | null;
+
+            if (!response.ok) {
+                setError(resolveApiError(result));
+                return;
+            }
+
+            setForm(emptyForm);
+            setSuccess(t("success"));
+
+            window.setTimeout(() => {
+                onClose();
+            }, 1000);
+        } catch {
+            setError(t("errorGeneric"));
+        } finally {
+            setIsSubmitting(false);
+        }
     };
 
 
@@ -139,7 +277,7 @@ const ChangePasswordModal = ({
                     event.target ===
                     event.currentTarget
                 ) {
-                    onClose();
+                    handleClose();
                 }
             }}
         >
@@ -155,8 +293,9 @@ const ChangePasswordModal = ({
                     <button
                         type="button"
                         className="profile_modal_close change_password_modal_close"
-                        onClick={onClose}
+                        onClick={handleClose}
                         aria-label={t("close")}
+                        disabled={isSubmitting}
                     >
                         <i className="fa-regular fa-xmark" />
                     </button>
@@ -167,7 +306,22 @@ const ChangePasswordModal = ({
                 {/* Body */}
                 <div className="profile_modal_body change_password_modal_body">
 
-                    <div className="change_password_form">
+                    <form
+                        className="change_password_form"
+                        onSubmit={handleSubmit}
+                    >
+
+                        {error ? (
+                            <p className="text-danger mb-3" role="alert" style={{ fontSize: 14 }}>
+                                {error}
+                            </p>
+                        ) : null}
+
+                        {success ? (
+                            <p className="text-success mb-3" role="status" style={{ fontSize: 14 }}>
+                                {success}
+                            </p>
+                        ) : null}
 
                         {/* Current Password */}
                         <div className="form_group change_password_field">
@@ -187,6 +341,9 @@ const ChangePasswordModal = ({
                                     }
                                     name="currentPassword"
                                     autoComplete="current-password"
+                                    value={form.currentPassword}
+                                    onChange={handleChange}
+                                    disabled={isSubmitting || Boolean(success)}
                                 />
 
                                 <button
@@ -202,6 +359,7 @@ const ChangePasswordModal = ({
                                             ? t("hidePassword")
                                             : t("showPassword")
                                     }
+                                    disabled={isSubmitting}
                                 >
                                     <i
                                         className={
@@ -235,6 +393,9 @@ const ChangePasswordModal = ({
                                     }
                                     name="newPassword"
                                     autoComplete="new-password"
+                                    value={form.newPassword}
+                                    onChange={handleChange}
+                                    disabled={isSubmitting || Boolean(success)}
                                 />
 
                                 <button
@@ -250,6 +411,7 @@ const ChangePasswordModal = ({
                                             ? t("hidePassword")
                                             : t("showPassword")
                                     }
+                                    disabled={isSubmitting}
                                 >
                                     <i
                                         className={
@@ -283,6 +445,9 @@ const ChangePasswordModal = ({
                                     }
                                     name="confirmNewPassword"
                                     autoComplete="new-password"
+                                    value={form.confirmNewPassword}
+                                    onChange={handleChange}
+                                    disabled={isSubmitting || Boolean(success)}
                                 />
 
                                 <button
@@ -298,6 +463,7 @@ const ChangePasswordModal = ({
                                             ? t("hidePassword")
                                             : t("showPassword")
                                     }
+                                    disabled={isSubmitting}
                                 >
                                     <i
                                         className={
@@ -312,7 +478,7 @@ const ChangePasswordModal = ({
 
                         </div>
 
-                    </div>
+                    </form>
 
                 </div>
 
@@ -323,7 +489,8 @@ const ChangePasswordModal = ({
                     <button
                         type="button"
                         className="profile_modal_cancel"
-                        onClick={onClose}
+                        onClick={handleClose}
+                        disabled={isSubmitting}
                     >
                         {t("cancel")}
                     </button>
@@ -331,8 +498,11 @@ const ChangePasswordModal = ({
                     <button
                         type="button"
                         className="change_password_submit"
+                        onClick={() => handleSubmit()}
+                        disabled={isSubmitting || Boolean(success)}
+                        aria-busy={isSubmitting}
                     >
-                        {t("updatePassword")}
+                        {isSubmitting ? t("updating") : t("updatePassword")}
                     </button>
 
                 </div>

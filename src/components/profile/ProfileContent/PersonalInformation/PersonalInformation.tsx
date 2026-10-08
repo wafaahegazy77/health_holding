@@ -1,17 +1,19 @@
 import { getTranslations } from "next-intl/server";
 
-import { getProfileData } from "@/lib/api/profile";
+import type { ProfileData } from "@/lib/api/profile";
 
 import PersonalInformationEdit from "./PersonalInformationEdit";
 import "./_PersonalInformation.scss";
 
-const PersonalInformation = async () => {
+type Props = {
+    data: ProfileData;
+};
+
+const PersonalInformation = async ({ data }: Props) => {
     const tRegister = await getTranslations("auth.register");
     const tProfile = await getTranslations(
         "profile.personalInformation"
     );
-
-    const data = await getProfileData();
 
     const translations = {
         personalInformation: tProfile("personalInformation"),

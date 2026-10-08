@@ -7,6 +7,7 @@ import {
 import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
 
+import { useRouter } from "@/i18n/routing";
 import { useLenis } from "@/components/LenisProvider";
 
 import "./_Modals.scss";
@@ -21,8 +22,11 @@ const LogoutModal = ({
     onClose,
 }: LogoutModalProps) => {
     const t = useTranslations("profile.logoutModal");
+    const router = useRouter();
 
     const [mounted, setMounted] = useState(false);
+    const [isLoggingOut, setIsLoggingOut] = useState(false);
+    const [error, setError] = useState<string | null>(null);
 
     const lenis = useLenis();
 
@@ -34,6 +38,17 @@ const LogoutModal = ({
     useEffect(() => {
         setMounted(true);
     }, []);
+
+
+    // -----------------------------------------
+    // Reset when closed
+    // -----------------------------------------
+
+    useEffect(() => {
+        if (isOpen) return;
+        setError(null);
+        setIsLoggingOut(false);
+    }, [isOpen]);
 
 
     // -----------------------------------------
@@ -62,7 +77,7 @@ const LogoutModal = ({
         const handleKeyDown = (
             event: KeyboardEvent
         ) => {
-            if (event.key === "Escape") {
+            if (event.key === "Escape" && !isLoggingOut) {
                 onClose();
             }
         };
@@ -95,7 +110,44 @@ const LogoutModal = ({
             // Start Lenis again
             lenis?.start();
         };
-    }, [isOpen, onClose, lenis]);
+    }, [isOpen, onClose, lenis, isLoggingOut]);
+
+    const handleClose = () => {
+        if (isLoggingOut) return;
+        onClose();
+    };
+
+    const handleLogout = async () => {
+        if (isLoggingOut) return;
+
+        setIsLoggingOut(true);
+        setError(null);
+
+        try {
+            const response = await fetch("/api/auth/logout", {
+                method: "POST",
+                headers: { Accept: "application/json" },
+            });
+
+            const payload = (await response.json().catch(() => null)) as {
+                message?: string;
+                success?: boolean;
+            } | null;
+
+            if (!response.ok) {
+                setError(payload?.message || t("error"));
+                return;
+            }
+
+            onClose();
+            router.replace("/login");
+            router.refresh();
+        } catch {
+            setError(t("error"));
+        } finally {
+            setIsLoggingOut(false);
+        }
+    };
 
 
     if (!mounted || !isOpen) {
@@ -114,7 +166,7 @@ const LogoutModal = ({
                     event.target ===
                     event.currentTarget
                 ) {
-                    onClose();
+                    handleClose();
                 }
             }}
         >
@@ -130,8 +182,9 @@ const LogoutModal = ({
                     <button
                         type="button"
                         className="profile_modal_close logout_modal_close"
-                        onClick={onClose}
+                        onClick={handleClose}
                         aria-label={t("close")}
+                        disabled={isLoggingOut}
                     >
                         <i className="fa-regular fa-xmark" />
                     </button>
@@ -150,6 +203,12 @@ const LogoutModal = ({
                         {t("description")}
                     </p>
 
+                    {error ? (
+                        <p className="text-danger mb-0 mt-3" role="alert" style={{ fontSize: 14 }}>
+                            {error}
+                        </p>
+                    ) : null}
+
                 </div>
 
 
@@ -159,7 +218,8 @@ const LogoutModal = ({
                     <button
                         type="button"
                         className="profile_modal_cancel logout_cancel"
-                        onClick={onClose}
+                        onClick={handleClose}
+                        disabled={isLoggingOut}
                     >
                         {t("cancel")}
                     </button>
@@ -167,8 +227,11 @@ const LogoutModal = ({
                     <button
                         type="button"
                         className="logout_confirm"
+                        onClick={handleLogout}
+                        disabled={isLoggingOut}
+                        aria-busy={isLoggingOut}
                     >
-                        {t("confirm")}
+                        {isLoggingOut ? t("loggingOut") : t("confirm")}
                     </button>
 
                 </div>

@@ -124,6 +124,7 @@
         "description": "We sent a 4-digit code to {email}. Enter it below to continue.",
         "prototype": "Prototype: any 4 digits work as the code.",
         "resend": "Resend code in {time}",
+        "resendNow": "Resend code",
         "changeEmail": "Change email address",
         "verify": "Verify"
       },
@@ -139,7 +140,22 @@
         "resetPassword": "Reset password"
       },
       "showPassword": "Show password",
-      "hidePassword": "Hide password"
+      "hidePassword": "Hide password",
+      "loading": {
+        "sending": "Sending...",
+        "verifying": "Verifying...",
+        "resetting": "Resetting..."
+      },
+      "errors": {
+        "emailRequired": "Please enter your email address.",
+        "emailInvalid": "Please enter a valid email address.",
+        "codeInvalid": "Please enter the 4-digit verification code.",
+        "passwordRequired": "Please enter a new password.",
+        "passwordMismatch": "Password confirmation does not match.",
+        "requestFailed": "Unable to send verification code. Please try again.",
+        "verifyFailed": "Unable to verify the code. Please try again.",
+        "resetFailed": "Unable to reset the password. Please try again."
+      }
     },
     "register": {
             "title": "Register",
@@ -231,7 +247,9 @@
       "description": "You’ll be signed out of this device. Your course progress is saved.",
       "cancel": "Cancel",
       "confirm": "Log out",
-      "close": "Close"
+      "loggingOut": "Logging out...",
+      "close": "Close",
+      "error": "Unable to log out. Please try again."
     },
     "personalInformation": {
       "personalInformation": "Personal Information",
@@ -269,13 +287,22 @@
       "hidePassword": "Hide password",
       "cancel": "Cancel",
       "updatePassword": "Update password",
-      "close": "Close"
+      "updating": "Updating...",
+      "close": "Close",
+      "mismatch": "New password and confirmation do not match.",
+      "required": "Please fill in all password fields.",
+      "success": "Password updated successfully.",
+      "errorGeneric": "Unable to change password. Please try again."
     },
     "courses": {
       "status": {
         "inProgress": "In progress",
         "completed": "Completed",
-        "notStarted": "Not started"
+        "notStarted": "Not started",
+        "in_progress": "In progress",
+        "overdue": "Overdue",
+        "completed_on_time": "Completed on time",
+        "completed_late": "Completed late"
       },
       "actions": {
         "resume": "Resume course",
@@ -289,6 +316,7 @@
         "completed": "Completed",
         "inProgress": "In progress",
         "notStarted": "Not started",
+        "overdue": "Overdue",
         "overallCompletion": "Overall completion"
       },
       "resume": {
@@ -298,7 +326,12 @@
         "search": "Search your courses",
         "allCategories": "All categories",
         "allStatuses": "All statuses"
-      }
+      },
+      "loading": "Loading courses...",
+      "loadingCategories": "Loading categories...",
+      "error": "Unable to load courses.",
+      "categoriesError": "Unable to load categories.",
+      "empty": "No courses found."
     }
   }
 }

@@ -1,14 +1,60 @@
 "use client";
 
-import { useState } from "react";
-import { useTranslations } from "next-intl";
+import { useEffect, useState } from "react";
+import { useLocale, useTranslations } from "next-intl";
+
+import { useRouter } from "@/i18n/routing";
 
 import "./_ForgotPassword.scss";
 
 type ForgotPasswordStep = 1 | 2 | 3;
 
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+function formatCountdown(seconds: number): string {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${String(mins).padStart(2, "0")}:${String(secs).padStart(2, "0")}`;
+}
+
+function resolveErrorMessage(
+    payload: {
+        message?: string;
+        errors?: Record<string, string[] | string> | string[] | string;
+    } | null,
+    fallback: string,
+): string {
+    if (!payload) return fallback;
+
+    if (typeof payload.errors === "string" && payload.errors.trim()) {
+        return payload.errors;
+    }
+
+    if (Array.isArray(payload.errors)) {
+        const first = payload.errors.find(
+            (item) => typeof item === "string" && item.trim(),
+        );
+        if (first) return first;
+    }
+
+    if (payload.errors && typeof payload.errors === "object") {
+        for (const value of Object.values(payload.errors)) {
+            if (Array.isArray(value) && value[0]) return String(value[0]);
+            if (typeof value === "string" && value.trim()) return value;
+        }
+    }
+
+    if (typeof payload.message === "string" && payload.message.trim()) {
+        return payload.message;
+    }
+
+    return fallback;
+}
+
 const ForgotPasswordForm = () => {
     const t = useTranslations("auth.forgotPassword");
+    const locale = useLocale();
+    const router = useRouter();
 
     const [currentStep, setCurrentStep] =
         useState<ForgotPasswordStep>(1);
@@ -28,24 +74,197 @@ const ForgotPasswordForm = () => {
     const [showConfirmPassword, setShowConfirmPassword] =
         useState(false);
 
-    const handleSendCode = () => {
-        setCurrentStep(2);
+    const [error, setError] = useState<string | null>(null);
+    const [isRequesting, setIsRequesting] = useState(false);
+    const [isVerifying, setIsVerifying] = useState(false);
+    const [isResetting, setIsResetting] = useState(false);
+    const [isResending, setIsResending] = useState(false);
+    const [resendSeconds, setResendSeconds] = useState(0);
+
+    useEffect(() => {
+        if (resendSeconds <= 0) return;
+
+        const timer = window.setTimeout(() => {
+            setResendSeconds((prev) => Math.max(prev - 1, 0));
+        }, 1000);
+
+        return () => window.clearTimeout(timer);
+    }, [resendSeconds]);
+
+    const codeValue = verificationCode.join("");
+
+    const requestCode = async (mode: "send" | "resend") => {
+        const trimmedEmail = email.trim();
+
+        if (!trimmedEmail) {
+            setError(t("errors.emailRequired"));
+            return false;
+        }
+
+        if (!EMAIL_PATTERN.test(trimmedEmail)) {
+            setError(t("errors.emailInvalid"));
+            return false;
+        }
+
+        if (mode === "send") setIsRequesting(true);
+        else setIsResending(true);
+
+        setError(null);
+
+        try {
+            const response = await fetch("/api/auth/forgot-password/request", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: trimmedEmail,
+                    lang: locale,
+                }),
+            });
+
+            const payload = (await response.json().catch(() => null)) as {
+                message?: string;
+                errors?: Record<string, string[] | string> | string[] | string;
+                success?: boolean;
+            } | null;
+
+            if (!response.ok) {
+                setError(resolveErrorMessage(payload, t("errors.requestFailed")));
+                return false;
+            }
+
+            setResendSeconds(55);
+            return true;
+        } catch {
+            setError(t("errors.requestFailed"));
+            return false;
+        } finally {
+            if (mode === "send") setIsRequesting(false);
+            else setIsResending(false);
+        }
     };
 
-    const handleVerifyCode = () => {
-        setCurrentStep(3);
+    const handleSendCode = async () => {
+        if (isRequesting) return;
+        const ok = await requestCode("send");
+        if (ok) setCurrentStep(2);
     };
 
-    const handleResetPassword = () => {
-        console.log({
-            email,
-            verificationCode,
-            newPassword,
-            confirmPassword,
-        });
+    const handleResendCode = async () => {
+        if (isResending || resendSeconds > 0 || isVerifying) return;
+        await requestCode("resend");
+    };
+
+    const handleVerifyCode = async () => {
+        if (isVerifying) return;
+
+        if (!/^\d{4}$/.test(codeValue)) {
+            setError(t("errors.codeInvalid"));
+            return;
+        }
+
+        setIsVerifying(true);
+        setError(null);
+
+        try {
+            const response = await fetch("/api/auth/forgot-password/verify", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email.trim(),
+                    code: codeValue,
+                    lang: locale,
+                }),
+            });
+
+            const payload = (await response.json().catch(() => null)) as {
+                message?: string;
+                errors?: Record<string, string[] | string> | string[] | string;
+                success?: boolean;
+            } | null;
+
+            if (!response.ok) {
+                setError(resolveErrorMessage(payload, t("errors.verifyFailed")));
+                return;
+            }
+
+            setCurrentStep(3);
+        } catch {
+            setError(t("errors.verifyFailed"));
+        } finally {
+            setIsVerifying(false);
+        }
+    };
+
+    const handleResetPassword = async () => {
+        if (isResetting) return;
+
+        if (!newPassword.trim()) {
+            setError(t("errors.passwordRequired"));
+            return;
+        }
+
+        if (newPassword !== confirmPassword) {
+            setError(t("errors.passwordMismatch"));
+            return;
+        }
+
+        if (!/^\d{4}$/.test(codeValue)) {
+            setError(t("errors.codeInvalid"));
+            return;
+        }
+
+        setIsResetting(true);
+        setError(null);
+
+        try {
+            const response = await fetch("/api/auth/forgot-password/reset", {
+                method: "POST",
+                headers: {
+                    Accept: "application/json",
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    email: email.trim(),
+                    code: codeValue,
+                    password: newPassword,
+                    passwordConfirmation: confirmPassword,
+                    lang: locale,
+                }),
+            });
+
+            const payload = (await response.json().catch(() => null)) as {
+                message?: string;
+                errors?: Record<string, string[] | string> | string[] | string;
+                success?: boolean;
+            } | null;
+
+            if (!response.ok) {
+                setError(resolveErrorMessage(payload, t("errors.resetFailed")));
+                return;
+            }
+
+            setNewPassword("");
+            setConfirmPassword("");
+            setVerificationCode(["", "", "", ""]);
+            router.replace("/login");
+            router.refresh();
+        } catch {
+            setError(t("errors.resetFailed"));
+        } finally {
+            setIsResetting(false);
+        }
     };
 
     const handleChangeEmail = () => {
+        if (isRequesting || isVerifying || isResending) return;
+        setError(null);
+        setVerificationCode(["", "", "", ""]);
         setCurrentStep(1);
     };
 
@@ -71,6 +290,12 @@ const ForgotPasswordForm = () => {
                     total: 3,
                 })}
             </div>
+
+            {error ? (
+                <p className="text-danger mb-3" role="alert" style={{ fontSize: 14 }}>
+                    {error}
+                </p>
+            ) : null}
 
             {currentStep === 1 && (
                 <div className="forgot_password_step_content">
@@ -105,6 +330,7 @@ const ForgotPasswordForm = () => {
                                     "stepOne.email.placeholder"
                                 )}
                                 autoComplete="email"
+                                disabled={isRequesting}
                             />
                         </div>
 
@@ -119,8 +345,9 @@ const ForgotPasswordForm = () => {
                             type="button"
                             className="forgot_password_back"
                             onClick={() =>
-                                window.history.back()
+                                router.push("/login")
                             }
+                            disabled={isRequesting}
                         >
                             {t("stepOne.backToLogin")}
                         </button>
@@ -129,18 +356,26 @@ const ForgotPasswordForm = () => {
                             type="button"
                             className="butn gradient_butn hvr-icon-slide-out-in"
                             onClick={handleSendCode}
+                            disabled={isRequesting}
+                            aria-busy={isRequesting}
                         >
                             <div className="txt">
-                                {t("stepOne.sendCode")}
+                                {isRequesting
+                                    ? t("loading.sending")
+                                    : t("stepOne.sendCode")}
                             </div>
 
-                            <span className="hvr-icon hvr-icon-current">
-                                <i className="fa-regular fa-arrow-right" />
-                            </span>
+                            {!isRequesting ? (
+                                <>
+                                    <span className="hvr-icon hvr-icon-current">
+                                        <i className="fa-regular fa-arrow-right" />
+                                    </span>
 
-                            <span className="hvr-icon hvr-icon-next">
-                                <i className="fa-regular fa-arrow-right" />
-                            </span>
+                                    <span className="hvr-icon hvr-icon-next">
+                                        <i className="fa-regular fa-arrow-right" />
+                                    </span>
+                                </>
+                            ) : null}
                         </button>
                     </div>
                 </div>
@@ -174,6 +409,7 @@ const ForgotPasswordForm = () => {
                                     inputMode="numeric"
                                     maxLength={1}
                                     value={value}
+                                    disabled={isVerifying || isResending}
                                     autoComplete={
                                         index === 0
                                             ? "one-time-code"
@@ -184,7 +420,7 @@ const ForgotPasswordForm = () => {
                                             event.target.value.replace(
                                                 /\D/g,
                                                 ""
-                                            );
+                                            ).slice(-1);
 
                                         setVerificationCode(
                                             (previous) => {
@@ -230,14 +466,23 @@ const ForgotPasswordForm = () => {
 
                     </div>
 
-                    <p className="forgot_password_prototype">
-                        {t("stepTwo.prototype")}
-                    </p>
-
                     <div className="forgot_password_resend">
-                        {t("stepTwo.resend", {
-                            time: "00:55",
-                        })}
+                        {resendSeconds > 0 ? (
+                            t("stepTwo.resend", {
+                                time: formatCountdown(resendSeconds),
+                            })
+                        ) : (
+                            <button
+                                type="button"
+                                className="forgot_password_back"
+                                onClick={handleResendCode}
+                                disabled={isResending || isVerifying}
+                            >
+                                {isResending
+                                    ? t("loading.sending")
+                                    : t("stepTwo.resendNow")}
+                            </button>
+                        )}
                     </div>
 
                     <div className="forgot_password_actions">
@@ -246,6 +491,7 @@ const ForgotPasswordForm = () => {
                             type="button"
                             className="forgot_password_back"
                             onClick={handleChangeEmail}
+                            disabled={isVerifying || isResending}
                         >
                             {t("stepTwo.changeEmail")}
                         </button>
@@ -254,18 +500,26 @@ const ForgotPasswordForm = () => {
                             type="button"
                             className="butn gradient_butn hvr-icon-slide-out-in"
                             onClick={handleVerifyCode}
+                            disabled={isVerifying || isResending}
+                            aria-busy={isVerifying}
                         >
                             <div className="txt">
-                                {t("stepTwo.verify")}
+                                {isVerifying
+                                    ? t("loading.verifying")
+                                    : t("stepTwo.verify")}
                             </div>
 
-                            <span className="hvr-icon hvr-icon-current">
-                                <i className="fa-regular fa-arrow-right" />
-                            </span>
+                            {!isVerifying ? (
+                                <>
+                                    <span className="hvr-icon hvr-icon-current">
+                                        <i className="fa-regular fa-arrow-right" />
+                                    </span>
 
-                            <span className="hvr-icon hvr-icon-next">
-                                <i className="fa-regular fa-arrow-right" />
-                            </span>
+                                    <span className="hvr-icon hvr-icon-next">
+                                        <i className="fa-regular fa-arrow-right" />
+                                    </span>
+                                </>
+                            ) : null}
                         </button>
                     </div>
                 </div>
@@ -313,6 +567,7 @@ const ForgotPasswordForm = () => {
                                         }
                                         placeholder="•••"
                                         autoComplete="new-password"
+                                        disabled={isResetting}
                                     />
 
                                     <button
@@ -329,6 +584,7 @@ const ForgotPasswordForm = () => {
                                                 ? t("hidePassword")
                                                 : t("showPassword")
                                         }
+                                        disabled={isResetting}
                                     >
                                         <i
                                             className={
@@ -372,6 +628,7 @@ const ForgotPasswordForm = () => {
                                         }
                                         placeholder="•••"
                                         autoComplete="new-password"
+                                        disabled={isResetting}
                                     />
 
                                     <button
@@ -388,6 +645,7 @@ const ForgotPasswordForm = () => {
                                                 ? t("hidePassword")
                                                 : t("showPassword")
                                         }
+                                        disabled={isResetting}
                                     >
                                         <i
                                             className={
@@ -410,20 +668,26 @@ const ForgotPasswordForm = () => {
                             type="button"
                             className="butn gradient_butn hvr-icon-slide-out-in"
                             onClick={handleResetPassword}
+                            disabled={isResetting}
+                            aria-busy={isResetting}
                         >
                             <div className="txt">
-                                {t(
-                                    "stepThree.resetPassword"
-                                )}
+                                {isResetting
+                                    ? t("loading.resetting")
+                                    : t("stepThree.resetPassword")}
                             </div>
 
-                            <span className="hvr-icon hvr-icon-current">
-                                <i className="fa-regular fa-arrow-right" />
-                            </span>
+                            {!isResetting ? (
+                                <>
+                                    <span className="hvr-icon hvr-icon-current">
+                                        <i className="fa-regular fa-arrow-right" />
+                                    </span>
 
-                            <span className="hvr-icon hvr-icon-next">
-                                <i className="fa-regular fa-arrow-right" />
-                            </span>
+                                    <span className="hvr-icon hvr-icon-next">
+                                        <i className="fa-regular fa-arrow-right" />
+                                    </span>
+                                </>
+                            ) : null}
                         </button>
 
                     </div>

@@ -12,7 +12,7 @@ const HeadTrainingMessage = async () => {
     const headTraining = await getHeadTrainingSection(locale);
 
     return (
-        <section className="head_training_message section">
+        <section className="head_training_message section" id="head-training-message">
             <div className="container">
                 <div className="row align-items-center">
 

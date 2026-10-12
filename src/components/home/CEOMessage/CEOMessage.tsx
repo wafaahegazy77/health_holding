@@ -12,7 +12,7 @@ const CEOMessage = async () => {
     const ceo = await getCeoSection(locale);
 
     return (
-        <section className="ceo_message section">
+        <section className="ceo_message section" id="ceo-message">
             <div className="container ">
 
                 {/* Content */}

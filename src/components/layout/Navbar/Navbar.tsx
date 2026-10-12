@@ -19,19 +19,14 @@ const navItems = [
         sectionId: "about",
     },
     {
-        key: "tracks",
-        href: "#tracks",
-        sectionId: "tracks",
+        key: "ceoMessage",
+        href: "#ceo-message",
+        sectionId: "ceo-message",
     },
     {
-        key: "courses",
-        href: "#courses",
-        sectionId: "courses",
-    },
-    {
-        key: "platformFeatures",
-        href: "#platform-features",
-        sectionId: "platform-features",
+        key: "headOfTrainingMessage",
+        href: "#head-training-message",
+        sectionId: "head-training-message",
     },
     {
         key: "process",

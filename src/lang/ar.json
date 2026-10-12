@@ -1,9 +1,8 @@
 {
   "navbar": {
     "about": "عن المنصة",
-    "tracks": "المسارات",
-    "courses": "الدورات",
-    "platformFeatures": "مميزات المنصة",
+    "ceoMessage": "كلمة الرئيس التنفيذي",
+    "headOfTrainingMessage": "كلمة رئيس التدريب",
     "process": "آلية العمل",
     "faqs": "الأسئلة الشائعة",
     "account": "حسابي",

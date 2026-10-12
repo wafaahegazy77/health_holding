@@ -1,9 +1,8 @@
 {
   "navbar": {
     "about": "About",
-    "tracks": "Tracks",
-    "courses": "Courses",
-    "platformFeatures": "Platform Features",
+    "ceoMessage": "CEO Message",
+    "headOfTrainingMessage": "Head of Training Message",
     "process": "Process",
     "faqs": "FAQs",
     "account": "Account",

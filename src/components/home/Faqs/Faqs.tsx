@@ -11,6 +11,8 @@ const Faqs = async () => {
     const t = await getTranslations("faqs");
     const items = await getFaqsSection(locale);
 
+    if (items.length === 0) return null;
+
     return (
         <section className="faqs section" id="faqs">
             <div className="container">
@@ -47,15 +49,13 @@ const Faqs = async () => {
                 </div>
 
 
-                {items.length > 0 ? (
-                    <Reveal animation="fade-up">
-                        <div className="faqs_wrapper">
-                            <FaqAccordion
-                                items={items}
-                            />
-                        </div>
-                    </Reveal>
-                ) : null}
+                <Reveal animation="fade-up">
+                    <div className="faqs_wrapper">
+                        <FaqAccordion
+                            items={items}
+                        />
+                    </div>
+                </Reveal>
 
             </div>
         </section>

@@ -46,6 +46,13 @@
         -webkit-box-orient: vertical;
         overflow: hidden;
     }
+    
+    .hero_description {
+        display: -webkit-box;
+        -webkit-line-clamp: 4;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
 
     .hero_stat {
         width: 190px;

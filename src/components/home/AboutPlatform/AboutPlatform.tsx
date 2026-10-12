@@ -34,12 +34,12 @@ const AboutPlatform = async () => {
                         </Reveal>
                     ) : null}
                 </div>
-                <div className="row align-items-center">
+                <div className="row">
                     {/* Images */}
-                    <div className="col-lg-6">
+                    <div className="col-lg-7">
                         <div className="about_images">
                             <div className="row align-items-end gx-3">
-                                <div className="col-6">
+                                <div className="col-5">
                                     {about.image_1 ? (
                                         <Reveal animation="fade-up" trigger="load">
                                             <div className="image_small">
@@ -53,7 +53,7 @@ const AboutPlatform = async () => {
                                         </Reveal>
                                     ) : null}
                                 </div>
-                                <div className="col-6">
+                                <div className="col-7">
                                     {about.image_2 ? (
                                         <Reveal animation="fade-up" trigger="load">
                                             <div className="image_large">
@@ -72,7 +72,7 @@ const AboutPlatform = async () => {
                     </div>
 
                     {/* Content */}
-                    <div className="col-lg-6 order_md_1">
+                    <div className="col-lg-5 order_md_1">
                         <div className="txt_content">
                             {about.description ? (
                                 <Reveal animation="fade-up" trigger="load">

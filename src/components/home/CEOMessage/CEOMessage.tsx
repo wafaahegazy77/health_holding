@@ -31,6 +31,7 @@ const CEOMessage = async () => {
                                             src={ceo.image}
                                             alt={ceo.manager_name}
                                             fill
+                                            sizes="(max-width: 991px) 100vw, 40vw"
                                             className="img-cover"
                                         />
                                     ) : null}

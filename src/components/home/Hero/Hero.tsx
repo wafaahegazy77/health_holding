@@ -2,9 +2,8 @@ import { getLocale, getTranslations } from "next-intl/server";
 
 import { getHeroSection } from "@/lib/api/home";
 import { Link } from "@/i18n/routing";
-import Reveal from "@/components/animations/Reveal";
 import "./_Hero.scss";
-import DnaInkScene from "./DnaInkScene";
+import HeroVisual from "./HeroVisual";
 
 const Hero = async () => {
     const locale = await getLocale();
@@ -17,71 +16,47 @@ const Hero = async () => {
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="txt_content">
-                            <Reveal animation="fade-up" trigger="load">
-                                <div className="badge bg-white color_primary fw-400 mb-3">
-                                    <img
-                                        src="/images/icons/shield_check.svg"
-                                        className="icon icon-20 "
-                                        alt=""
-                                    />
-                                    {t("eyebrow")}
-                                </div>
-                            </Reveal>
+                            <div className="badge bg-white color_primary fw-400 mb-3">
+                                <img
+                                    src="/images/icons/shield_check.svg"
+                                    className="icon icon-20 "
+                                    alt=""
+                                />
+                                {t("eyebrow")}
+                            </div>
 
                             {hero.main_title || hero.subtitle ? (
-                                <Reveal animation="fade-up" trigger="load">
-                                    <h1 className="title fsz-60 fw-500 mb-3 ">
-                                        {hero.main_title ? <span>{hero.main_title} </span> : null}
-                                        {hero.subtitle ? (
-                                            <span className="txt_gradient fw-600 ">
-                                                {hero.subtitle}
-                                            </span>
-                                        ) : null}
-                                    </h1>
-                                </Reveal>
+                                <h1 className="title fsz-60 fw-500 mb-3 ">
+                                    {hero.main_title ? <span>{hero.main_title} </span> : null}
+                                    {hero.subtitle ? (
+                                        <span className="txt_gradient fw-600 ">
+                                            {hero.subtitle}
+                                        </span>
+                                    ) : null}
+                                </h1>
                             ) : null}
 
                             {hero.description ? (
-                                <Reveal animation="fade-up" trigger="load">
-                                    <p className="hero_description fsz-16 mb-4">
-                                        {hero.description}
-                                    </p>
-                                </Reveal>
+                                <p className="hero_description fsz-16 mb-4">
+                                    {hero.description}
+                                </p>
                             ) : null}
 
                             <div className="butns_box d-flex align-items-center pt-3">
-                                {/* <Reveal animation="fade-up" trigger="load">
-                                    <Link
-                                        href="/register"
-                                        className="butn white_butn hvr-icon-slide-out-in"
-                                    >
-                                        <div className="txt">{t("signUpButn")}</div>
+                                <Link
+                                    href="/login"
+                                    className="butn gradient_butn hvr-icon-slide-out-in"
+                                >
+                                    <div className="txt">{t("logInButn")}</div>
 
-                                        <span className="hvr-icon hvr-icon-current">
-                                            <i className="fa-regular fa-arrow-up-right"></i>
-                                        </span>
+                                    <span className="hvr-icon hvr-icon-current">
+                                        <i className="fa-regular fa-arrow-up-right"></i>
+                                    </span>
 
-                                        <span className="hvr-icon hvr-icon-next">
-                                            <i className="fa-regular fa-arrow-right"></i>
-                                        </span>
-                                    </Link>
-                                </Reveal> */}
-                                <Reveal animation="fade-up" trigger="load">
-                                    <Link
-                                        href="/login"
-                                        className="butn gradient_butn hvr-icon-slide-out-in"
-                                    >
-                                        <div className="txt">{t("logInButn")}</div>
-
-                                        <span className="hvr-icon hvr-icon-current">
-                                            <i className="fa-regular fa-arrow-up-right"></i>
-                                        </span>
-
-                                        <span className="hvr-icon hvr-icon-next">
-                                            <i className="fa-regular fa-arrow-right"></i>
-                                        </span>
-                                    </Link>
-                                </Reveal>
+                                    <span className="hvr-icon hvr-icon-next">
+                                        <i className="fa-regular fa-arrow-right"></i>
+                                    </span>
+                                </Link>
                             </div>
                         </div>
                     </div>
@@ -114,7 +89,7 @@ const Hero = async () => {
                 priority
             /> */}
 
-            <DnaInkScene />
+            <HeroVisual />
         </section>
     );
 };

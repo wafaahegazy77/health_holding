@@ -39,7 +39,7 @@ const AboutPlatform = async () => {
                     <div className="col-lg-7">
                         <div className="about_images">
                             <div className="row align-items-end gx-3">
-                                <div className="col-5">
+                                <div className="col-lg-5 col-6">
                                     {about.image_1 ? (
                                         <Reveal animation="fade-up" trigger="load">
                                             <div className="image_small">
@@ -47,13 +47,14 @@ const AboutPlatform = async () => {
                                                     src={about.image_1}
                                                     alt=""
                                                     fill
+                                                    sizes="(max-width: 991px) 45vw, 25vw"
                                                     className="img-cover"
                                                 />
                                             </div>
                                         </Reveal>
                                     ) : null}
                                 </div>
-                                <div className="col-7">
+                                <div className="col-lg-7 col-6">
                                     {about.image_2 ? (
                                         <Reveal animation="fade-up" trigger="load">
                                             <div className="image_large">
@@ -61,6 +62,7 @@ const AboutPlatform = async () => {
                                                     src={about.image_2}
                                                     alt=""
                                                     fill
+                                                    sizes="(max-width: 991px) 55vw, 35vw"
                                                     className="img-cover"
                                                 />
                                             </div>

@@ -123,6 +123,7 @@ const LearningTracks = async () => {
                 className="bg"
                 alt=""
                 fill
+                sizes="100vw"
             />
 
         </section>

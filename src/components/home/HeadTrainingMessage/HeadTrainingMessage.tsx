@@ -85,6 +85,7 @@ const HeadTrainingMessage = async () => {
                                             src={headTraining.image}
                                             alt={headTraining.manager_name}
                                             fill
+                                            sizes="(max-width: 991px) 100vw, 40vw"
                                             className="img-cover"
                                         />
                                     ) : null}

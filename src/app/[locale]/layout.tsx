@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import "bootstrap/dist/css/bootstrap.min.css";
-import "@/app/styles/lib/all.min.css";
 import "@/app/styles/scss/style.scss";
 import BootstrapClient from "@/components/BootstrapClient";
-import LenisProvider from "@/components/LenisProvider";
+import DeferredFontAwesome from "@/components/DeferredFontAwesome";
 import Providers from "@/components/Providers";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
@@ -47,11 +46,10 @@ export default async function RootLayout({
             <body suppressHydrationWarning>
                 <NextIntlClientProvider messages={messages}>
                     <Providers>
-                        <MotionProvider>
-                            <LenisProvider>{children}</LenisProvider>
-                        </MotionProvider>
+                        <MotionProvider>{children}</MotionProvider>
                     </Providers>
                 </NextIntlClientProvider>
+                <DeferredFontAwesome />
                 <BootstrapClient />
             </body>
         </html>

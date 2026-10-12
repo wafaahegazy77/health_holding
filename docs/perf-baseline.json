@@ -1,0 +1,9 @@
+{
+  "measuredAt": "2026-10-12T16:20:57.785Z",
+  "source": "user-lighthouse-screenshot",
+  "performance": 35,
+  "accessibility": 100,
+  "bestPractices": 100,
+  "seo": 100,
+  "note": "Baseline before optimizations. Re-measure with next build + next start (not dev)."
+}

@@ -18,7 +18,7 @@ import {
     inkVertex,
 } from "@/lib/hero/shaders";
 
-const CFG = {
+const CFG_BASE = {
     bgColor: "#EBF8FF",
     atmoColor: "#14508A",
     atmoCount: 1500,
@@ -54,12 +54,32 @@ const CFG = {
     parallax: 3,
     pointerRadius: 5,
     pointerStrength: 1.55,
-    maxPixelRatio: 1.5,
+    maxPixelRatio: 1.25,
     fov: 45,
     near: 0.1,
     far: 200,
     fogFar: 22,
+    useComposer: true,
 };
+
+function getSceneConfig() {
+    if (typeof window === "undefined") return CFG_BASE;
+
+    const lowPower =
+        window.matchMedia("(max-width: 1200px)").matches ||
+        (navigator.hardwareConcurrency ?? 8) <= 4;
+
+    if (!lowPower) return CFG_BASE;
+
+    return {
+        ...CFG_BASE,
+        helixCount: 12000,
+        inkCount: 35000,
+        atmoCount: 600,
+        maxPixelRatio: 1,
+        useComposer: false,
+    };
+}
 
 const REFERENCE_BUFFER_HEIGHT = 1600;
 const MAX_FRAME_DELTA = 0.05;
@@ -115,6 +135,7 @@ export default function DnaInkScene() {
         const wrap = wrapRef.current;
         if (!wrap) return;
 
+        const CFG = getSceneConfig();
         const bg = rawColor(CFG.bgColor);
 
         const renderer = new THREE.WebGLRenderer({
@@ -253,15 +274,20 @@ export default function DnaInkScene() {
         atmoPoints.frustumCulled = false;
         camera.add(atmoPoints);
 
-        const composer = new EffectComposer(renderer);
-        composer.addPass(new RenderPass(scene, camera));
-        composer.addPass(
-            new ShaderPass({
-                uniforms: { tDiffuse: { value: null } },
-                vertexShader: finalVertex,
-                fragmentShader: finalFragment,
-            })
-        );
+        const composer = CFG.useComposer
+            ? new EffectComposer(renderer)
+            : null;
+
+        if (composer) {
+            composer.addPass(new RenderPass(scene, camera));
+            composer.addPass(
+                new ShaderPass({
+                    uniforms: { tDiffuse: { value: null } },
+                    vertexShader: finalVertex,
+                    fragmentShader: finalFragment,
+                })
+            );
+        }
 
         let lastW = -1;
         let lastH = -1;
@@ -278,8 +304,10 @@ export default function DnaInkScene() {
             pixelRatio = Math.min(window.devicePixelRatio || 1, CFG.maxPixelRatio);
             renderer.setPixelRatio(pixelRatio);
             renderer.setSize(w, h, false);
-            composer.setPixelRatio(pixelRatio);
-            composer.setSize(w, h);
+            if (composer) {
+                composer.setPixelRatio(pixelRatio);
+                composer.setSize(w, h);
+            }
             camera.aspect = w / h;
             camera.updateProjectionMatrix();
             const uPixelScale = (h * pixelRatio) / REFERENCE_BUFFER_HEIGHT;
@@ -412,7 +440,11 @@ export default function DnaInkScene() {
                 sharedCursor.uCursor.value.copy(cursorEased);
             }
 
-            composer.render();
+            if (composer) {
+                composer.render();
+            } else {
+                renderer.render(scene, camera);
+            }
         });
 
         return () => {
@@ -426,7 +458,7 @@ export default function DnaInkScene() {
             helixMat.dispose();
             inkMat.dispose();
             atmoMat.dispose();
-            composer.dispose();
+            composer?.dispose();
             renderer.dispose();
             renderer.domElement.remove();
         };

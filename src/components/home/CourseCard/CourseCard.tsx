@@ -37,6 +37,7 @@ const CourseCard = async ({ course }: CourseCardProps) => {
                     src={course.image}
                     alt={course.title}
                     fill
+                    sizes="(max-width: 991px) 100vw, 33vw"
                     className="img-cover"
                 />
 

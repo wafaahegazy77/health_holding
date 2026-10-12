@@ -10,7 +10,7 @@ const nextConfig: NextConfig = {
   // assetPrefix: "",
   trailingSlash: true,
   images: {
-    unoptimized: true,
+    formats: ["image/avif", "image/webp"],
     remotePatterns: [
       {
         protocol: "https",

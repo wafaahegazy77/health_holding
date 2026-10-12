@@ -17,8 +17,17 @@ const ProcessSteps = ({ steps }: ProcessStepsProps) => {
                 >
                     <div className="process_card">
                         {step.number ? (
-                            <div className="process_number">
-                                {step.number}
+                            <div className="process_number" aria-hidden="true">
+                                <span className="process_number_value">
+                                    {String(Number(step.number) || index + 1).padStart(3, "0")}
+                                </span>
+
+                                <span className="process_number_lines">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </span>
                             </div>
                         ) : null}
 

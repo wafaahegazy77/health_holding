@@ -575,6 +575,15 @@ input {
     }
 }
 
+/* iOS zooms focused inputs when font-size is under 16px */
+@media screen and (max-width: 991px) {
+    input,
+    select,
+    textarea {
+        font-size: 16px !important;
+    }
+}
+
 
 // ---------- animations ------------
 /**

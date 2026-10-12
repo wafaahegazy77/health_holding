@@ -1,242 +1,156 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
-import { getFooterSection, type FooterSocialKey } from "@/lib/api/home";
+import { getFooterSection } from "@/lib/api/home";
 import { Link } from "@/i18n/routing";
-import Reveal from "@/components/animations/Reveal";
 import BackToTop from "./BackToTop";
 
 import "./_Footer.scss";
-
-const socialIcons: Record<FooterSocialKey, { icon: string; label: string }> = {
-    facebook: { icon: "fa-brands fa-facebook-f", label: "Facebook" },
-    instagram: { icon: "fa-brands fa-instagram", label: "Instagram" },
-    x: { icon: "fa-brands fa-x-twitter", label: "X" },
-    whatsapp: { icon: "fa-brands fa-whatsapp", label: "WhatsApp" },
-    linkedin: { icon: "fa-brands fa-linkedin-in", label: "LinkedIn" },
-};
 
 const Footer = async () => {
     const locale = await getLocale();
     const t = await getTranslations("footer");
     const footer = await getFooterSection(locale);
-
     const currentYear = new Date().getFullYear();
-    const hasContact = Boolean(footer.email || footer.phone || footer.address);
 
     return (
         <footer className="footer">
-
             <div className="container">
 
-                {/* Top Content */}
                 <div className="footer_top">
                     <div className="row justify-content-between">
 
-                        {/* Brand */}
                         <div className="col-lg-5 col-md-12">
                             <div className="footer_brand">
+                                <Link href="/" className="footer_logo">
+                                    <img src="/images/logo.png" alt="Health Holding" />
+                                </Link>
 
-                                <Reveal
-                                    animation="fade-up"
-                                    trigger="load"
-                                >
-                                    <Link
-                                        href="/"
-                                        className="footer_logo"
-                                    >
-                                        <img
-                                            src="/images/logo.png"
-                                            alt="Health Holding"
-                                        />
-                                    </Link>
-                                </Reveal>
-
-                                {footer.description ? (
-                                    <Reveal
-                                        animation="fade-up"
-                                        trigger="load"
-                                    >
-                                        <p className="footer_description fsz-18 mb-0 col-lg-10">
-                                            {footer.description}
-                                        </p>
-                                    </Reveal>
-                                ) : null}
-
+                                {footer.description && (
+                                    <p className="footer_description fsz-18 mb-0 col-lg-10">
+                                        {footer.description}
+                                    </p>
+                                )}
                             </div>
                         </div>
 
-
-                        {/* Contact */}
                         <div className="col-lg-2 col-md-4">
                             <div className="footer_column">
+                                <h3 className="fsz-22 fw-500">{t("contact")}</h3>
 
-                                <Reveal
-                                    animation="fade-up"
-                                    trigger="load"
-                                >
-                                    <h3 className="fsz-22 fw-500">
-                                        {t("contact")}
-                                    </h3>
-                                </Reveal>
+                                <ul>
+                                    {footer.email && (
+                                        <li>
+                                            <a href={`mailto:${footer.email}`}>
+                                                <i className="fal fa-envelope me-3"></i>
+                                                {footer.email}
+                                            </a>
+                                        </li>
+                                    )}
 
-                                {hasContact ? (
-                                    <ul>
-                                        {footer.email ? (
-                                            <li>
-                                                <a href={`mailto:${footer.email}`}>
-                                                    {footer.email}
-                                                </a>
-                                            </li>
-                                        ) : null}
+                                    {footer.phone && (
+                                        <li>
+                                            <a href={`tel:${footer.phone.replace(/\s/g, "")}`}>
+                                                <i className="fal fa-phone me-3"></i>
+                                                {footer.phone}
+                                            </a>
+                                        </li>
+                                    )}
 
-                                        {footer.phone ? (
-                                            <li>
-                                                <a href={`tel:${footer.phone.replace(/\s/g, "")}`}>
-                                                    {footer.phone}
-                                                </a>
-                                            </li>
-                                        ) : null}
-
-                                        {footer.address ? (
-                                            <li>
-                                                <span>
-                                                    {footer.address}
+                                    {footer.address && (
+                                        <li>
+                                            <span>
+                                                <i className="fal fa-location-dot me-3"></i>
+                                                {footer.address}
                                                 </span>
-                                            </li>
-                                        ) : null}
-                                    </ul>
-                                ) : null}
-
+                                        </li>
+                                    )}
+                                </ul>
                             </div>
                         </div>
 
-
-                        {/* Platform */}
                         <div className="col-lg-2 col-md-4">
                             <div className="footer_column">
-
-                                <Reveal
-                                    animation="fade-up"
-                                    trigger="load"
-                                >
-                                    <h3 className="fsz-18 fw-500">
-                                        {t("platform")}
-                                    </h3>
-                                </Reveal>
+                                <h3 className="fsz-18 fw-500">{t("platform")}</h3>
 
                                 <ul>
-
                                     <li>
-                                        <Link href="/about">
-                                            {t("aboutUs")}
-                                        </Link>
+                                        <Link href="/about">{t("aboutUs")}</Link>
                                     </li>
-
                                     <li>
-                                        <Link href="/learning-tracks">
-                                            {t("learningTracks")}
-                                        </Link>
+                                        <Link href="/learning-tracks">{t("learningTracks")}</Link>
                                     </li>
-
                                     <li>
-                                        <Link href="/courses">
-                                            {t("courses")}
-                                        </Link>
+                                        <Link href="/courses">{t("courses")}</Link>
                                     </li>
-
                                     <li>
-                                        <Link href="/faqs">
-                                            {t("faqs")}
-                                        </Link>
+                                        <Link href="/faqs">{t("faqs")}</Link>
                                     </li>
-
                                     <li>
-                                        <Link href="/contact">
-                                            {t("contactLink")}
-                                        </Link>
+                                        <Link href="/contact">{t("contactLink")}</Link>
                                     </li>
-
                                 </ul>
-
                             </div>
                         </div>
 
-
-                        {/* Helps */}
                         <div className="col-lg-2 col-md-4">
                             <div className="footer_column">
-
-                                <Reveal
-                                    animation="fade-up"
-                                    trigger="load"
-                                >
-                                    <h3 className="fsz-18 fw-500">
-                                        {t("helps")}
-                                    </h3>
-                                </Reveal>
+                                <h3 className="fsz-18 fw-500">{t("helps")}</h3>
 
                                 <ul>
-
                                     <li>
-                                        <Link href="/privacy-policy">
-                                            {t("privacyPolicy")}
-                                        </Link>
+                                        <Link href="/privacy-policy">{t("privacyPolicy")}</Link>
                                     </li>
-
                                     <li>
-                                        <Link href="/terms-conditions">
-                                            {t("termsConditions")}
-                                        </Link>
+                                        <Link href="/terms-conditions">{t("termsConditions")}</Link>
                                     </li>
-
                                 </ul>
-
                             </div>
                         </div>
 
                     </div>
                 </div>
 
-
-                {/* Bottom */}
                 <div className="footer_bottom">
-
-                    {/* Copyright */}
                     <div className="copyright fsz-15">
                         © {currentYear} {t("copyright")}
                     </div>
 
+                    <div className="social_links">
+                        {footer.facebook && (
+                            <a href={footer.facebook} target="_blank" rel="noreferrer" aria-label="Facebook">
+                                <i className="fa-brands fa-facebook-f"></i>
+                            </a>
+                        )}
 
-                    {footer.socials.length > 0 ? (
-                        <div className="social_links">
-                            {footer.socials.map((social) => {
-                                const item = socialIcons[social.key];
+                        {footer.instagram && (
+                            <a href={footer.instagram} target="_blank" rel="noreferrer" aria-label="Instagram">
+                                <i className="fa-brands fa-instagram"></i>
+                            </a>
+                        )}
 
-                                return (
-                                    <a
-                                        key={social.key}
-                                        href={social.url}
-                                        target="_blank"
-                                        rel="noreferrer"
-                                        aria-label={item.label}
-                                    >
-                                        <i className={item.icon}></i>
-                                    </a>
-                                );
-                            })}
-                        </div>
-                    ) : null}
+                        {footer.x && (
+                            <a href={footer.x} target="_blank" rel="noreferrer" aria-label="X">
+                                <i className="fa-brands fa-x-twitter"></i>
+                            </a>
+                        )}
 
+                        {footer.whatsapp && (
+                            <a href={footer.whatsapp} target="_blank" rel="noreferrer" aria-label="WhatsApp">
+                                <i className="fa-brands fa-whatsapp"></i>
+                            </a>
+                        )}
 
-                    {/* Back To Top */}
-                    <BackToTop
-                        label={t("backToTop")}
-                    />
+                        {footer.linkedin && (
+                            <a href={footer.linkedin} target="_blank" rel="noreferrer" aria-label="LinkedIn">
+                                <i className="fa-brands fa-linkedin-in"></i>
+                            </a>
+                        )}
+                    </div>
 
+                    <BackToTop label={t("backToTop")} />
                 </div>
 
             </div>
-
         </footer>
     );
 };

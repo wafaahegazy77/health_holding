@@ -455,5 +455,35 @@
         padding-top: 50px !important;
     }
 
+    .butn {
+        font-size: 12px;
+        padding: 6px 12px !important;
+
+        &.hvr-icon-slide-out-in {
+            padding-inline-end: 38px !important;
+
+            .hvr-icon {
+                width: 24px;
+                height: 24px;
+
+                i {
+                    font-size: 11px;
+                }
+            }
+
+            .hvr-icon-current {
+                right: 4px;
+            }
+
+            .hvr-icon-next {
+                left: 4px;
+            }
+
+            &:hover .txt {
+                transform: translateX(28px);
+            }
+        }
+    }
+
 }
 

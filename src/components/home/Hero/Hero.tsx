@@ -16,13 +16,13 @@ const Hero = async () => {
                 <div className="row">
                     <div className="col-lg-6">
                         <div className="txt_content">
-                            <div className="badge bg-white color_primary fw-400 mb-3">
+                            <div className="badge bg-white fw-400 mb-3">
                                 <img
                                     src="/images/icons/shield_check.svg"
                                     className="icon icon-20 "
                                     alt=""
                                 />
-                                {t("eyebrow")}
+                                <span className="txt txt_gradient fw-200">{t("eyebrow")}</span>
                             </div>
 
                             {hero.main_title || hero.subtitle ? (

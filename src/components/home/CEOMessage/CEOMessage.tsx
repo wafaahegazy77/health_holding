@@ -96,7 +96,11 @@ const CEOMessage = async () => {
                                 trigger="load"
                             >
                                 <div className="message_mark bg-white">
-                                    <i className="fa-regular fa-quote-left" />
+                                    <img
+                                        src="/images/icons/quote.svg"
+                                        alt=""
+                                        className="icon"
+                                    />
                                 </div>
                             </Reveal>
 

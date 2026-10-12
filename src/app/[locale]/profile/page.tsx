@@ -8,10 +8,28 @@ import PersonalInformation from "@/components/profile/ProfileContent/PersonalInf
 import MyCourses from "@/components/profile/ProfileContent/MyCourses/MyCourses";
 
 import { getProfileData } from "@/lib/api/profile";
-import { getAuthToken } from "@/lib/auth/session";
+import { ApiRequestError } from "@/lib/api/server";
+import { clearAuthToken, getAuthToken } from "@/lib/auth/session";
 import { redirect } from "@/i18n/routing";
 
 import { getLocale } from "next-intl/server";
+
+function isUnauthorizedError(error: ApiRequestError) {
+    if (error.status === 401) return true;
+
+    if (/login first/i.test(error.message)) return true;
+
+    if (
+        error.errors &&
+        typeof error.errors === "object" &&
+        !Array.isArray(error.errors) &&
+        "status" in error.errors
+    ) {
+        return Number((error.errors as { status?: number }).status) === 401;
+    }
+
+    return false;
+}
 
 const ProfilePage = async () => {
     const locale = await getLocale();
@@ -21,7 +39,23 @@ const ProfilePage = async () => {
         redirect({ href: "/login", locale });
     }
 
-    const profile = await getProfileData(locale);
+    let profile;
+
+    try {
+        profile = await getProfileData(locale);
+    } catch (error) {
+        if (error instanceof ApiRequestError && isUnauthorizedError(error)) {
+            try {
+                await clearAuthToken();
+            } catch {
+                // Cookie may be read-only outside Server Actions.
+            }
+
+            redirect({ href: "/login", locale });
+        }
+
+        throw error;
+    }
 
     return (
         <>

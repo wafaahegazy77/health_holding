@@ -238,17 +238,16 @@ export async function getFaqsSection(locale: string): Promise<FaqItem[]> {
 
 export type FooterSocialKey = "facebook" | "instagram" | "x" | "whatsapp" | "linkedin";
 
-export type FooterSocialLink = {
-    key: FooterSocialKey;
-    url: string;
-};
-
 export type FooterSectionData = {
     description: string;
     email: string;
     phone: string;
     address: string;
-    socials: FooterSocialLink[];
+    facebook: string;
+    instagram: string;
+    x: string;
+    whatsapp: string;
+    linkedin: string;
 };
 
 function toSocialHref(value: string, key: FooterSocialKey) {
@@ -262,13 +261,22 @@ function toSocialHref(value: string, key: FooterSocialKey) {
     return `https://${url.replace(/^\/+/, "")}`;
 }
 
+function getSocialUrl(settings: Record<string, unknown>, key: FooterSocialKey) {
+    const value = typeof settings[key] === "string" ? settings[key] : "";
+    return toSocialHref(value, key);
+}
+
 export async function getFooterSection(locale: string): Promise<FooterSectionData> {
     const empty: FooterSectionData = {
         description: "",
         email: "",
         phone: "",
         address: "",
-        socials: [],
+        facebook: "",
+        instagram: "",
+        x: "",
+        whatsapp: "",
+        linkedin: "",
     };
 
     try {
@@ -288,24 +296,16 @@ export async function getFooterSection(locale: string): Promise<FooterSectionDat
                     ? settingsPayload
                     : {};
 
-        const socialKeys: FooterSocialKey[] = [
-            "facebook",
-            "instagram",
-            "x",
-            "whatsapp",
-            "linkedin",
-        ];
-
         return {
             description: footerData.description || "",
             email: settings.site_email || settings.email || "",
             phone: settings.site_phone || settings.phone || "",
             address: settings.site_address || settings.address || "",
-            socials: socialKeys.flatMap((key) => {
-                const value = typeof settings[key] === "string" ? settings[key] : "";
-                const url = toSocialHref(value, key);
-                return url ? [{ key, url }] : [];
-            }),
+            facebook: getSocialUrl(settings, "facebook"),
+            instagram: getSocialUrl(settings, "instagram"),
+            x: getSocialUrl(settings, "x"),
+            whatsapp: getSocialUrl(settings, "whatsapp"),
+            linkedin: getSocialUrl(settings, "linkedin"),
         };
     } catch {
         return empty;

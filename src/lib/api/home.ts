@@ -236,7 +236,13 @@ export async function getFaqsSection(locale: string): Promise<FaqItem[]> {
     }
 }
 
-export type FooterSocialKey = "facebook" | "instagram" | "x" | "whatsapp" | "linkedin";
+export type FooterSocialKey =
+    | "facebook"
+    | "instagram"
+    | "x"
+    | "whatsapp"
+    | "linkedin"
+    | "youtube";
 
 export type FooterSectionData = {
     description: string;
@@ -248,6 +254,7 @@ export type FooterSectionData = {
     x: string;
     whatsapp: string;
     linkedin: string;
+    youtube: string;
 };
 
 function toSocialHref(value: string, key: FooterSocialKey) {
@@ -277,6 +284,7 @@ export async function getFooterSection(locale: string): Promise<FooterSectionDat
         x: "",
         whatsapp: "",
         linkedin: "",
+        youtube: "",
     };
 
     try {
@@ -306,6 +314,7 @@ export async function getFooterSection(locale: string): Promise<FooterSectionDat
             x: getSocialUrl(settings, "x"),
             whatsapp: getSocialUrl(settings, "whatsapp"),
             linkedin: getSocialUrl(settings, "linkedin"),
+            youtube: getSocialUrl(settings, "youtube"),
         };
     } catch {
         return empty;

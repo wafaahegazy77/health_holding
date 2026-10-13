@@ -1,6 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { getProcessSection } from "@/lib/api/home";
+import { Link } from "@/i18n/routing";
 import Reveal from "@/components/animations/Reveal";
 import ProcessSteps from "./ProcessSteps";
 
@@ -10,6 +11,7 @@ const Process = async () => {
     const locale = await getLocale();
     const t = await getTranslations("process");
     const process = await getProcessSection(locale);
+    const description = process.description || t("description");
 
     return (
         <section className="process section pt-100" id="process">
@@ -47,16 +49,36 @@ const Process = async () => {
                             </Reveal>
 
 
-                            {process.description ? (
+                            {description ? (
                                 <Reveal
                                     animation="fade-up"
                                     trigger="load"
                                 >
-                                    <p className="description fsz-16 mb-0">
-                                        {process.description}
+                                    <p className="description fsz-16 mb-4">
+                                        {description}
                                     </p>
                                 </Reveal>
                             ) : null}
+
+                            <Reveal
+                                animation="fade-up"
+                                trigger="load"
+                            >
+                                <Link
+                                    href="/login"
+                                    className="butn white_butn hvr-icon-slide-out-in"
+                                >
+                                    <div className="txt">{t("cta")}</div>
+
+                                    <span className="hvr-icon hvr-icon-current">
+                                        <i className="fa-regular fa-arrow-up-right"></i>
+                                    </span>
+
+                                    <span className="hvr-icon hvr-icon-next">
+                                        <i className="fa-regular fa-arrow-right"></i>
+                                    </span>
+                                </Link>
+                            </Reveal>
 
                         </div>
                     </div>

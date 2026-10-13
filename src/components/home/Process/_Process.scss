@@ -16,6 +16,15 @@
             line-height: 1.7;
             max-width: 390px;
         }
+
+        .butn.white_butn {
+            border-color: #e6e9ee;
+            color: #5c6974;
+
+            &:hover {
+                color: #fff !important;
+            }
+        }
     }
 
     .process_stack {

@@ -145,6 +145,13 @@ const Footer = async () => {
                                 <i className="fa-brands fa-linkedin-in"></i>
                             </a>
                         )}
+
+                        {footer.youtube && (
+                            <a href={footer.youtube} target="_blank" rel="noreferrer" aria-label="YouTube">
+                                <i className="fa-brands fa-youtube"></i>
+                            </a>
+                        )}
+                        
                     </div>
 
                     <BackToTop label={t("backToTop")} />

@@ -48,7 +48,9 @@
   },
   "process": {
     "title": "A clear, sequential learning journey",
-    "eyebrow": "PROCESS"
+    "eyebrow": "PROCESS",
+    "description": "From first login to final assessment — designed around how doctors actually learn.",
+    "cta": "See the full journey"
   },
   "stats": {
     "activeLearners": "Active learners",

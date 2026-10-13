@@ -33,7 +33,7 @@ const Footer = async () => {
                             </div>
                         </div>
 
-                        <div className="col-lg-2 col-md-4">
+                        <div className="col-lg-3 col-md-4">
                             <div className="footer_column">
                                 <h3 className="fsz-22 fw-500">{t("contact")}</h3>
 

@@ -41,7 +41,7 @@ const BackToTop = ({
     return (
         <button
             type="button"
-            className={`back_to_top ${
+            className={`back_to_top border ps-3 py-1 rounded-pill pe-1 ${
                 visible ? "show" : ""
             }`}
             onClick={handleClick}

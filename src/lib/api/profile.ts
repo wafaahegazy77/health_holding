@@ -93,9 +93,11 @@ export type CourseApiData = {
     url?: string | null;
     category_code?: string | null;
     category_title?: string | null;
+    category_name?: string | null;
     category?: {
         code?: string | null;
         title?: string | null;
+        name?: string | null;
     } | null;
     progress?: number | string | null;
     progress_percent?: number | string | null;
@@ -119,10 +121,15 @@ export type CourseApiData = {
 
 export type CourseSummaryApiData = {
     total?: number | null;
+    assigned?: number | null;
     in_progress?: number | null;
     overdue?: number | null;
+    completed?: number | null;
     completed_on_time?: number | null;
     completed_late?: number | null;
+    overall_completion?: number | string | null;
+    completion_percent?: number | string | null;
+    completion?: number | string | null;
 };
 
 export type MyCoursesApiData = {
@@ -200,6 +207,7 @@ export type CourseSummary = {
     overdue?: number;
     completedOnTime?: number;
     completedLate?: number;
+    overallCompletion?: number;
 };
 
 export type Course = {
@@ -454,7 +462,10 @@ export function mapCourseResponseToCourse(
             apiCourse.category_code ?? apiCourse.category?.code,
         ),
         categoryTitle: asString(
-            apiCourse.category_title ?? apiCourse.category?.title,
+            apiCourse.category_title ??
+                apiCourse.category_name ??
+                apiCourse.category?.title ??
+                apiCourse.category?.name,
         ),
         progress,
         modulesCount,
@@ -482,13 +493,23 @@ export function mapCourseSummaryResponseToCourseSummary(
     apiSummary: CourseSummaryApiData | null | undefined,
 ): CourseSummary {
     const summary = apiSummary ?? {};
+    const completedTotal = asNumber(summary.completed);
+    const completedOnTime = asNumber(summary.completed_on_time);
+    const completedLate = asNumber(summary.completed_late);
 
     return {
-        total: asNumber(summary.total),
+        total: asNumber(summary.total ?? summary.assigned),
         inProgress: asNumber(summary.in_progress),
         overdue: asNumber(summary.overdue),
-        completedOnTime: asNumber(summary.completed_on_time),
-        completedLate: asNumber(summary.completed_late),
+        completedOnTime:
+            completedOnTime ??
+            (completedLate === undefined ? completedTotal : undefined),
+        completedLate: completedLate,
+        overallCompletion: asNumber(
+            summary.overall_completion ??
+                summary.completion_percent ??
+                summary.completion,
+        ),
     };
 }
 

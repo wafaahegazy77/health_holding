@@ -6,6 +6,7 @@ import {
 } from "react";
 import { createPortal } from "react-dom";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 
 import { useRouter } from "@/i18n/routing";
 import { useLenis } from "@/components/LenisProvider";
@@ -23,6 +24,7 @@ const LogoutModal = ({
 }: LogoutModalProps) => {
     const t = useTranslations("profile.logoutModal");
     const router = useRouter();
+    const queryClient = useQueryClient();
 
     const [mounted, setMounted] = useState(false);
     const [isLoggingOut, setIsLoggingOut] = useState(false);
@@ -139,6 +141,7 @@ const LogoutModal = ({
                 return;
             }
 
+            queryClient.clear();
             onClose();
             router.replace("/login");
             router.refresh();

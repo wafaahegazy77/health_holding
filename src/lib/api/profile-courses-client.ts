@@ -1,9 +1,58 @@
 import type {
+    Course,
     CourseCategory,
     CourseStatus,
     GetMyCoursesParams,
     MyCoursesData,
 } from "@/lib/api/profile";
+
+/** Build dashboard stats from the real courses list (source of truth for UI). */
+export function computeCourseStatsFromCourses(courses: Course[]): {
+    assigned: number;
+    completed: number;
+    inProgress: number;
+    overdue: number;
+    overallCompletion: number | null;
+} {
+    let completed = 0;
+    let inProgress = 0;
+    let overdue = 0;
+    let progressSum = 0;
+
+    for (const course of courses) {
+        const status = String(course.status);
+
+        if (status === "completed_on_time" || status === "completed_late") {
+            completed += 1;
+        } else if (status === "overdue") {
+            overdue += 1;
+        } else if (status === "in_progress") {
+            inProgress += 1;
+        }
+
+        // Treat missing progress as 0; completed courses as 100 when progress is absent.
+        if (course.progress !== null) {
+            progressSum += course.progress;
+        } else if (
+            status === "completed_on_time" ||
+            status === "completed_late"
+        ) {
+            progressSum += 100;
+        }
+    }
+
+    const assigned = courses.length;
+    const overallCompletion =
+        assigned > 0 ? Math.round(progressSum / assigned) : null;
+
+    return {
+        assigned,
+        completed,
+        inProgress,
+        overdue,
+        overallCompletion,
+    };
+}
 
 export type ProfileCoursesFilters = {
     title?: string;

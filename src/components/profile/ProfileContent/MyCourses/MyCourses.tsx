@@ -1,17 +1,19 @@
 "use client";
 
-import Image from "next/image";
 import { useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 
-import type { Course, CourseAction, CourseStatus } from "@/lib/api/profile";
+import type { Course, CourseStatus } from "@/lib/api/profile";
 import {
+    computeCourseStatsFromCourses,
     fetchCourseCategories,
     fetchProfileCourses,
     getProfileCoursesQueryKey,
     profileCourseCategoriesQueryKey,
 } from "@/lib/api/profile-courses-client";
+
+import ProfileCourseCard from "./ProfileCourseCard";
 
 import "@/components/home/CourseCard/_CourseCard.scss";
 import "./_MyCourses.scss";
@@ -23,23 +25,11 @@ const COURSE_STATUSES: CourseStatus[] = [
     "completed_late",
 ];
 
-function statusClassName(status: string): string {
-    if (status === "completed_on_time" || status === "completed_late") {
-        return "completed";
-    }
-    if (status === "overdue") {
-        return "overdue";
-    }
-    if (status === "in_progress") {
-        return "inProgress";
-    }
-    return "inProgress";
-}
-
 function actionLabelKey(action: Course["action"]): "start" | "resume" | "review" {
     if (action === "start" || action === "resume" || action === "review") {
         return action;
     }
+
     return "resume";
 }
 
@@ -50,7 +40,8 @@ type MyCoursesProps = {
 const MyCourses = ({ locale }: MyCoursesProps) => {
     const t = useTranslations("profile.courses");
     const currentLocale = useLocale();
-    const resolvedLocale = locale === "en" || locale === "ar" ? locale : currentLocale;
+    const resolvedLocale =
+        locale === "en" || locale === "ar" ? locale : currentLocale;
 
     const [titleInput, setTitleInput] = useState("");
     const [title, setTitle] = useState("");
@@ -84,21 +75,49 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
         queryFn: () => fetchCourseCategories(resolvedLocale),
     });
 
+    const hasActiveFilters = Boolean(
+        title || categoryCode || status,
+    );
+
     const { data, isPending, isError, error, isFetching } = useQuery({
         queryKey: getProfileCoursesQueryKey(filters),
         queryFn: () => fetchProfileCourses(resolvedLocale, filters),
         placeholderData: keepPreviousData,
     });
 
-    const summary = data?.summary ?? {};
-    const courses = data?.courses ?? [];
-    const continueLearning = data?.continueLearning ?? null;
+    // Unfiltered list — keeps stats aligned with all assigned courses.
+    const { data: statsSource, isPending: isStatsPending } = useQuery({
+        queryKey: getProfileCoursesQueryKey({}),
+        queryFn: () => fetchProfileCourses(resolvedLocale, {}),
+        enabled: hasActiveFilters,
+    });
 
-    const assignedCount = summary.total ?? courses.length;
-    const completedCount =
-        (summary.completedOnTime ?? 0) + (summary.completedLate ?? 0);
-    const inProgressCount = summary.inProgress ?? 0;
-    const overdueCount = summary.overdue ?? 0;
+    const courses = data?.courses ?? [];
+    const continueLearning =
+        data?.continueLearning ?? statsSource?.continueLearning ?? null;
+
+    const statsCourses = hasActiveFilters
+        ? (statsSource?.courses ?? [])
+        : courses;
+    const summary = (hasActiveFilters ? statsSource?.summary : data?.summary) ?? {};
+    const computedStats = computeCourseStatsFromCourses(statsCourses);
+
+    const useComputedStats = statsCourses.length > 0;
+    const assignedCount = useComputedStats
+        ? computedStats.assigned
+        : (summary.total ?? 0);
+    const completedCount = useComputedStats
+        ? computedStats.completed
+        : (summary.completedOnTime ?? 0) + (summary.completedLate ?? 0);
+    const inProgressCount = useComputedStats
+        ? computedStats.inProgress
+        : (summary.inProgress ?? 0);
+    const overdueCount = useComputedStats
+        ? computedStats.overdue
+        : (summary.overdue ?? 0);
+    const overallCompletion = useComputedStats
+        ? computedStats.overallCompletion
+        : (summary.overallCompletion ?? null);
 
     const continueProgress = continueLearning?.progress ?? null;
     const continueCompletedModules =
@@ -117,85 +136,73 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
         .join(" — ");
 
     const showInitialLoading = isPending && !data;
+    const showStatsLoading =
+        showInitialLoading ||
+        (hasActiveFilters && isStatsPending && !statsSource);
 
     return (
         <div className="my_courses">
 
-            {/* -----------------------------------------
-                Courses Statistics
-            ----------------------------------------- */}
-
+            {/* Courses Statistics */}
             <div className="courses_stats">
 
                 <div className="course_stat_card">
                     <div className="course_stat_icon">
-                        <i className="fa-regular fa-book-open" />
+                        <i className="fa-regular fa-book-open"></i>
                     </div>
-
                     <strong>
-                        {showInitialLoading ? "—" : assignedCount}
+                        {showStatsLoading ? "—" : assignedCount}
                     </strong>
-
                     <span>
                         {t("stats.assigned")}
                     </span>
                 </div>
 
-
                 <div className="course_stat_card course_stat_completed">
                     <div className="course_stat_icon">
-                        <i className="fa-regular fa-check" />
+                        <i className="fa-regular fa-check"></i>
                     </div>
-
                     <strong>
-                        {showInitialLoading ? "—" : completedCount}
+                        {showStatsLoading ? "—" : completedCount}
                     </strong>
-
                     <span>
                         {t("stats.completed")}
                     </span>
                 </div>
 
-
                 <div className="course_stat_card course_stat_in_progress">
                     <div className="course_stat_icon">
-                        <i className="fa-solid fa-play" />
+                        <i className="fa-solid fa-play"></i>
                     </div>
-
                     <strong>
-                        {showInitialLoading ? "—" : inProgressCount}
+                        {showStatsLoading ? "—" : inProgressCount}
                     </strong>
-
                     <span>
                         {t("stats.inProgress")}
                     </span>
                 </div>
 
-
                 <div className="course_stat_card course_stat_not_started">
                     <div className="course_stat_icon">
-                        <i className="fa-regular fa-minus" />
+                        <i className="fa-regular fa-minus"></i>
                     </div>
-
                     <strong>
-                        {showInitialLoading ? "—" : overdueCount}
+                        {showStatsLoading ? "—" : overdueCount}
                     </strong>
-
                     <span>
                         {t("stats.overdue")}
                     </span>
                 </div>
 
-
                 <div className="course_stat_card course_stat_completion">
                     <div className="course_stat_icon">
-                        <i className="fa-regular fa-chart-simple" />
+                        <i className="fa-regular fa-chart-simple"></i>
                     </div>
-
                     <strong>
-                        —
+                        {showStatsLoading || overallCompletion === null
+                            ? "—"
+                            : `${overallCompletion}%`}
                     </strong>
-
                     <span>
                         {t("stats.overallCompletion")}
                     </span>
@@ -203,16 +210,11 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
 
             </div>
 
-
-            {/* -----------------------------------------
-                Resume / Continue Learning
-            ----------------------------------------- */}
-
+            {/* Resume / Continue Learning */}
             {!showInitialLoading && continueLearning ? (
                 <div className="resume_course">
 
                     <div className="resume_course_content">
-
                         <span className="resume_course_eyebrow">
                             {t("resume.pickUp")}
                         </span>
@@ -229,24 +231,25 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
                                         style={{
                                             width: `${continueProgress ?? 0}%`,
                                         }}
-                                    />
+                                    ></span>
                                 </div>
-                                <span>{continueProgressLabel}</span>
+                                <span>
+                                    {continueProgressLabel}
+                                </span>
                             </div>
                         ) : null}
-
                     </div>
-
 
                     {continueLearning.url ? (
                         <a
                             href={continueLearning.url}
                             className="resume_course_button"
                         >
-                            <i className="fa-solid fa-play" />
-
+                            <i className="fa-solid fa-play"></i>
                             <span>
-                                {t(`actions.${actionLabelKey(continueLearning.action)}`)}
+                                {t(
+                                    `actions.${actionLabelKey(continueLearning.action)}`,
+                                )}
                             </span>
                         </a>
                     ) : (
@@ -255,10 +258,11 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
                             className="resume_course_button"
                             disabled
                         >
-                            <i className="fa-solid fa-play" />
-
+                            <i className="fa-solid fa-play"></i>
                             <span>
-                                {t(`actions.${actionLabelKey(continueLearning.action)}`)}
+                                {t(
+                                    `actions.${actionLabelKey(continueLearning.action)}`,
+                                )}
                             </span>
                         </button>
                     )}
@@ -266,29 +270,20 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
                 </div>
             ) : null}
 
-
-            {/* -----------------------------------------
-                Search & Filters
-            ----------------------------------------- */}
-
+            {/* Search & Filters */}
             <div className="courses_filters">
 
                 <div className="courses_search">
-
-                    <i className="fa-regular fa-magnifying-glass" />
-
+                    <i className="fa-regular fa-magnifying-glass"></i>
                     <input
                         type="search"
                         placeholder={t("filters.search")}
                         value={titleInput}
                         onChange={(event) => setTitleInput(event.target.value)}
                     />
-
                 </div>
 
-
                 <div className="courses_filter">
-
                     <select
                         value={categoryCode}
                         onChange={(event) => setCategoryCode(event.target.value)}
@@ -301,23 +296,24 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
                         </option>
 
                         {categories.map((category) => (
-                            <option value={category.code} key={category.code}>
+                            <option
+                                value={category.code}
+                                key={category.code}
+                            >
                                 {category.title}
                             </option>
                         ))}
                     </select>
-
-                    <i className="fa-regular fa-chevron-down" />
-
+                    <i className="fa-regular fa-chevron-down"></i>
                 </div>
 
-
                 <div className="courses_filter">
-
                     <select
                         value={status}
                         onChange={(event) =>
-                            setStatus((event.target.value || "") as CourseStatus | "")
+                            setStatus(
+                                (event.target.value || "") as CourseStatus | "",
+                            )
                         }
                     >
                         <option value="">
@@ -325,200 +321,81 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
                         </option>
 
                         {COURSE_STATUSES.map((value) => (
-                            <option value={value} key={value}>
+                            <option
+                                value={value}
+                                key={value}
+                            >
                                 {t(`status.${value}`)}
                             </option>
                         ))}
                     </select>
-
-                    <i className="fa-regular fa-chevron-down" />
-
+                    <i className="fa-regular fa-chevron-down"></i>
                 </div>
 
             </div>
 
             {isCategoriesError ? (
-                <p className="text-danger mb-3" role="alert" style={{ fontSize: 14 }}>
-                    {categoriesError instanceof Error && categoriesError.message
+                <p
+                    className="text-danger mb-3"
+                    role="alert"
+                    style={{ fontSize: 14 }}
+                >
+                    {categoriesError instanceof Error &&
+                    categoriesError.message
                         ? categoriesError.message
                         : t("categoriesError")}
                 </p>
             ) : null}
 
-
-            {/* -----------------------------------------
-                Courses
-            ----------------------------------------- */}
-
+            {/* Courses */}
             {showInitialLoading ? (
-                <p className="mb-0" style={{ fontSize: 14 }}>
+                <p
+                    className="mb-0"
+                    style={{ fontSize: 14 }}
+                >
                     {t("loading")}
                 </p>
-            ) : isError ? (
-                <p className="text-danger mb-0" role="alert" style={{ fontSize: 14 }}>
+            ) : null}
+
+            {!showInitialLoading && isError ? (
+                <p
+                    className="text-danger mb-0"
+                    role="alert"
+                    style={{ fontSize: 14 }}
+                >
                     {error instanceof Error && error.message
                         ? error.message
                         : t("error")}
                 </p>
-            ) : courses.length === 0 ? (
-                <p className="mb-0" style={{ fontSize: 14 }}>
+            ) : null}
+
+            {!showInitialLoading && !isError && courses.length === 0 ? (
+                <p
+                    className="mb-0"
+                    style={{ fontSize: 14 }}
+                >
                     {t("empty")}
                 </p>
-            ) : (
+            ) : null}
+
+            {!showInitialLoading && !isError && courses.length > 0 ? (
                 <div
                     className="row gx-3"
                     style={isFetching ? { opacity: 0.72 } : undefined}
                 >
-
-                    {courses.map((course) => {
-                        const courseStatus = String(course.status);
-                        const cssStatus = statusClassName(courseStatus);
-                        const action = actionLabelKey(
-                            course.action as CourseAction | null,
-                        );
-                        const isCompleted =
-                            courseStatus === "completed_on_time" ||
-                            courseStatus === "completed_late";
-                        const progress = course.progress;
-                        const completedModules = course.completedModules;
-                        const modulesCount = course.modulesCount;
-                        const hasModules =
-                            completedModules !== null && modulesCount !== null;
-                        const hasProgress = progress !== null;
-
-                        const actionClassName = `course_action ${
-                            isCompleted ? "course_action_completed" : ""
-                        }`;
-
-                        const actionLabel = t(`actions.${action}`);
-
-                        return (
-                            <div
-                                className="col-lg-4"
-                                key={`${course.id}-${course.code}`}
-                            >
-                                <div className={`course_card profile_course_card status_${cssStatus}`}>
-
-                                    <div className={`course_image header_${cssStatus}`}>
-                                        {course.coverImage ? (
-                                            <Image
-                                                src={course.coverImage}
-                                                alt={course.title}
-                                                fill
-                                                className="img-cover"
-                                            />
-                                        ) : null}
-
-                                        {course.categoryTitle ? (
-                                            <div className="course_category">
-                                                {course.categoryTitle}
-                                            </div>
-                                        ) : null}
-
-                                        {courseStatus ? (
-                                            <div className={`course_status ${cssStatus}`}>
-                                                {t(`status.${courseStatus}`)}
-                                            </div>
-                                        ) : null}
-                                    </div>
-
-                                    <div className="course_content">
-                                        <h3>{course.title}</h3>
-
-                                        <div className="course_meta_row">
-                                            {course.hours !== null ? (
-                                                <span>
-                                                    <i className="fa-regular fa-clock" />
-                                                    {t("meta.hours", {
-                                                        count: course.hours,
-                                                    })}
-                                                </span>
-                                            ) : null}
-
-                                            {modulesCount !== null ? (
-                                                <span>
-                                                    <i className="fa-regular fa-layer-group" />
-                                                    {t("meta.modules", {
-                                                        count: modulesCount,
-                                                    })}
-                                                </span>
-                                            ) : null}
-
-                                            {course.quizzesCount !== null ? (
-                                                <span>
-                                                    <i className="fa-regular fa-chart-simple" />
-                                                    {t("meta.quizzes", {
-                                                        count: course.quizzesCount,
-                                                    })}
-                                                </span>
-                                            ) : null}
-                                        </div>
-
-                                        {hasModules || hasProgress ? (
-                                            <div
-                                                className={`course_progress ${
-                                                    isCompleted || progress === 100
-                                                        ? "is_completed"
-                                                        : ""
-                                                }`}
-                                            >
-                                                <div className="progress_bar">
-                                                    <span
-                                                        style={{
-                                                            width: `${progress ?? 0}%`,
-                                                        }}
-                                                    />
-                                                </div>
-
-                                                <div className="progress_info">
-                                                    <span>
-                                                        {hasModules
-                                                            ? `${completedModules}/${modulesCount} ${t("modulesDone")}`
-                                                            : null}
-                                                    </span>
-                                                    <span>
-                                                        {hasProgress
-                                                            ? `${progress}%`
-                                                            : null}
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        ) : null}
-
-                                        {course.action ? (
-                                            course.url ? (
-                                                <a
-                                                    href={course.url}
-                                                    className={actionClassName}
-                                                    target="_blank"
-                                                    rel="noopener noreferrer"
-                                                >
-                                                    {actionLabel}
-                                                </a>
-                                            ) : (
-                                                <button
-                                                    type="button"
-                                                    className={actionClassName}
-                                                    disabled
-                                                >
-                                                    {actionLabel}
-                                                </button>
-                                            )
-                                        ) : null}
-
-                                        {course.lastActivity ? (
-                                            <p className="course_last_activity">
-                                                {t("lastActivity")}: {course.lastActivity}
-                                            </p>
-                                        ) : null}
-                                    </div>
-                                </div>
-                            </div>
-                        );
-                    })}
-
+                    {courses.map((course) => (
+                        <div
+                            className="col-lg-4"
+                            key={`${course.id}-${course.code}`}
+                        >
+                            <ProfileCourseCard
+                                course={course}
+                                categories={categories}
+                            />
+                        </div>
+                    ))}
                 </div>
-            )}
+            ) : null}
 
         </div>
     );

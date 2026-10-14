@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useLocale } from "next-intl";
 import { Link, useRouter } from "@/i18n/routing";
 
@@ -99,12 +99,15 @@ const PersonalInformationEdit = ({
     const [formData, setFormData] = useState<ProfileData>(() =>
         withNormalizedSalutation(data),
     );
+    const [profileSource, setProfileSource] = useState(data);
 
-    useEffect(() => {
+    // Sync local state when parent profile data changes (no useEffect setState).
+    if (data !== profileSource) {
         const next = withNormalizedSalutation(data);
+        setProfileSource(data);
         setProfile(next);
         setFormData(next);
-    }, [data]);
+    }
 
 
     // -----------------------------------------

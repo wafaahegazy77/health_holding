@@ -2,12 +2,14 @@
 
 import { FormEvent, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { Link, useRouter } from "@/i18n/routing";
 
 const LoginForm = () => {
     const t = useTranslations("auth.login");
     const locale = useLocale();
     const router = useRouter();
+    const queryClient = useQueryClient();
 
     const [showPassword, setShowPassword] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
@@ -80,6 +82,7 @@ const LoginForm = () => {
                 return;
             }
 
+            queryClient.clear();
             router.push("/profile");
             router.refresh();
         } catch {

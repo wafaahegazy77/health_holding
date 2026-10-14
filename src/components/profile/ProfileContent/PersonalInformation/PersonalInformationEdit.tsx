@@ -5,7 +5,15 @@ import { useLocale } from "next-intl";
 import { Link, useRouter } from "@/i18n/routing";
 
 import type { ProfileData } from "@/lib/api/profile";
+import { formatLookupLabel } from "@/lib/format-lookup";
 import ChangePasswordModal from "../../Modals/ChangePasswordModal";
+
+function healthcareSectorDisplay(profile: ProfileData) {
+    return (
+        profile.healthcareSectorLabel ||
+        formatLookupLabel(profile.healthcareSector)
+    );
+}
 
 type PersonalInformationTranslations = {
     personalInformation: string;
@@ -233,6 +241,9 @@ const PersonalInformationEdit = ({
                 lastName: formData.lastName,
                 mobile: formData.mobile,
                 healthcareSector: formData.healthcareSector,
+                healthcareSectorLabel: formatLookupLabel(
+                    formData.healthcareSector,
+                ),
                 healthcareSectorOther: formData.healthcareSectorOther,
                 workplace: formData.workplace,
                 postcode: formData.postcode,
@@ -571,7 +582,7 @@ const PersonalInformationEdit = ({
 
                                 <div className="profile_info_value">
                                     <span>
-                                        {profile.healthcareSector}
+                                        {healthcareSectorDisplay(profile)}
                                     </span>
                                 </div>
 
@@ -669,13 +680,45 @@ const PersonalInformationEdit = ({
                                             {translations.healthcareSector}
                                         </label>
 
-                                        <input
-                                            type="text"
+                                        <select
                                             name="healthcareSector"
+                                            className="form-select"
                                             value={formData.healthcareSector}
                                             onChange={handleChange}
                                             disabled={isSaving}
-                                        />
+                                        >
+                                            {formData.healthcareSector &&
+                                            ![
+                                                "moh_hospitals",
+                                                "private_hospitals",
+                                                "government",
+                                                "private",
+                                            ].includes(
+                                                formData.healthcareSector,
+                                            ) ? (
+                                                <option
+                                                    value={
+                                                        formData.healthcareSector
+                                                    }
+                                                >
+                                                    {healthcareSectorDisplay(
+                                                        formData,
+                                                    )}
+                                                </option>
+                                            ) : null}
+                                            <option value="moh_hospitals">
+                                                MOH hospitals
+                                            </option>
+                                            <option value="private_hospitals">
+                                                Private hospitals
+                                            </option>
+                                            <option value="government">
+                                                Government
+                                            </option>
+                                            <option value="private">
+                                                Private
+                                            </option>
+                                        </select>
 
                                     </div>
 
@@ -718,31 +761,6 @@ const PersonalInformationEdit = ({
                                             onChange={handleChange}
                                             disabled={isSaving}
                                         />
-
-                                    </div>
-
-                                </div>
-
-
-                                <div className="col-lg-12">
-
-                                    <div className="form_group">
-
-                                        <label>
-                                            {translations.scfhs}
-                                        </label>
-
-                                        <input
-                                            type="text"
-                                            value={profile.scfhs}
-                                            disabled
-                                            readOnly
-                                        />
-
-                                        <span className="locked mt-2 d-inline-flex fsz-10 align-items-center gap-2">
-                                            <i className="fa-regular fa-lock" />
-                                            {translations.cantBeChanged}
-                                        </span>
 
                                     </div>
 

@@ -490,6 +490,8 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
                                                 <a
                                                     href={course.url}
                                                     className={actionClassName}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
                                                 >
                                                     {actionLabel}
                                                 </a>

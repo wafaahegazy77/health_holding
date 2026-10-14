@@ -23,8 +23,13 @@ export type ProfileApiData = {
     last_name?: string | null;
     email?: string | null;
     mobile?: string | null;
+    phone?: string | null;
+    phone_number?: string | null;
+    mobile_number?: string | null;
     country?: string | null;
     healthcare_sector?: string | null;
+    healthcare_sector_label?: string | null;
+    healthcare_sector_name?: string | null;
     healthcare_sector_other?: string | null;
     workplace_name?: string | null;
     workplace_postcode?: string | null;
@@ -148,6 +153,8 @@ export type ProfileData = {
     roleStatement: string;
     region: string;
     healthcareSector: string;
+    /** Human label from API when available; otherwise format the code in UI. */
+    healthcareSectorLabel: string;
     healthcareSectorOther: string | null;
     role: string;
     workplace: string;
@@ -306,12 +313,20 @@ export function mapProfileResponseToProfileData(
         firstName: asString(data.first_name),
         lastName: asString(data.last_name),
         email: asString(data.email),
-        mobile: asString(data.mobile),
+        mobile: asString(
+            data.mobile ??
+                data.phone ??
+                data.phone_number ??
+                data.mobile_number,
+        ),
         memberSince: asString(data.member_since ?? data.created_at),
 
         roleStatement: asString(data.role_statement),
         region: asString(data.health_cluster),
         healthcareSector: asString(data.healthcare_sector),
+        healthcareSectorLabel: asString(
+            data.healthcare_sector_label ?? data.healthcare_sector_name,
+        ),
         healthcareSectorOther: asNullableString(data.healthcare_sector_other),
         role: asString(data.role),
         workplace: asString(data.workplace_name),

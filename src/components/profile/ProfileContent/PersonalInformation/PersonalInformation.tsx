@@ -1,91 +1,48 @@
 import { getTranslations } from "next-intl/server";
 
-import type { ProfileData } from "@/lib/api/profile";
-
-import PersonalInformationEdit from "./PersonalInformationEdit";
 import "./_PersonalInformation.scss";
 
-type Props = {
-    data: ProfileData;
-};
-
-const PersonalInformation = async ({ data }: Props) => {
+export async function getPersonalInformationTranslations() {
     const tRegister = await getTranslations("auth.register");
-    const tProfile = await getTranslations(
-        "profile.personalInformation"
-    );
+    const tProfile = await getTranslations("profile.personalInformation");
 
-    const translations = {
+    return {
         personalInformation: tProfile("personalInformation"),
 
         editDetails: tProfile("editDetails"),
-        editPersonalInformation: tProfile(
-            "editPersonalInformation"
-        ),
+        editPersonalInformation: tProfile("editPersonalInformation"),
         save: tProfile("save"),
         cancel: tProfile("cancel"),
 
         accountDetails: tProfile("accountDetails"),
-        professionalDetails: tProfile(
-            "professionalDetails"
-        ),
+        professionalDetails: tProfile("professionalDetails"),
 
         cantBeChanged: tProfile("cantBeChanged"),
         confirmed: tProfile("confirmed"),
         accepted: tProfile("accepted"),
         readTerms: tProfile("readTerms"),
 
-        preferencesTitle: tProfile(
-            "preferences.title"
-        ),
-        healthcareProfessional: tProfile(
-            "preferences.healthcareProfessional"
-        ),
+        preferencesTitle: tProfile("preferences.title"),
+        healthcareProfessional: tProfile("preferences.healthcareProfessional"),
 
-        accountSecurityTitle: tProfile(
-            "accountSecurity.title"
-        ),
-        password: tProfile(
-            "accountSecurity.password"
-        ),
-        changePassword: tProfile(
-            "accountSecurity.changePassword"
-        ),
+        accountSecurityTitle: tProfile("accountSecurity.title"),
+        password: tProfile("accountSecurity.password"),
+        changePassword: tProfile("accountSecurity.changePassword"),
 
-        country: tRegister("country.label"),
         salutation: tRegister("salutation.label"),
         firstName: tRegister("firstName.label"),
         lastName: tRegister("lastName.label"),
         email: tRegister("email.label"),
         mobile: tRegister("mobile.label"),
 
-        roleStatement: tRegister(
-            "roleStatement.label"
-        ),
         region: tRegister("ksaRegion.label"),
-        healthcareSector: tRegister(
-            "healthcareSector.label"
-        ),
-        role: tRegister("role.label"),
+        healthcareSector: tRegister("healthcareSector.label"),
         workplace: tRegister("workplace.label"),
         postcode: tRegister("postcode.label"),
         scfhs: tRegister("scfhs.label"),
 
         termsOfUse: tRegister("terms.title"),
-        marketingTitle: tRegister(
-            "marketing.title"
-        ),
-        marketingText: tRegister(
-            "marketing.text"
-        ),
+        marketingTitle: tRegister("marketing.title"),
+        marketingText: tRegister("marketing.text"),
     };
-
-    return (
-        <PersonalInformationEdit
-            data={data}
-            translations={translations}
-        />
-    );
-};
-
-export default PersonalInformation;
+}

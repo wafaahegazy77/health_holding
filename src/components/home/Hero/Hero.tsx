@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { getHeroSection } from "@/lib/api/home";
-import { Link } from "@/i18n/routing";
+import HomeAuthButton from "@/components/home/HomeAuthButton";
 import "./_Hero.scss";
 import HeroVisual from "./HeroVisual";
 
@@ -43,20 +43,10 @@ const Hero = async () => {
                             ) : null}
 
                             <div className="butns_box d-flex align-items-center pt-3">
-                                <Link
-                                    href="/login"
+                                <HomeAuthButton
                                     className="butn gradient_butn hvr-icon-slide-out-in"
-                                >
-                                    <div className="txt">{t("logInButn")}</div>
-
-                                    <span className="hvr-icon hvr-icon-current">
-                                        <i className="fa-regular fa-arrow-up-right"></i>
-                                    </span>
-
-                                    <span className="hvr-icon hvr-icon-next">
-                                        <i className="fa-regular fa-arrow-right"></i>
-                                    </span>
-                                </Link>
+                                    guestLabel={t("logInButn")}
+                                />
                             </div>
                         </div>
                     </div>

@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { getProcessSection } from "@/lib/api/home";
-import { Link } from "@/i18n/routing";
+import HomeAuthButton from "@/components/home/HomeAuthButton";
 import Reveal from "@/components/animations/Reveal";
 import ProcessSteps from "./ProcessSteps";
 
@@ -64,20 +64,10 @@ const Process = async () => {
                                 animation="fade-up"
                                 trigger="load"
                             >
-                                <Link
-                                    href="/login"
+                                <HomeAuthButton
                                     className="butn white_butn hvr-icon-slide-out-in"
-                                >
-                                    <div className="txt">{t("cta")}</div>
-
-                                    <span className="hvr-icon hvr-icon-current">
-                                        <i className="fa-regular fa-arrow-up-right"></i>
-                                    </span>
-
-                                    <span className="hvr-icon hvr-icon-next">
-                                        <i className="fa-regular fa-arrow-right"></i>
-                                    </span>
-                                </Link>
+                                    guestLabel={t("cta")}
+                                />
                             </Reveal>
 
                         </div>

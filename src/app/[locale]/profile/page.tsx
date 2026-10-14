@@ -1,18 +1,18 @@
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 
-import ProfileHeader from "@/components/profile/ProfileHeader/ProfileHeader";
-import ProfileTabs from "@/components/profile/ProfileTabs/ProfileTabs";
-
-import PersonalInformation from "@/components/profile/ProfileContent/PersonalInformation/PersonalInformation";
+import ProfileShell from "@/components/profile/ProfileShell";
 import MyCourses from "@/components/profile/ProfileContent/MyCourses/MyCourses";
+import { getPersonalInformationTranslations } from "@/components/profile/ProfileContent/PersonalInformation/PersonalInformation";
 
 import { getProfileData } from "@/lib/api/profile";
 import { ApiRequestError } from "@/lib/api/server";
 import { clearAuthToken, getAuthToken } from "@/lib/auth/session";
 import { redirect } from "@/i18n/routing";
 
-import { getLocale } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
+
+import "@/components/profile/ProfileContent/PersonalInformation/_PersonalInformation.scss";
 
 function isUnauthorizedError(error: ApiRequestError) {
     if (error.status === 401) return true;
@@ -57,6 +57,11 @@ const ProfilePage = async () => {
         throw error;
     }
 
+    const [personalTranslations, tProfile] = await Promise.all([
+        getPersonalInformationTranslations(),
+        getTranslations("profile"),
+    ]);
+
     return (
         <>
             <Navbar />
@@ -64,18 +69,12 @@ const ProfilePage = async () => {
             <main>
                 <section className="profile_pg position-relative pb-70 bg_blue pt-150">
                     <div className="container">
-
-                        <ProfileHeader data={profile} />
-
-                        <ProfileTabs
-                            personalContent={
-                                <PersonalInformation data={profile} />
-                            }
-                            coursesContent={
-                                <MyCourses locale={locale} />
-                            }
+                        <ProfileShell
+                            initialProfile={profile}
+                            personalTranslations={personalTranslations}
+                            memberSinceLabel={tProfile("memberSince")}
+                            coursesContent={<MyCourses locale={locale} />}
                         />
-
                     </div>
                 </section>
             </main>

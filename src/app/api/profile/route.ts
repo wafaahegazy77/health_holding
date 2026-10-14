@@ -29,6 +29,8 @@ export async function PUT(request: NextRequest) {
         healthcareSectorOther: body.healthcareSectorOther,
         workplaceName: body.workplaceName,
         workplacePostcode: body.workplacePostcode,
+        healthClusterId: body.healthClusterId,
+        healthCluster: body.healthCluster,
     };
 
     try {

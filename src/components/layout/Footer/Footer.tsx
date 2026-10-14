@@ -9,6 +9,7 @@ import "./_Footer.scss";
 const Footer = async () => {
     const locale = await getLocale();
     const t = await getTranslations("footer");
+    const tNav = await getTranslations("navbar");
     const footer = await getFooterSection(locale);
     const currentYear = new Date().getFullYear();
 
@@ -22,7 +23,7 @@ const Footer = async () => {
                         <div className="col-lg-5 col-md-12">
                             <div className="footer_brand">
                                 <Link href="/" className="footer_logo">
-                                    <img src="/images/logo.png" alt="Health Holding" />
+                                    <img src={footer.logo} alt="Health Holding" />
                                 </Link>
 
                                 {footer.description && (
@@ -74,19 +75,19 @@ const Footer = async () => {
 
                                 <ul>
                                     <li>
-                                        <Link href="/about">{t("aboutUs")}</Link>
+                                        <Link href="/#about">{tNav("about")}</Link>
                                     </li>
                                     <li>
-                                        <Link href="/learning-tracks">{t("learningTracks")}</Link>
+                                        <Link href="/#ceo-message">{tNav("ceoMessage")}</Link>
                                     </li>
                                     <li>
-                                        <Link href="/courses">{t("courses")}</Link>
+                                        <Link href="/#head-training-message">{tNav("headOfTrainingMessage")}</Link>
                                     </li>
                                     <li>
-                                        <Link href="/faqs">{t("faqs")}</Link>
+                                        <Link href="/#process">{tNav("process")}</Link>
                                     </li>
                                     <li>
-                                        <Link href="/contact">{t("contactLink")}</Link>
+                                        <Link href="/#faqs">{tNav("faqs")}</Link>
                                     </li>
                                 </ul>
                             </div>

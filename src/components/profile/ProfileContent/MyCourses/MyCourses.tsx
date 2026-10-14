@@ -16,8 +16,6 @@ import {
 import "@/components/home/CourseCard/_CourseCard.scss";
 import "./_MyCourses.scss";
 
-const PLACEHOLDER_IMAGE = "/images/featured-course-1.png";
-
 const COURSE_STATUSES: CourseStatus[] = [
     "in_progress",
     "overdue",
@@ -29,7 +27,10 @@ function statusClassName(status: string): string {
     if (status === "completed_on_time" || status === "completed_late") {
         return "completed";
     }
-    if (status === "in_progress" || status === "overdue") {
+    if (status === "overdue") {
+        return "overdue";
+    }
+    if (status === "in_progress") {
         return "inProgress";
     }
     return "inProgress";
@@ -98,6 +99,22 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
         (summary.completedOnTime ?? 0) + (summary.completedLate ?? 0);
     const inProgressCount = summary.inProgress ?? 0;
     const overdueCount = summary.overdue ?? 0;
+
+    const continueProgress = continueLearning?.progress ?? null;
+    const continueCompletedModules =
+        continueLearning?.completedModules ?? null;
+    const continueModulesCount = continueLearning?.modulesCount ?? null;
+    const continueHasModules =
+        continueCompletedModules !== null && continueModulesCount !== null;
+    const continueHasProgress = continueProgress !== null;
+    const continueProgressLabel = [
+        continueHasModules
+            ? `${continueCompletedModules}/${continueModulesCount} ${t("modulesDone")}`
+            : null,
+        continueHasProgress ? `${continueProgress}%` : null,
+    ]
+        .filter(Boolean)
+        .join(" — ");
 
     const showInitialLoading = isPending && !data;
 
@@ -203,6 +220,20 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
                         <h3>
                             {continueLearning.title}
                         </h3>
+
+                        {continueHasModules || continueHasProgress ? (
+                            <div className="resume_progress">
+                                <div className="resume_progress_bar">
+                                    <span
+                                        className="resume_progress_fill"
+                                        style={{
+                                            width: `${continueProgress ?? 0}%`,
+                                        }}
+                                    />
+                                </div>
+                                <span>{continueProgressLabel}</span>
+                            </div>
+                        ) : null}
 
                     </div>
 
@@ -342,27 +373,41 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
                     {courses.map((course) => {
                         const courseStatus = String(course.status);
                         const cssStatus = statusClassName(courseStatus);
-                        const action = actionLabelKey(course.action as CourseAction | null);
-                        const imageSrc = course.coverImage || PLACEHOLDER_IMAGE;
+                        const action = actionLabelKey(
+                            course.action as CourseAction | null,
+                        );
                         const isCompleted =
                             courseStatus === "completed_on_time" ||
                             courseStatus === "completed_late";
+                        const progress = course.progress;
+                        const completedModules = course.completedModules;
+                        const modulesCount = course.modulesCount;
+                        const hasModules =
+                            completedModules !== null && modulesCount !== null;
+                        const hasProgress = progress !== null;
+
+                        const actionClassName = `course_action ${
+                            isCompleted ? "course_action_completed" : ""
+                        }`;
+
+                        const actionLabel = t(`actions.${action}`);
 
                         return (
                             <div
                                 className="col-lg-4"
                                 key={`${course.id}-${course.code}`}
                             >
-                                <div className="course_card">
+                                <div className={`course_card profile_course_card status_${cssStatus}`}>
 
-                                    <div className="course_image">
-
-                                        <Image
-                                            src={imageSrc}
-                                            alt={course.title}
-                                            fill
-                                            className="img-cover"
-                                        />
+                                    <div className={`course_image header_${cssStatus}`}>
+                                        {course.coverImage ? (
+                                            <Image
+                                                src={course.coverImage}
+                                                alt={course.title}
+                                                fill
+                                                className="img-cover"
+                                            />
+                                        ) : null}
 
                                         {course.categoryTitle ? (
                                             <div className="course_category">
@@ -372,50 +417,99 @@ const MyCourses = ({ locale }: MyCoursesProps) => {
 
                                         {courseStatus ? (
                                             <div className={`course_status ${cssStatus}`}>
-                                                <span className="status_dot" />
                                                 {t(`status.${courseStatus}`)}
                                             </div>
                                         ) : null}
-
                                     </div>
 
                                     <div className="course_content">
+                                        <h3>{course.title}</h3>
 
-                                        <h3 className="fsz-25 fw-500 mb-2">
-                                            {course.title}
-                                        </h3>
+                                        <div className="course_meta_row">
+                                            {course.hours !== null ? (
+                                                <span>
+                                                    <i className="fa-regular fa-clock" />
+                                                    {t("meta.hours", {
+                                                        count: course.hours,
+                                                    })}
+                                                </span>
+                                            ) : null}
+
+                                            {modulesCount !== null ? (
+                                                <span>
+                                                    <i className="fa-regular fa-layer-group" />
+                                                    {t("meta.modules", {
+                                                        count: modulesCount,
+                                                    })}
+                                                </span>
+                                            ) : null}
+
+                                            {course.quizzesCount !== null ? (
+                                                <span>
+                                                    <i className="fa-regular fa-chart-simple" />
+                                                    {t("meta.quizzes", {
+                                                        count: course.quizzesCount,
+                                                    })}
+                                                </span>
+                                            ) : null}
+                                        </div>
+
+                                        {hasModules || hasProgress ? (
+                                            <div
+                                                className={`course_progress ${
+                                                    isCompleted || progress === 100
+                                                        ? "is_completed"
+                                                        : ""
+                                                }`}
+                                            >
+                                                <div className="progress_bar">
+                                                    <span
+                                                        style={{
+                                                            width: `${progress ?? 0}%`,
+                                                        }}
+                                                    />
+                                                </div>
+
+                                                <div className="progress_info">
+                                                    <span>
+                                                        {hasModules
+                                                            ? `${completedModules}/${modulesCount} ${t("modulesDone")}`
+                                                            : null}
+                                                    </span>
+                                                    <span>
+                                                        {hasProgress
+                                                            ? `${progress}%`
+                                                            : null}
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        ) : null}
 
                                         {course.action ? (
                                             course.url ? (
                                                 <a
                                                     href={course.url}
-                                                    className={`course_action ${
-                                                        isCompleted
-                                                            ? "course_action_completed"
-                                                            : ""
-                                                    }`}
+                                                    className={actionClassName}
                                                 >
-                                                    <i className="fa-regular fa-circle-play" />
-                                                    {t(`actions.${action}`)}
+                                                    {actionLabel}
                                                 </a>
                                             ) : (
                                                 <button
                                                     type="button"
-                                                    className={`course_action ${
-                                                        isCompleted
-                                                            ? "course_action_completed"
-                                                            : ""
-                                                    }`}
+                                                    className={actionClassName}
                                                     disabled
                                                 >
-                                                    <i className="fa-regular fa-circle-play" />
-                                                    {t(`actions.${action}`)}
+                                                    {actionLabel}
                                                 </button>
                                             )
                                         ) : null}
 
+                                        {course.lastActivity ? (
+                                            <p className="course_last_activity">
+                                                {t("lastActivity")}: {course.lastActivity}
+                                            </p>
+                                        ) : null}
                                     </div>
-
                                 </div>
                             </div>
                         );

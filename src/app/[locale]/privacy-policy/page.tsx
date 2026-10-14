@@ -2,16 +2,15 @@ import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import ContentPage from "@/components/ContentPage/ContentPage";
 
-import ContentPagesData from "@/mock-api/content-pages.json";
+import { getPrivacyPage } from "@/lib/api/pages";
+import { getLocale, getTranslations } from "next-intl/server";
 
-import { getLocale } from "next-intl/server";
+export const dynamic = "force-dynamic";
 
 const PrivacyPolicyPage = async () => {
     const locale = await getLocale();
-    const currentLocale = locale === "ar" ? "ar" : "en";
-
-    const privacyPolicy =
-        ContentPagesData.privacyPolicy;
+    const t = await getTranslations("footer");
+    const page = await getPrivacyPage(locale);
 
     return (
         <>
@@ -19,24 +18,8 @@ const PrivacyPolicyPage = async () => {
 
             <main>
                 <ContentPage
-                    title={privacyPolicy.title[currentLocale]}
-                    updatedAt={
-                        privacyPolicy.updatedAt[
-                            currentLocale
-                        ]
-                    }
-                    sections={privacyPolicy.sections.map(
-                        (section) => ({
-                            title:
-                                section.title[
-                                    currentLocale
-                                ],
-                            content:
-                                section.content[
-                                    currentLocale
-                                ],
-                        })
-                    )}
+                    title={page?.title || t("privacyPolicy")}
+                    contentHtml={page?.contentHtml || ""}
                 />
             </main>
 

@@ -22,6 +22,7 @@ export type PageKey =
     | "how_we_work"
     | "footer"
     | "terms_conditions"
+    | "privacy_policy"
     | (string & {});
 
 export type CourseStatus =
@@ -65,6 +66,7 @@ export const endpoints = {
     howWeWork: "/pages/how_we_work",
     footer: "/pages/footer",
     terms: "/pages/terms_conditions",
+    privacy: "/pages/privacy_policy",
 
     // FAQs
     faqs: "/faqs",
@@ -125,6 +127,8 @@ export const api = {
         apiClient.get(endpoints.footer, withLang(locale)).then((res) => res.data),
     getTerms: (locale?: string) =>
         apiClient.get(endpoints.terms, withLang(locale)).then((res) => res.data),
+    getPrivacy: (locale?: string) =>
+        apiClient.get(endpoints.privacy, withLang(locale)).then((res) => res.data),
     getFaqs: (locale?: string) =>
         apiClient.get(endpoints.faqs, withLang(locale)).then((res) => res.data),
 };

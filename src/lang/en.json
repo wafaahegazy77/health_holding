@@ -7,6 +7,7 @@
     "faqs": "FAQs",
     "account": "Account",
     "login": "Login",
+    "exploreContent": "Explore Content",
     "createAccount": "Create an Account"
   },
   "hero": {
@@ -15,7 +16,7 @@
     "highlightedTitle": "designed for doctors",
     "logInButn": "Login",
     "signUpButn": "Create an Account",
-    "exploreCourses": "Explore content",
+    "exploreCourses": "Explore Content",
     "specialties": "Medical specialties"
   },
   "aboutPlatform": {
@@ -200,11 +201,11 @@
                 "placeholder": "Select your role"
             },
             "ksaRegion": {
-                "label": "KSA Region",
-                "placeholder": "Select your region"
+                "label": "Health Cluster",
+                "placeholder": "Select your health cluster"
             },
             "healthcareSector": {
-                "label": "Which healthcare sector do you work in?",
+                "label": "Healthcare Sector",
                 "placeholder": "Select healthcare sector"
             },
             "role": {
@@ -312,6 +313,11 @@
       },
       "modulesDone": "modules done",
       "lastActivity": "Last activity",
+      "meta": {
+        "hours": "{count} h",
+        "modules": "{count} modules",
+        "quizzes": "{count} quizzes"
+      },
       "stats": {
         "assigned": "Courses assigned",
         "completed": "Completed",

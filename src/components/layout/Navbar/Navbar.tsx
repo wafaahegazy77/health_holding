@@ -2,8 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import Image from "next/image";
-
+import BrandLogo from "@/components/BrandLogo";
 import {
     Link,
     usePathname,
@@ -40,7 +39,11 @@ const navItems = [
     },
 ];
 
-export default function Navbar() {
+type NavbarProps = {
+    isLoggedIn?: boolean;
+};
+
+export default function Navbar({ isLoggedIn = false }: NavbarProps) {
     const locale = useLocale();
     const pathname = usePathname();
     const router = useRouter();
@@ -267,9 +270,7 @@ export default function Navbar() {
                     className="navbar-brand"
                     href="/"
                 >
-                    <Image
-                        src="/images/logo.png"
-                        alt="Health Holding"
+                    <BrandLogo
                         className="logo"
                         width={100}
                         height={50}
@@ -415,11 +416,11 @@ export default function Navbar() {
                         <div className="account-dropdown">
 
                             <Link 
-                                href="/login"
+                                href={isLoggedIn ? "/profile" : "/login"}
                                 className="butn white_butn hvr-icon-slide-out-in account-trigger"
                             >
                                 <div className="txt">
-                                    {t("login")}
+                                    {isLoggedIn ? t("exploreContent") : t("login")}
                                 </div>
 
                                 {/* Current icon */}
@@ -429,7 +430,11 @@ export default function Navbar() {
 
                                 {/* Next icon */}
                                 <span className="hvr-icon hvr-icon-next">
-                                    <i className="fa-regular fa-right-to-bracket"></i>
+                                    <i className={`fa-regular ${
+                                        isLoggedIn
+                                            ? "fa-arrow-right"
+                                            : "fa-right-to-bracket"
+                                    }`}></i>
                                 </span>
                             </Link>
 

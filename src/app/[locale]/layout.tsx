@@ -4,21 +4,37 @@ import "@/app/styles/scss/style.scss";
 import BootstrapClient from "@/components/BootstrapClient";
 import DeferredFontAwesome from "@/components/DeferredFontAwesome";
 import Providers from "@/components/Providers";
+import { SiteSettingsProvider } from "@/components/SiteSettingsProvider";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import MotionProvider from "@/components/MotionProvider";
 import { cairo, poppins, prata } from "@/app/fonts";
+import { getSiteSettings } from "@/lib/api/home";
 
 export function generateStaticParams() {
     return routing.locales.map((locale) => ({ locale }));
 }
 
-export const metadata: Metadata = {
-    title: "Holding Health",
-    description: "Holding Health",
-};
+export async function generateMetadata({
+    params,
+}: {
+    params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+    const { locale } = await params;
+    const settings = await getSiteSettings(locale);
+
+    return {
+        title: "Holding Health",
+        description: "Holding Health",
+        icons: {
+            icon: settings.favicon,
+            shortcut: settings.favicon,
+            apple: settings.favicon,
+        },
+    };
+}
 
 export default async function RootLayout({
     children,
@@ -34,7 +50,10 @@ export default async function RootLayout({
     }
 
     setRequestLocale(locale);
-    const messages = await getMessages({ locale });
+    const [messages, settings] = await Promise.all([
+        getMessages({ locale }),
+        getSiteSettings(locale),
+    ]);
     const dir = locale === "ar" ? "rtl" : "ltr";
 
     return (
@@ -46,7 +65,9 @@ export default async function RootLayout({
             <body suppressHydrationWarning>
                 <NextIntlClientProvider messages={messages}>
                     <Providers>
-                        <MotionProvider>{children}</MotionProvider>
+                        <SiteSettingsProvider value={settings}>
+                            <MotionProvider>{children}</MotionProvider>
+                        </SiteSettingsProvider>
                     </Providers>
                 </NextIntlClientProvider>
                 <DeferredFontAwesome />

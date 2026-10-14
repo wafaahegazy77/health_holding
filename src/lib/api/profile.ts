@@ -56,6 +56,8 @@ export type ProfileUpdateApiBody = {
     healthcare_sector_other?: string | null;
     workplace_name?: string;
     workplace_postcode?: string;
+    health_cluster_id?: string | number;
+    health_cluster?: string;
 };
 
 export type ChangePasswordApiBody = {
@@ -90,6 +92,24 @@ export type CourseApiData = {
         code?: string | null;
         title?: string | null;
     } | null;
+    progress?: number | string | null;
+    progress_percent?: number | string | null;
+    completion?: number | string | null;
+    modules_count?: number | string | null;
+    total_modules?: number | string | null;
+    completed_modules?: number | string | null;
+    modules_completed?: number | string | null;
+    hours?: number | string | null;
+    duration_hours?: number | string | null;
+    duration?: number | string | null;
+    quizzes_count?: number | string | null;
+    quizzes?: number | string | null;
+    last_activity?: string | null;
+    last_activity_at?: string | null;
+    last_accessed_at?: string | null;
+    last_opened_at?: string | null;
+    accessed_at?: string | null;
+    updated_at?: string | null;
 };
 
 export type CourseSummaryApiData = {
@@ -151,6 +171,8 @@ export type UpdateProfilePayload = {
     healthcareSectorOther?: string | null;
     workplaceName?: string;
     workplacePostcode?: string;
+    healthClusterId?: string;
+    healthCluster?: string;
 };
 
 export type ChangePasswordPayload = {
@@ -183,6 +205,12 @@ export type Course = {
     url: string | null;
     categoryCode: string;
     categoryTitle: string;
+    progress: number | null;
+    modulesCount: number | null;
+    completedModules: number | null;
+    hours: number | null;
+    quizzesCount: number | null;
+    lastActivity: string | null;
 };
 
 export type MyCoursesData = {
@@ -222,6 +250,23 @@ function asNumber(value: unknown): number | undefined {
         return Number(value);
     }
     return undefined;
+}
+
+function formatCourseActivityDate(value: unknown): string | null {
+    const raw = asNullableString(value)?.trim();
+    if (!raw) return null;
+
+    // Keep date only — strip time from values like 2026-10-13T14:30:00Z
+    const dateOnly = raw.match(/^(\d{4}-\d{2}-\d{2})/)?.[1];
+    if (dateOnly) return dateOnly;
+
+    const parsed = new Date(raw);
+    if (Number.isNaN(parsed.getTime())) return null;
+
+    const year = parsed.getFullYear();
+    const month = String(parsed.getMonth() + 1).padStart(2, "0");
+    const day = String(parsed.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
 }
 
 function unwrapData<T>(payload: { data?: T } | T): T {
@@ -285,14 +330,16 @@ export function mapProfileResponseToProfileData(
 
 /**
  * Maps UI camelCase editable fields → API snake_case body.
- * Never includes locked fields (email, health_cluster*, scfhs_number).
+ * Never includes locked fields (email, scfhs_number).
  */
 export function mapProfileToUpdatePayload(
     payload: UpdateProfilePayload,
 ): ProfileUpdateApiBody {
     const body: ProfileUpdateApiBody = {};
 
-    if (payload.salutation !== undefined) body.salutation = payload.salutation;
+    if (payload.salutation !== undefined) {
+        body.salutation = payload.salutation.trim().replace(/\.$/, "").toLowerCase();
+    }
     if (payload.firstName !== undefined) body.first_name = payload.firstName;
     if (payload.lastName !== undefined) body.last_name = payload.lastName;
     if (payload.mobile !== undefined) body.mobile = payload.mobile;
@@ -307,6 +354,12 @@ export function mapProfileToUpdatePayload(
     }
     if (payload.workplacePostcode !== undefined) {
         body.workplace_postcode = payload.workplacePostcode;
+    }
+    if (payload.healthClusterId !== undefined) {
+        body.health_cluster_id = payload.healthClusterId;
+    }
+    if (payload.healthCluster !== undefined) {
+        body.health_cluster = payload.healthCluster;
     }
 
     return body;
@@ -323,6 +376,8 @@ export function mapProfileDataToUpdatePayload(data: ProfileData): ProfileUpdateA
         healthcareSectorOther: data.healthcareSectorOther,
         workplaceName: data.workplace,
         workplacePostcode: data.postcode,
+        healthClusterId: data.healthClusterId,
+        healthCluster: data.healthCluster || data.region,
     });
 }
 
@@ -345,6 +400,33 @@ export function mapCourseResponseToCourse(
     const actionRaw = asNullableString(apiCourse.action);
     const id = apiCourse.id ?? apiCourse.code ?? "";
 
+    const modulesCount =
+        asNumber(apiCourse.modules_count ?? apiCourse.total_modules) ?? null;
+    const completedModules =
+        asNumber(
+            apiCourse.completed_modules ?? apiCourse.modules_completed,
+        ) ?? null;
+
+    let progress =
+        asNumber(
+            apiCourse.progress ??
+                apiCourse.progress_percent ??
+                apiCourse.completion,
+        ) ?? null;
+
+    if (
+        progress === null &&
+        completedModules !== null &&
+        modulesCount !== null &&
+        modulesCount > 0
+    ) {
+        progress = Math.round((completedModules / modulesCount) * 100);
+    }
+
+    if (progress !== null) {
+        progress = Math.min(100, Math.max(0, Math.round(progress)));
+    }
+
     return {
         id,
         code: asString(apiCourse.code),
@@ -358,6 +440,25 @@ export function mapCourseResponseToCourse(
         ),
         categoryTitle: asString(
             apiCourse.category_title ?? apiCourse.category?.title,
+        ),
+        progress,
+        modulesCount,
+        completedModules,
+        hours:
+            asNumber(
+                apiCourse.hours ??
+                    apiCourse.duration_hours ??
+                    apiCourse.duration,
+            ) ?? null,
+        quizzesCount:
+            asNumber(apiCourse.quizzes_count ?? apiCourse.quizzes) ?? null,
+        lastActivity: formatCourseActivityDate(
+            apiCourse.last_activity ??
+                apiCourse.last_activity_at ??
+                apiCourse.last_accessed_at ??
+                apiCourse.last_opened_at ??
+                apiCourse.accessed_at ??
+                apiCourse.updated_at,
         ),
     };
 }

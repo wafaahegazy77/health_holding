@@ -7,6 +7,7 @@
     "faqs": "الأسئلة الشائعة",
     "account": "حسابي",
     "login": "تسجيل الدخول",
+    "exploreContent": "استكشف المحتوى",
     "createAccount": "إنشاء حساب"
   },
   "hero": {
@@ -200,11 +201,11 @@
         "placeholder": "اختر دورك"
         },
         "ksaRegion": {
-        "label": "منطقة المملكة العربية السعودية",
-        "placeholder": "اختر المنطقة"
+        "label": "التجمع الصحي",
+        "placeholder": "اختر التجمع الصحي"
         },
         "healthcareSector": {
-        "label": "في أي قطاع من قطاعات الرعاية الصحية تعمل؟",
+        "label": "قطاع الرعاية الصحية",
         "placeholder": "اختر قطاع الرعاية الصحية"
         },
         "role": {
@@ -312,6 +313,11 @@
       },
       "modulesDone": "وحدات مكتملة",
       "lastActivity": "آخر نشاط",
+      "meta": {
+        "hours": "{count} س",
+        "modules": "{count} وحدات",
+        "quizzes": "{count} اختبارات"
+      },
       "stats": {
         "assigned": "الدورات المسندة",
         "completed": "مكتملة",

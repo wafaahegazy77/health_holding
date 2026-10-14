@@ -1,7 +1,7 @@
 "use client";
 
-import Image from "next/image";
 import { useTranslations } from "next-intl";
+import BrandLogo from "@/components/BrandLogo";
 import { Link } from "@/i18n/routing";
 
 import "./_AuthNavbar.scss";
@@ -18,9 +18,7 @@ const AuthNavbar = () => {
                     href="/"
                     className="auth_navbar_logo"
                 >
-                    <Image
-                        src="/images/logo.png"
-                        alt="Health Holding"
+                    <BrandLogo
                         width={170}
                         height={50}
                         priority

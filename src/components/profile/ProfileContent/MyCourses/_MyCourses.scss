@@ -173,11 +173,13 @@
         align-items: center;
         justify-content: center;
         gap: 12px;
+        flex-shrink: 0;
 
         min-width: 190px;
         height: 56px;
         padding: 0 25px;
 
+        border: 0;
         border-radius: 11px;
 
         background: #3298d2;
@@ -187,6 +189,7 @@
         font-weight: 600;
 
         text-decoration: none;
+        cursor: pointer;
 
         transition:
             background-color 0.25s ease,
@@ -196,10 +199,15 @@
             font-size: 11px;
         }
 
-        &:hover {
+        &:hover:not(:disabled) {
             background: #2788c0;
             color: #fff;
             transform: translateY(-1px);
+        }
+
+        &:disabled {
+            opacity: 0.65;
+            cursor: not-allowed;
         }
     }
 
@@ -322,36 +330,216 @@
        Course Cards
     ========================================= */
 
-    .course_card {
+    .profile_course_card {
+        display: flex;
+        flex-direction: column;
+
+        margin-bottom: 18px;
+
+        border: 1px solid #e6eef3;
+        border-radius: 18px;
+        box-shadow: 0 8px 24px rgba(20, 80, 138, 0.06);
+
+        overflow: hidden;
+
+        &:hover {
+            border-color: #d5e4ee;
+        }
 
         .course_image {
-            height: 150px;
+            height: 132px;
+            background: linear-gradient(120deg, #1c5f8f 0%, #3298d2 100%);
+
+            &.header_completed {
+                background: linear-gradient(120deg, #0f6b5c 0%, #1f9b72 55%, #4db892 100%);
+            }
+
+            &.header_inProgress {
+                background: linear-gradient(120deg, #1c5f8f 0%, #3298d2 100%);
+            }
+
+            &.header_overdue {
+                background: linear-gradient(120deg, #9a6b1a 0%, #d58b19 100%);
+            }
+
+            .img-cover {
+                opacity: 0.35;
+            }
+
+            .course_category {
+                z-index: 2;
+                padding: 6px 12px;
+                border-radius: 999px;
+                background: #fff;
+                color: #205589;
+                font-size: 11px;
+                font-weight: 600;
+            }
+
+            .course_status {
+                z-index: 2;
+                gap: 0;
+                padding: 6px 12px;
+                border-radius: 999px;
+                background: rgba(255, 255, 255, 0.92);
+                font-size: 11px;
+                font-weight: 600;
+
+                .status_dot {
+                    display: none;
+                }
+
+                &.completed {
+                    background: #dff5ea;
+                    color: #159b69;
+                }
+
+                &.inProgress {
+                    background: #fcf2dd;
+                    color: #d58b19;
+                }
+
+                &.overdue {
+                    background: #fde8e8;
+                    color: #c44949;
+                }
+            }
         }
 
         .course_content {
+            display: flex;
+            flex: 1;
+            flex-direction: column;
+            padding: 18px 18px 16px;
 
             h3 {
-                height: 47px;
+                margin: 0 0 12px;
 
-                overflow: hidden;
-
-                font-size: 18px !important;
-            }
-
-            p {
-                display: none;
+                color: #205589;
+                font-size: 18px;
+                font-weight: 700;
+                line-height: 1.35;
             }
         }
 
+        .course_meta_row {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 14px;
 
-        // .course_action:hover {
-        //     color: #fff !important;
-        // }
+            margin-bottom: 14px;
 
+            color: #8a9eae;
+            font-size: 12px;
 
-        // .course_action_completed:hover {
-        //     color: var(--primary) !important;
-        // }
+            span {
+                display: inline-flex;
+                align-items: center;
+                gap: 6px;
+            }
+
+            i {
+                font-size: 12px;
+                color: #9db0bf;
+            }
+        }
+
+        .course_progress {
+            margin-bottom: 14px;
+
+            .progress_bar {
+                width: 100%;
+                height: 6px;
+                margin-bottom: 8px;
+
+                overflow: hidden;
+
+                background: #e8f0f5;
+                border-radius: 999px;
+
+                span {
+                    display: block;
+                    height: 100%;
+
+                    background: #3298d2;
+                    border-radius: inherit;
+                }
+            }
+
+            .progress_info {
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+                gap: 10px;
+
+                margin-bottom: 0;
+
+                color: #8a9eae;
+                font-size: 12px;
+
+                span:last-child {
+                    color: #205589;
+                    font-weight: 700;
+                }
+            }
+
+            &.is_completed .progress_bar span {
+                background: #159b69;
+            }
+        }
+
+        .course_action {
+            width: 100%;
+            height: 42px;
+            margin-top: auto;
+            margin-bottom: 10px;
+
+            border: 1px solid #d7e3ec;
+            border-radius: 10px;
+
+            background: #fff;
+            color: #205589;
+
+            font-size: 13px;
+            font-weight: 600;
+            text-decoration: none;
+
+            transition:
+                background-color 0.2s ease,
+                border-color 0.2s ease,
+                color 0.2s ease;
+
+            &:hover {
+                background: #f4f9fc;
+                border-color: #c5d7e4;
+                color: #205589 !important;
+            }
+
+            &.course_action_completed {
+                background: #fff;
+                color: #205589;
+
+                &:hover {
+                    background: #f4f9fc;
+                    color: #205589 !important;
+                }
+            }
+
+            &:disabled {
+                opacity: 0.65;
+                cursor: not-allowed;
+            }
+        }
+
+        .course_last_activity {
+            margin: 0;
+
+            color: #9db0bf;
+            font-size: 11px;
+            line-height: 1.4;
+            text-align: center;
+        }
     }
 
 

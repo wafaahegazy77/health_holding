@@ -1,7 +1,7 @@
 import { getLocale, getTranslations } from "next-intl/server";
 
 import { getHomeData } from "@/lib/api/home";
-import { Link } from "@/i18n/routing";
+import HomeAuthButton from "@/components/home/HomeAuthButton";
 import Reveal from "@/components/animations/Reveal";
 
 import "./_CallToAction.scss";
@@ -46,24 +46,10 @@ const CallToAction = async () => {
                             animation="fade-up"
                             trigger="load"
                         >
-                            <Link
-                                href="/login"
-                                className="butn gradient_butn hvr-icon-slide-out-in "
-                            >
-                                <div className="txt" >
-                                    {t("login")}
-                                </div>
-
-                                {/* Current icon */}
-                                <span className="hvr-icon hvr-icon-current">
-                                    <i className="fa-regular fa-arrow-up-right"></i>
-                                </span>
-
-                                {/* Next icon */}
-                                <span className="hvr-icon hvr-icon-next">
-                                    <i className="fa-regular fa-arrow-right"></i>
-                                </span>
-                            </Link>
+                            <HomeAuthButton
+                                className="butn gradient_butn hvr-icon-slide-out-in"
+                                guestLabel={t("login")}
+                            />
                         </Reveal>
 
                     </div>

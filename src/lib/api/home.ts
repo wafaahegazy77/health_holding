@@ -1,6 +1,17 @@
+import { cache } from "react";
+
 import { api } from "@/lib/api";
+import {
+    DEFAULT_SITE_FAVICON,
+    DEFAULT_SITE_LOGO,
+    emptySiteSettings,
+    type SiteSettingsData,
+} from "@/lib/site-branding";
 import homeAr from "@/mock-api/home.ar.json";
 import homeEn from "@/mock-api/home.en.json";
+
+export type { SiteSettingsData };
+export { DEFAULT_SITE_FAVICON, DEFAULT_SITE_LOGO };
 
 export type HeroSectionData = {
     main_title: string;
@@ -246,16 +257,7 @@ export type FooterSocialKey =
 
 export type FooterSectionData = {
     description: string;
-    email: string;
-    phone: string;
-    address: string;
-    facebook: string;
-    instagram: string;
-    x: string;
-    whatsapp: string;
-    linkedin: string;
-    youtube: string;
-};
+} & SiteSettingsData;
 
 function toSocialHref(value: string, key: FooterSocialKey) {
     const url = value.trim();
@@ -273,50 +275,67 @@ function getSocialUrl(settings: Record<string, unknown>, key: FooterSocialKey) {
     return toSocialHref(value, key);
 }
 
-export async function getFooterSection(locale: string): Promise<FooterSectionData> {
-    const empty: FooterSectionData = {
-        description: "",
-        email: "",
-        phone: "",
-        address: "",
-        facebook: "",
-        instagram: "",
-        x: "",
-        whatsapp: "",
-        linkedin: "",
-        youtube: "",
-    };
+function asUrl(value: unknown, fallback: string) {
+    return typeof value === "string" && value.trim() ? value.trim() : fallback;
+}
 
+function parseSettingsPayload(settingsPayload: unknown): Record<string, unknown> {
+    const payload = settingsPayload as { data?: unknown } | null;
+    if (
+        payload?.data &&
+        typeof payload.data === "object" &&
+        !Array.isArray(payload.data)
+    ) {
+        return payload.data as Record<string, unknown>;
+    }
+    if (payload && typeof payload === "object" && !Array.isArray(payload)) {
+        return payload as Record<string, unknown>;
+    }
+    return {};
+}
+
+export const getSiteSettings = cache(
+    async (locale: string): Promise<SiteSettingsData> => {
+        try {
+            const settingsRes = await api.getSettings(locale).catch(() => null);
+            const settings = parseSettingsPayload(settingsRes?.data);
+
+            return {
+                logo: asUrl(settings.website_logo_url, DEFAULT_SITE_LOGO),
+                favicon: asUrl(settings.website_favicon_url, DEFAULT_SITE_FAVICON),
+                email: asUrl(settings.site_email || settings.email, ""),
+                phone: asUrl(settings.site_phone || settings.phone, ""),
+                address: asUrl(settings.site_address || settings.address, ""),
+                facebook: getSocialUrl(settings, "facebook"),
+                instagram: getSocialUrl(settings, "instagram"),
+                x: getSocialUrl(settings, "x"),
+                whatsapp: getSocialUrl(settings, "whatsapp"),
+                linkedin: getSocialUrl(settings, "linkedin"),
+                youtube: getSocialUrl(settings, "youtube"),
+            };
+        } catch {
+            return emptySiteSettings();
+        }
+    },
+);
+
+export async function getFooterSection(locale: string): Promise<FooterSectionData> {
     try {
-        const [footerRes, settingsRes] = await Promise.all([
+        const [footerRes, settings] = await Promise.all([
             api.getFooter(locale).catch(() => null),
-            api.getSettings(locale).catch(() => null),
+            getSiteSettings(locale),
         ]);
 
         const footerData = footerRes?.data?.data ?? {};
-        const settingsPayload = settingsRes?.data;
-        const settings =
-            settingsPayload?.data &&
-            typeof settingsPayload.data === "object" &&
-            !Array.isArray(settingsPayload.data)
-                ? settingsPayload.data
-                : settingsPayload && typeof settingsPayload === "object"
-                    ? settingsPayload
-                    : {};
 
         return {
             description: footerData.description || "",
-            email: settings.site_email || settings.email || "",
-            phone: settings.site_phone || settings.phone || "",
-            address: settings.site_address || settings.address || "",
-            facebook: getSocialUrl(settings, "facebook"),
-            instagram: getSocialUrl(settings, "instagram"),
-            x: getSocialUrl(settings, "x"),
-            whatsapp: getSocialUrl(settings, "whatsapp"),
-            linkedin: getSocialUrl(settings, "linkedin"),
-            youtube: getSocialUrl(settings, "youtube"),
+            ...settings,
         };
     } catch {
-        return empty;
+        return {
+            description: "",
+            ...(await getSiteSettings(locale)),
+        };
     }
 }

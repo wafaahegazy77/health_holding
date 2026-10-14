@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useLocale } from "next-intl";
-import { useRouter } from "@/i18n/routing";
+import { Link, useRouter } from "@/i18n/routing";
 
 import type { ProfileData } from "@/lib/api/profile";
 import ChangePasswordModal from "../../Modals/ChangePasswordModal";
@@ -29,17 +29,14 @@ type PersonalInformationTranslations = {
     password: string;
     changePassword: string;
 
-    country: string;
     salutation: string;
     firstName: string;
     lastName: string;
     email: string;
     mobile: string;
 
-    roleStatement: string;
     region: string;
     healthcareSector: string;
-    role: string;
     workplace: string;
     postcode: string;
     scfhs: string;
@@ -52,11 +49,31 @@ type PersonalInformationTranslations = {
 type Props = {
     data: ProfileData;
     translations: PersonalInformationTranslations;
+    onProfileUpdated?: (profile: ProfileData) => void;
 };
+
+const SALUTATION_VALUES = ["dr", "mr", "mrs", "ms"] as const;
+
+function normalizeSalutation(value: string) {
+    const normalized = value.trim().replace(/\.$/, "").toLowerCase();
+    return SALUTATION_VALUES.includes(
+        normalized as (typeof SALUTATION_VALUES)[number],
+    )
+        ? normalized
+        : "";
+}
+
+function withNormalizedSalutation(profile: ProfileData): ProfileData {
+    return {
+        ...profile,
+        salutation: normalizeSalutation(profile.salutation),
+    };
+}
 
 const PersonalInformationEdit = ({
     data,
     translations,
+    onProfileUpdated,
 }: Props) => {
     const locale = useLocale();
     const router = useRouter();
@@ -68,12 +85,17 @@ const PersonalInformationEdit = ({
     const [isChangePasswordOpen, setIsChangePasswordOpen] =
         useState(false);
 
-    const [profile, setProfile] = useState<ProfileData>(data);
-    const [formData, setFormData] = useState<ProfileData>(data);
+    const [profile, setProfile] = useState<ProfileData>(() =>
+        withNormalizedSalutation(data),
+    );
+    const [formData, setFormData] = useState<ProfileData>(() =>
+        withNormalizedSalutation(data),
+    );
 
     useEffect(() => {
-        setProfile(data);
-        setFormData(data);
+        const next = withNormalizedSalutation(data);
+        setProfile(next);
+        setFormData(next);
     }, [data]);
 
 
@@ -88,10 +110,20 @@ const PersonalInformationEdit = ({
     ) => {
         const { name, value } = e.target;
 
-        setFormData((prev) => ({
-            ...prev,
-            [name]: value,
-        }));
+        setFormData((prev) => {
+            if (name === "healthCluster") {
+                return {
+                    ...prev,
+                    healthCluster: value,
+                    region: value,
+                };
+            }
+
+            return {
+                ...prev,
+                [name]: value,
+            };
+        });
     };
 
 
@@ -129,23 +161,42 @@ const PersonalInformationEdit = ({
         setError(null);
 
         try {
+            const healthCluster =
+                formData.healthCluster || formData.region;
+            const previousHealthCluster =
+                profile.healthCluster || profile.region;
+
+            const salutation = normalizeSalutation(formData.salutation);
+
+            const body: Record<string, unknown> = {
+                lang: locale,
+                salutation,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                mobile: formData.mobile,
+                healthcareSector: formData.healthcareSector,
+                healthcareSectorOther: formData.healthcareSectorOther,
+                workplaceName: formData.workplace,
+                workplacePostcode: formData.postcode,
+            };
+
+            if (
+                healthCluster !== previousHealthCluster ||
+                formData.healthClusterId !== profile.healthClusterId
+            ) {
+                body.healthCluster = healthCluster;
+                if (formData.healthClusterId) {
+                    body.healthClusterId = formData.healthClusterId;
+                }
+            }
+
             const response = await fetch("/api/profile", {
                 method: "PUT",
                 headers: {
                     Accept: "application/json",
                     "Content-Type": "application/json",
                 },
-                body: JSON.stringify({
-                    lang: locale,
-                    salutation: formData.salutation,
-                    firstName: formData.firstName,
-                    lastName: formData.lastName,
-                    mobile: formData.mobile,
-                    healthcareSector: profile.healthcareSector,
-                    healthcareSectorOther: profile.healthcareSectorOther,
-                    workplaceName: formData.workplace,
-                    workplacePostcode: formData.postcode,
-                }),
+                body: JSON.stringify(body),
             });
 
             const result = (await response.json().catch(() => null)) as {
@@ -175,11 +226,24 @@ const PersonalInformationEdit = ({
                 return;
             }
 
-            if (result?.data) {
-                setProfile(result.data);
-                setFormData(result.data);
-            }
+            const nextProfile: ProfileData = {
+                ...(result?.data ?? profile),
+                salutation,
+                firstName: formData.firstName,
+                lastName: formData.lastName,
+                mobile: formData.mobile,
+                healthcareSector: formData.healthcareSector,
+                healthcareSectorOther: formData.healthcareSectorOther,
+                workplace: formData.workplace,
+                postcode: formData.postcode,
+                healthClusterId: formData.healthClusterId,
+                healthCluster,
+                region: healthCluster,
+            };
 
+            setProfile(nextProfile);
+            setFormData(nextProfile);
+            onProfileUpdated?.(nextProfile);
             setIsEditing(false);
             router.refresh();
         } catch {
@@ -278,28 +342,6 @@ const PersonalInformationEdit = ({
                     {!isEditing ? (
 
                         <div className="profile_card_body">
-
-                            <div className="profile_info_row">
-
-                                <div className="profile_info_label">
-                                    {translations.country}
-                                </div>
-
-                                <div className="profile_info_value">
-
-                                    <span>
-                                        {profile.country}
-                                    </span>
-
-                                    <span className="locked">
-                                        <i className="fa-regular fa-lock" />
-                                        {translations.cantBeChanged}
-                                    </span>
-
-                                </div>
-
-                            </div>
-
 
                             <div className="profile_info_row">
 
@@ -443,26 +485,16 @@ const PersonalInformationEdit = ({
                                         <select
                                             name="salutation"
                                             className="form-select"
-                                            value={formData.salutation}
+                                            value={normalizeSalutation(
+                                                formData.salutation,
+                                            )}
                                             onChange={handleChange}
                                             disabled={isSaving}
                                         >
-                                            <option value="Dr">
-                                                Dr
-                                            </option>
-
-                                            <option value="Mr">
-                                                Mr
-                                            </option>
-
-                                            <option value="Mrs">
-                                                Mrs
-                                            </option>
-
-                                            <option value="Ms">
-                                                Ms
-                                            </option>
-
+                                            <option value="dr">Dr</option>
+                                            <option value="mr">Mr</option>
+                                            <option value="mrs">Mrs</option>
+                                            <option value="ms">Ms</option>
                                         </select>
 
                                     </div>
@@ -519,27 +551,12 @@ const PersonalInformationEdit = ({
                             <div className="profile_info_row">
 
                                 <div className="profile_info_label">
-                                    {translations.roleStatement}
-                                </div>
-
-                                <div className="profile_info_value">
-                                    <span>
-                                        {profile.roleStatement}
-                                    </span>
-                                </div>
-
-                            </div>
-
-
-                            <div className="profile_info_row">
-
-                                <div className="profile_info_label">
                                     {translations.region}
                                 </div>
 
                                 <div className="profile_info_value">
                                     <span>
-                                        {profile.region}
+                                        {profile.healthCluster || profile.region}
                                     </span>
                                 </div>
 
@@ -555,21 +572,6 @@ const PersonalInformationEdit = ({
                                 <div className="profile_info_value">
                                     <span>
                                         {profile.healthcareSector}
-                                    </span>
-                                </div>
-
-                            </div>
-
-
-                            <div className="profile_info_row">
-
-                                <div className="profile_info_label">
-                                    {translations.role}
-                                </div>
-
-                                <div className="profile_info_value">
-                                    <span>
-                                        {profile.role}
                                     </span>
                                 </div>
 
@@ -643,30 +645,58 @@ const PersonalInformationEdit = ({
                                             {translations.region}
                                         </label>
 
-                                        <select
-                                            name="region"
-                                            className="form-select"
-                                            value={formData.region}
+                                        <input
+                                            type="text"
+                                            name="healthCluster"
+                                            value={
+                                                formData.healthCluster ||
+                                                formData.region
+                                            }
                                             onChange={handleChange}
                                             disabled={isSaving}
-                                        >
-                                            <option value="Al-Riyadh">
-                                                Al-Riyadh
-                                            </option>
+                                        />
 
-                                            <option value="Makkah">
-                                                Makkah
-                                            </option>
+                                    </div>
 
-                                            <option value="Madinah">
-                                                Madinah
-                                            </option>
+                                </div>
 
-                                            <option value="Eastern Province">
-                                                Eastern Province
-                                            </option>
 
-                                        </select>
+                                <div className="col-lg-6">
+
+                                    <div className="form_group">
+
+                                        <label>
+                                            {translations.healthcareSector}
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            name="healthcareSector"
+                                            value={formData.healthcareSector}
+                                            onChange={handleChange}
+                                            disabled={isSaving}
+                                        />
+
+                                    </div>
+
+                                </div>
+
+
+                                <div className="col-lg-6">
+
+                                    <div className="form_group">
+
+                                        <label>
+                                            {translations.workplace}
+                                        </label>
+
+                                        <input
+                                            type="text"
+                                            name="workplace"
+                                            value={formData.workplace}
+                                            onChange={handleChange}
+                                            disabled={isSaving}
+                                        />
 
                                     </div>
 
@@ -699,16 +729,20 @@ const PersonalInformationEdit = ({
                                     <div className="form_group">
 
                                         <label>
-                                            {translations.workplace}
+                                            {translations.scfhs}
                                         </label>
 
                                         <input
                                             type="text"
-                                            name="workplace"
-                                            value={formData.workplace}
-                                            onChange={handleChange}
-                                            disabled={isSaving}
+                                            value={profile.scfhs}
+                                            disabled
+                                            readOnly
                                         />
+
+                                        <span className="locked mt-2 d-inline-flex fsz-10 align-items-center gap-2">
+                                            <i className="fa-regular fa-lock" />
+                                            {translations.cantBeChanged}
+                                        </span>
 
                                     </div>
 
@@ -774,12 +808,12 @@ const PersonalInformationEdit = ({
                                     {translations.accepted}
                                 </span>
 
-                                <button
-                                    type="button"
+                                <Link
+                                    href="/terms-conditions"
                                     className="read_terms_btn"
                                 >
                                     {translations.readTerms}
-                                </button>
+                                </Link>
 
                             </div>
 
